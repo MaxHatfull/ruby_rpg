@@ -1,6 +1,9 @@
 class Bullet < GameObject
   attr_reader :x, :y, :radius
+
   def initialize(x, y)
+    super
+
     @x = x
     @y = y
     @radius = 3
