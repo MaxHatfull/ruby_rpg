@@ -19,4 +19,20 @@ describe GameObject do
       GameObject.update_all
     end
   end
+
+  describe "#update for a subclass of GameObject" do
+    class TestObject < GameObject
+      attr_reader :updated
+      def update
+        @updated = true
+      end
+    end
+    let!(:object) { TestObject.new }
+
+    it 'calls update on the object' do
+      GameObject.update_all
+
+      expect(object.updated).to be true
+    end
+  end
 end
