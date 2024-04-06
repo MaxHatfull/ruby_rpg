@@ -4,6 +4,7 @@ class Bullet < Component
   end
 
   def update
-    @image.y -= 5
+    game_object.x, game_object.y = game_object.local_to_world_coordinate(0, -10)
+    @image.x, @image.y = game_object.x, game_object.y
   end
 end

@@ -1,20 +1,22 @@
 class Gun < Component
   def start
-    Window.on(:mouse_down) { |event| fire if event.button == :left }
+    Window.on(:key_down) { |event| fire if event.key == "space" }
   end
 
   def fire
+    x, y = game_object.local_to_world_coordinate(0, -40)
     GameObject.new("Bullet",
-                   x: game_object.x,
-                   y: game_object.y - 40,
+                   x: x,
+                   y: y,
+                   rotation: game_object.rotation,
                    components: [Bullet.new]
     )
     Sprite.new(
       __dir__ + "/boom.png",
       clip_width: 127,
       time: 75,
-      x: game_object.x - 10,
-      y: game_object.y - 40 - 10,
+      x: x - 10,
+      y: y - 10,
       width: 20,
       height: 20
     ).play

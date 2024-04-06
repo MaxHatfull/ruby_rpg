@@ -16,6 +16,12 @@ describe GameObject do
       expect(object.y).to eq(20)
     end
 
+    it "sets the rotation of the object" do
+      object = GameObject.new(rotation: 90)
+
+      expect(object.rotation).to eq(90)
+    end
+
     it "sets the name of the object" do
       object = GameObject.new("Test Object")
 
