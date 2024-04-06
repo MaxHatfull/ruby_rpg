@@ -1,25 +1,7 @@
-class Ship < Component
-  def initialize
-    super
-
-    @image = Triangle.new
+class Gun < Component
+  def start
     Window.on(:mouse_down) { |event| fire if event.button == :left }
   end
-
-  def update
-    game_object.x = Window.mouse_x
-    game_object.y = Window.mouse_y
-
-    x, y = game_object.x, game_object.y
-    @image.x1 = x
-    @image.y1 = y - 40
-    @image.x2 = x - 20
-    @image.y2 = y + 40
-    @image.x3 = x + 20
-    @image.y3 = y + 40
-  end
-
-  private
 
   def fire
     GameObject.new("Bullet",
