@@ -21,5 +21,14 @@ class Ship < GameObject
 
   def fire
     Bullet.new(x, y - 40)
+    Sprite.new(
+      __dir__ + "/boom.png",
+      clip_width: 127,
+      time: 75,
+      x: x - 10,
+      y: y - 40 - 10,
+      width: 20,
+      height: 20
+    ).play
   end
 end
