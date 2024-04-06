@@ -1,7 +1,7 @@
 require 'ruby2d'
 require_relative 'game_object'
 require_relative 'component'
-Dir[File.join(__dir__, "..", "objects", "**/*.rb")].each { |file| require file }
+Dir[File.join(Dir.pwd, File.dirname(caller[0]), "components", "**/*.rb")].each { |file| require file }
 
 class Engine
   def self.update

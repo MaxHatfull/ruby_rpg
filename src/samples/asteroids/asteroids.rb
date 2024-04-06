@@ -1,4 +1,4 @@
-require_relative "engine/engine"
+require_relative "../../engine/engine"
 
 set title: 'Ruby RPG'
 set width: 1920, height: 1080, background: 'navy', fullscreen: true
