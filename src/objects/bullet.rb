@@ -1,18 +1,9 @@
-class Bullet < GameObject
-  attr_reader :x, :y, :radius
-
-  def initialize(x, y)
-    super
-
-    @x = x
-    @y = y
-    @radius = 3
-    @image = Circle.new(x: @x, y: @y, radius: @radius, color: 'white')
-    @speed = 5
+class Bullet < Component
+  def start
+    @image = Circle.new(x: game_object.x, y: game_object.y, radius: 3, color: 'white')
   end
 
   def update
-    @y -= @speed
-    @image.y = @y
+    @image.y -= 5
   end
 end

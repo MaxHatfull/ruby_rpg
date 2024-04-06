@@ -5,7 +5,7 @@ require_relative "../../src/engine/engine"
 
 describe Engine do
   describe ".update" do
-    it 'calls update on all objects' do
+    it 'calls update on gameobjects' do
       expect(GameObject).to receive(:update_all)
 
       Engine.update

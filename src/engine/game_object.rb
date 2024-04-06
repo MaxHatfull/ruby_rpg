@@ -1,18 +1,21 @@
 class GameObject
-  attr_accessor :x, :y
+  attr_accessor :name, :x, :y, :components
 
-  def initialize(*args)
+  def initialize(name = "Game Object", x: 0, y: 0, components: [])
     GameObject.object_spawned(self)
+    @x = x
+    @y = y
+    @name = name
+    @components = components
+    components.each { |component| component.set_game_object(self) }
+    components.each(&:start)
   end
 
   def self.update_all
-    GameObject.objects.each(&:update)
+    GameObject.objects.each do |object|
+      object.components.each(&:update)
+    end
   end
-
-  def update
-  end
-
-  private
 
   def self.object_spawned(object)
     @objects ||= []

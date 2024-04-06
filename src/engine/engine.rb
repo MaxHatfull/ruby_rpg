@@ -1,5 +1,6 @@
 require 'ruby2d'
 require_relative 'game_object'
+require_relative 'component'
 Dir[File.join(__dir__, "..", "objects", "**/*.rb")].each { |file| require file }
 
 class Engine
