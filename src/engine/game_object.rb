@@ -3,6 +3,7 @@ class GameObject
 
   def initialize(name = "Game Object", x: 0, y: 0, rotation: 0, components: [])
     GameObject.object_spawned(self)
+
     @x = x
     @y = y
     @rotation = rotation
@@ -26,11 +27,10 @@ class GameObject
   end
 
   def self.object_spawned(object)
-    @objects ||= []
-    @objects << object
+    objects << object
   end
 
   def self.objects
-    @objects
+    @objects ||= []
   end
 end
