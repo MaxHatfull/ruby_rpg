@@ -20,5 +20,20 @@ describe "Ship" do
         end
       end
     end
+
+    it "renders the ship again" do
+      within_game_context do
+        at(0) do
+          GameObject.new("Ship", x: 100, y: 100,
+                         components: [ShipEngine.new, Gun.new]
+          )
+        end
+        at(1) do
+          Engine.screenshot("spec/asteroids/components/ship/ship2.png")
+          expect(true).to eq(true)
+          Engine.close
+        end
+      end
+    end
   end
 end

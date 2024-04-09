@@ -1,4 +1,4 @@
-require 'ruby2d'
+load 'ruby2d.rb'
 require_relative 'game_object'
 require_relative 'component'
 
