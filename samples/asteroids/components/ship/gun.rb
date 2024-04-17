@@ -1,8 +1,4 @@
 class Gun < Component
-  def start
-    Window.on(:key_down) { |event| fire if event.key == "space" }
-  end
-
   def fire
     x, y = game_object.local_to_world_coordinate(0, -40)
     GameObject.new("Bullet",
