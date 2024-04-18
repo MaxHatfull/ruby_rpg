@@ -1,12 +1,13 @@
 require 'opengl'
 require 'glfw'
+require_relative 'input'
 require_relative 'game_object'
 require_relative 'component'
 
 GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
 GLFW.Init()
 
-class Engine
+module Engine
   def self.load(base_dir)
     Dir[File.join(base_dir, "components", "**/*.rb")].each { |file| require file }
   end
@@ -14,17 +15,12 @@ class Engine
   def self.start(**args)
     @width = args[:width] || 640
     @height = args[:height] || 480
-    @keys = {}
 
     open_widow
   end
 
   def self.close
     GLFW.SetWindowShouldClose(@window, 1)
-  end
-
-  def self.key_down?(key)
-    @keys[key]
   end
 
   def self.screenshot(file)
@@ -64,25 +60,9 @@ class Engine
     GameObject.update_all(delta_time)
   end
 
-  def self.on_key_down(key)
-    @keys[key] = true
-    if key == GLFW::KEY_ESCAPE
-      close
-    end
-  end
-
-  def self.on_key_up(key)
-    @keys[key] = false
-  end
-
   def self.open_widow
     key_callback = GLFW::create_callback(:GLFWkeyfun) do |window, key, scancode, action, mods|
-      if action == GLFW::GLFW_PRESS
-        on_key_down(key)
-      end
-      if action == GLFW::GLFW_RELEASE
-        on_key_up(key)
-      end
+      Input.key_callback(key, action)
     end
 
     @window = GLFW.CreateWindow(@width, @height, "Simple example", nil, nil)

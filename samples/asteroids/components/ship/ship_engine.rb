@@ -8,12 +8,12 @@ class ShipEngine < Component
   end
 
   def update(delta_time)
-    acceleration = Engine.key_down?(GLFW::KEY_UP) ? ACCELERATION : -ACCELERATION / 5
+    acceleration = Engine::Input.key_down?(GLFW::KEY_UP) ? ACCELERATION : -ACCELERATION / 5
     @speed += acceleration
     @speed = 0 if @speed < 0
     @speed = MAX_SPEED if @speed > MAX_SPEED
-    torque = Engine.key_down?(GLFW::KEY_LEFT) ? -TURNING_SPEED : 0
-    torque += Engine.key_down?(GLFW::KEY_RIGHT) ? TURNING_SPEED : 0
+    torque = Engine::Input.key_down?(GLFW::KEY_LEFT) ? -TURNING_SPEED : 0
+    torque += Engine::Input.key_down?(GLFW::KEY_RIGHT) ? TURNING_SPEED : 0
     game_object.rotation -= torque * delta_time
 
     rotation = game_object.rotation * Math::PI / 180

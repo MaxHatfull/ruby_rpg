@@ -1,7 +1,7 @@
 class Gun < Component
   COOLDOWN = 0.1
   def update(delta_time)
-    fire if Engine.key_down?(GLFW::KEY_SPACE)
+    fire if Engine::Input.key_down?(GLFW::KEY_SPACE)
   end
 
   def fire
