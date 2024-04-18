@@ -1,11 +1,10 @@
 class GameObject
-  attr_accessor :name, :x, :y, :rotation, :components
+  attr_accessor :name, :pos, :rotation, :components
 
   def initialize(name = "Game Object", x: 0, y: 0, rotation: 0, components: [])
     GameObject.object_spawned(self)
 
-    @x = x
-    @y = y
+    @pos = { x: x, y: y }
     @rotation = rotation
     @name = name
     @components = components
@@ -13,10 +12,26 @@ class GameObject
     components.each(&:start)
   end
 
+  def x
+    @pos[:x]
+  end
+
+  def x=(value)
+    @pos[:x] = value
+  end
+
+  def y
+    @pos[:y]
+  end
+
+  def y=(value)
+    @pos[:y] = value
+  end
+
   def local_to_world_coordinate(local_x, local_y)
     angle = Math::PI * @rotation / 180.0
-    world_x = @x + local_x * Math.cos(angle) - local_y * Math.sin(angle)
-    world_y = @y + local_x * Math.sin(angle) + local_y * Math.cos(angle)
+    world_x = x + local_x * Math.cos(angle) - local_y * Math.sin(angle)
+    world_y = y + local_x * Math.sin(angle) + local_y * Math.cos(angle)
     { x: world_x, y: world_y, z: 0 }
   end
 

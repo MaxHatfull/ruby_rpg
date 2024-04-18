@@ -1,9 +1,12 @@
 class Gun < Component
+  COOLDOWN = 0.1
   def update(delta_time)
     fire if Engine.key_down?(GLFW::KEY_SPACE)
   end
 
   def fire
+    return if @last_fire && Time.now - @last_fire < COOLDOWN
+    @last_fire = Time.now
     pos = game_object.local_to_world_coordinate(0, -40)
     GameObject.new("Bullet",
                    x: pos[:x],
