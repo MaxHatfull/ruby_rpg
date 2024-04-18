@@ -29,20 +29,20 @@ describe GameObject do
     end
 
     it "sets the components of the object" do
-      component = Component.new
+      component = Engine::Component.new
       object = GameObject.new(components: [component])
 
       expect(object.components).to eq([component])
     end
 
     it "calls start on all components" do
-      component = Component.new
+      component = Engine::Component.new
       expect(component).to receive(:start)
       GameObject.new(components: [component])
     end
 
     it "sets the game object on all components" do
-      component = Component.new
+      component = Engine::Component.new
       object = GameObject.new(components: [component])
 
       expect(component.game_object).to eq(object)
@@ -56,7 +56,7 @@ describe GameObject do
   end
 
   describe ".update_all" do
-    let(:component) { Component.new }
+    let(:component) { Engine::Component.new }
     let!(:object) { GameObject.new(components: [component]) }
 
     it 'calls update on all components' do

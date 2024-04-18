@@ -1,5 +1,5 @@
 module TestDriver
-  class TestDriverComponent < Component
+  class TestDriverComponent < Engine::Component
     include RSpec::Matchers
 
     def initialize(&block)

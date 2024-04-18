@@ -1,4 +1,4 @@
-class Bullet < Component
+class Bullet < Engine::Component
   SPEED = 1000
 
   def update(delta_time)

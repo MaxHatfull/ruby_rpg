@@ -1,4 +1,4 @@
-class ShipEngine < Component
+class ShipEngine < Engine::Component
   ACCELERATION = 50
   MAX_SPEED = 500
   TURNING_SPEED = 100
