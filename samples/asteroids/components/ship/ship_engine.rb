@@ -20,7 +20,7 @@ class ShipEngine < Component
     game_object.x += Math.sin(rotation) * @speed * delta_time
     game_object.y -= Math.cos(rotation) * @speed * delta_time
 
-    Engine.draw_triangle(
+    Engine::Renderer.draw_triangle(
       game_object.local_to_world_coordinate(0, -40), { r: 1, g: 0.5, b: 0.5 },
       game_object.local_to_world_coordinate(-20, 40), { r: 1, g: 1, b: 1 },
       game_object.local_to_world_coordinate(20, 40), { r: 1, g: 1, b: 1 }
