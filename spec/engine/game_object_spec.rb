@@ -3,34 +3,34 @@
 require 'rspec'
 require_relative "../../src/engine/engine"
 
-describe GameObject do
+describe Engine::GameObject do
   describe ".new" do
     it 'creates the object' do
-      expect(GameObject.new).to be_a(GameObject)
+      expect(Engine::GameObject.new).to be_a(Engine::GameObject)
     end
 
     it "sets the position of the object" do
-      object = GameObject.new(x: 10, y: 20)
+      object = Engine::GameObject.new(x: 10, y: 20)
 
       expect(object.x).to eq(10)
       expect(object.y).to eq(20)
     end
 
     it "sets the rotation of the object" do
-      object = GameObject.new(rotation: 90)
+      object = Engine::GameObject.new(rotation: 90)
 
       expect(object.rotation).to eq(90)
     end
 
     it "sets the name of the object" do
-      object = GameObject.new("Test Object")
+      object = Engine::GameObject.new("Test Object")
 
       expect(object.name).to eq("Test Object")
     end
 
     it "sets the components of the object" do
       component = Engine::Component.new
-      object = GameObject.new(components: [component])
+      object = Engine::GameObject.new(components: [component])
 
       expect(object.components).to eq([component])
     end
@@ -38,31 +38,31 @@ describe GameObject do
     it "calls start on all components" do
       component = Engine::Component.new
       expect(component).to receive(:start)
-      GameObject.new(components: [component])
+      Engine::GameObject.new(components: [component])
     end
 
     it "sets the game object on all components" do
       component = Engine::Component.new
-      object = GameObject.new(components: [component])
+      object = Engine::GameObject.new(components: [component])
 
       expect(component.game_object).to eq(object)
     end
 
     it "adds the object to the list of objects" do
-      object = GameObject.new
+      object = Engine::GameObject.new
 
-      expect(GameObject.objects).to include(object)
+      expect(Engine::GameObject.objects).to include(object)
     end
   end
 
   describe ".update_all" do
     let(:component) { Engine::Component.new }
-    let!(:object) { GameObject.new(components: [component]) }
+    let!(:object) { Engine::GameObject.new(components: [component]) }
 
     it 'calls update on all components' do
       expect(component).to receive(:update)
 
-      GameObject.update_all(0.1)
+      Engine::GameObject.update_all(0.1)
     end
   end
 end

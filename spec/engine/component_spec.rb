@@ -13,7 +13,7 @@ describe Engine::Component do
   describe ".set_game_object" do
     it 'sets the game object' do
       component = Engine::Component.new
-      object = GameObject.new
+      object = Engine::GameObject.new
       component.set_game_object(object)
 
       expect(component.game_object).to eq(object)
