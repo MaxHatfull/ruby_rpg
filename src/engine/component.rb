@@ -8,6 +8,6 @@ class Component
   def start
   end
 
-  def update
+  def update(delta_time)
   end
 end

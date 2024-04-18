@@ -1,6 +1,6 @@
 require_relative "../../src/engine/engine"
 
-Engine.load
+Engine.load(File.dirname(__FILE__))
 
 GameObject.new(
   "Ship", x: 100, y: 100,

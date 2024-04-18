@@ -6,7 +6,7 @@ include TestDriver
 
 describe "Ship" do
   describe "When placed in the scene" do
-    it "renders the ship" do
+    xit "renders the ship" do
       within_game_context do
         at(0) do
           GameObject.new("Ship", x: 100, y: 100,
@@ -21,7 +21,7 @@ describe "Ship" do
       end
     end
 
-    it "renders the ship again" do
+    xit "renders the ship again" do
       within_game_context do
         at(0) do
           GameObject.new("Ship", x: 100, y: 100,

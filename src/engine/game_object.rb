@@ -17,12 +17,12 @@ class GameObject
     angle = Math::PI * @rotation / 180.0
     world_x = @x + local_x * Math.cos(angle) - local_y * Math.sin(angle)
     world_y = @y + local_x * Math.sin(angle) + local_y * Math.cos(angle)
-    [world_x, world_y]
+    { x: world_x, y: world_y, z: 0 }
   end
 
-  def self.update_all
+  def self.update_all(delta_time)
     GameObject.objects.each do |object|
-      object.components.each(&:update)
+      object.components.each { |component| component.update(delta_time) }
     end
   end
 

@@ -62,7 +62,7 @@ describe GameObject do
     it 'calls update on all components' do
       expect(component).to receive(:update)
 
-      GameObject.update_all
+      GameObject.update_all(0.1)
     end
   end
 end

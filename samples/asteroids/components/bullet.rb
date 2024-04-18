@@ -1,10 +1,10 @@
 class Bullet < Component
-  def start
-    @image = Circle.new(x: game_object.x, y: game_object.y, radius: 3, color: 'white')
-  end
+  SPEED = 1000
 
-  def update
-    game_object.x, game_object.y = game_object.local_to_world_coordinate(0, -10)
-    @image.x, @image.y = game_object.x, game_object.y
+  def update(delta_time)
+    pos = game_object.local_to_world_coordinate(0, -SPEED * delta_time)
+    game_object.x = pos[:x]
+    game_object.y = pos[:y]
+    Engine.draw_circle(game_object.x, game_object.y, 5, r: rand, g: rand, b: rand)
   end
 end
