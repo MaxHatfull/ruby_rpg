@@ -3,7 +3,7 @@ class ShipEngine < Engine::Component
   MAX_SPEED = 500
   TURNING_SPEED = 100
 
-  def start
+  def initialize
     @speed = 0
   end
 
@@ -19,18 +19,5 @@ class ShipEngine < Engine::Component
     rotation = game_object.rotation * Math::PI / 180
     game_object.x += Math.sin(rotation) * @speed * delta_time
     game_object.y -= Math.cos(rotation) * @speed * delta_time
-
-    triangle.draw(
-      game_object.local_to_world_coordinate(0, -40),
-      game_object.local_to_world_coordinate(-20, 40),
-      game_object.local_to_world_coordinate(20, 40),
-      { r: 1, g: 0.5, b: 0.5 }
-    )
-  end
-
-  private
-
-  def triangle
-    @triangle ||= Engine::TriangleRenderer.new
   end
 end

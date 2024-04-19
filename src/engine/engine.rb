@@ -1,10 +1,12 @@
 require 'opengl'
 require 'glfw'
+
 require_relative 'input'
-require_relative 'renderer'
-require_relative "triangle_renderer"
 require_relative 'game_object'
 require_relative 'component'
+require_relative 'renderer'
+require_relative "triangle_renderer"
+
 
 GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
 GLFW.Init()
@@ -14,11 +16,11 @@ module Engine
     Dir[File.join(base_dir, "components", "**/*.rb")].each { |file| require file }
   end
 
-  def self.start(**args)
+  def self.start(**args, &block)
     @width = args[:width] || 640
     @height = args[:height] || 480
 
-    open_widow
+    open_widow(&block)
   end
 
   def self.close
@@ -40,7 +42,7 @@ module Engine
     GameObject.update_all(delta_time)
   end
 
-  def self.open_widow
+  def self.open_widow(&first_frame_block)
     key_callback = GLFW::create_callback(:GLFWkeyfun) do |window, key, scancode, action, mods|
       Input.key_callback(key, action)
     end
@@ -66,6 +68,8 @@ module Engine
 
       GL.LoadIdentity()
 
+      first_frame_block.call if first_frame_block && !@first_frame_block_called
+      @first_frame_block_called = true
       update
 
       GLFW.SwapBuffers(@window)
