@@ -7,7 +7,8 @@ class Gun < Engine::Component
   def fire
     return if @last_fire && Time.now - @last_fire < COOLDOWN
     @last_fire = Time.now
-    pos = game_object.local_to_world_coordinate(0, -40)
+
+    pos = game_object.local_to_world_coordinate(0, 40)
     Engine::GameObject.new("Bullet",
                    x: pos[:x],
                    y: pos[:y],

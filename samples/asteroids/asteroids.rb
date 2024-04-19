@@ -14,9 +14,9 @@ Engine.start(
          [ShipEngine.new,
           Gun.new,
           Engine::TriangleRenderer.new(
-            { x: 0, y: -40 },
-            { x: -20, y: 40 },
-            { x: 20, y: 40 },
+            { x: 0, y: 40 },
+            { x: -20, y: -40 },
+            { x: 20, y: -40 },
             { r: 1, g: 0, b: 0 }
           )]
      )

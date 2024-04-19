@@ -12,12 +12,10 @@ class ShipEngine < Engine::Component
     @speed += acceleration
     @speed = 0 if @speed < 0
     @speed = MAX_SPEED if @speed > MAX_SPEED
-    torque = Engine::Input.key_down?(GLFW::KEY_LEFT) ? -TURNING_SPEED : 0
-    torque += Engine::Input.key_down?(GLFW::KEY_RIGHT) ? TURNING_SPEED : 0
-    game_object.rotation -= torque * delta_time
+    game_object.pos = game_object.local_to_world_coordinate(0, @speed * delta_time)
 
-    rotation = game_object.rotation * Math::PI / 180
-    game_object.x += Math.sin(rotation) * @speed * delta_time
-    game_object.y -= Math.cos(rotation) * @speed * delta_time
+    torque = Engine::Input.key_down?(GLFW::KEY_LEFT) ? TURNING_SPEED : 0
+    torque += Engine::Input.key_down?(GLFW::KEY_RIGHT) ? -TURNING_SPEED : 0
+    game_object.rotation += torque * delta_time
   end
 end
