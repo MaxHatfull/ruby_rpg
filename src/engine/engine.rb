@@ -2,6 +2,7 @@ require 'opengl'
 require 'glfw'
 require_relative 'input'
 require_relative 'renderer'
+require_relative "triangle_renderer"
 require_relative 'game_object'
 require_relative 'component'
 
