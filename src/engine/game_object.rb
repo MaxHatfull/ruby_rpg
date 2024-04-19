@@ -2,13 +2,14 @@ module Engine
   class GameObject
     attr_accessor :name, :pos, :rotation, :components
 
-    def initialize(name = "Game Object", x: 0, y: 0, rotation: 0, components: [])
+    def initialize(name = "Game Object", pos: { x: 0, y: 0 }, rotation: 0, components: [])
       GameObject.object_spawned(self)
 
-      @pos = { x: x, y: y }
+      @pos = pos
       @rotation = rotation
       @name = name
       @components = components
+
       components.each { |component| component.set_game_object(self) }
       components.each(&:start)
     end
