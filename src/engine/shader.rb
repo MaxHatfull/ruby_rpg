@@ -38,5 +38,10 @@ module Engine
     def use
       GL.UseProgram(@program)
     end
+
+    def set_vec3(name, vec)
+      loc = GL.GetUniformLocation(@program, name)
+      GL.Uniform3f(loc, vec[:r], vec[:g], vec[:b])
+    end
   end
 end

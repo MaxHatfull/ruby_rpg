@@ -63,10 +63,11 @@ module Engine
     height_buf = ' ' * 8
     puts "OpenGL Version: #{GL.GetString(GL::VERSION)}"
     puts "GLSL Version: #{GL.GetString(GL::SHADING_LANGUAGE_VERSION)}"
-
+    @time = Time.now
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE
+      #puts "fps: #{1 / (Time.now - @time)}"
+      @time = Time.now
       GLFW.GetFramebufferSize(@window, width_buf, height_buf)
-      puts "Framebuffer size: #{width_buf.unpack('L')[0]} x #{height_buf.unpack('L')[0]}"
 
       GL.Clear(GL::COLOR_BUFFER_BIT) # Clear the screen
 
