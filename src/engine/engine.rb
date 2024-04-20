@@ -3,9 +3,10 @@ require 'glfw'
 
 require_relative 'input'
 require_relative 'game_object'
+require_relative 'shader'
 require_relative 'component'
-require_relative 'renderer'
 require_relative "triangle_renderer"
+require_relative "sprite_renderer"
 
 
 GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
@@ -47,6 +48,12 @@ module Engine
       Input.key_callback(key, action)
     end
 
+    GLFW.WindowHint(GLFW::CONTEXT_VERSION_MAJOR, 3)
+    GLFW.WindowHint(GLFW::CONTEXT_VERSION_MINOR, 3)
+    GLFW.WindowHint(GLFW::OPENGL_PROFILE, GLFW::OPENGL_CORE_PROFILE)
+    GLFW.WindowHint(GLFW::OPENGL_FORWARD_COMPAT, GLFW::TRUE)
+    GLFW.WindowHint(GLFW::DECORATED, 0)
+
     @window = GLFW.CreateWindow(@width, @height, "Simple example", nil, nil)
     GLFW.MakeContextCurrent(@window)
     GLFW.SetKeyCallback(@window, key_callback)
@@ -54,29 +61,24 @@ module Engine
 
     width_buf = ' ' * 8
     height_buf = ' ' * 8
+    puts "OpenGL Version: #{GL.GetString(GL::VERSION)}"
+    puts "GLSL Version: #{GL.GetString(GL::SHADING_LANGUAGE_VERSION)}"
+
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE
       GLFW.GetFramebufferSize(@window, width_buf, height_buf)
-      width = width_buf.unpack1('L')
-      height = height_buf.unpack1('L')
+      puts "Framebuffer size: #{width_buf.unpack('L')[0]} x #{height_buf.unpack('L')[0]}"
 
-      GL.Viewport(0, 0, width, height)
-      GL.Clear(GL::COLOR_BUFFER_BIT)
-      GL.MatrixMode(GL::PROJECTION)
-      GL.LoadIdentity()
-      GL.Ortho(0, width, 0, height, 1.0, -1.0)
-      GL.MatrixMode(GL::MODELVIEW)
-
-      GL.LoadIdentity()
+      GL.Clear(GL::COLOR_BUFFER_BIT) # Clear the screen
 
       first_frame_block.call if first_frame_block && !@first_frame_block_called
       @first_frame_block_called = true
       update
 
       GLFW.SwapBuffers(@window)
-      GLFW.PollEvents()
+      GLFW.PollEvents
     end
 
     GLFW.DestroyWindow(@window)
-    GLFW.Terminate()
+    GLFW.Terminate
   end
 end

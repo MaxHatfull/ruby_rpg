@@ -13,7 +13,10 @@ class Gun < Engine::Component
       "Bullet",
       pos: game_object.local_to_world_coordinate(0, 40),
       rotation: game_object.rotation,
-      components: [Bullet.new]
+      components: [
+        Bullet.new,
+        Engine::SpriteRenderer.new
+      ]
     )
   end
 end
