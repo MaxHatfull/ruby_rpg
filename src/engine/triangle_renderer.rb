@@ -15,6 +15,9 @@ module Engine
     end
 
     def update(delta_time)
+      shader.use
+      GL.BindVertexArray(@vao)
+
       set_shader_per_frame_data
       draw_array_data
     end
@@ -26,8 +29,6 @@ module Engine
     end
 
     def draw_array_data
-      shader.use
-      GL.BindVertexArray(@vao)
       GL.DrawArrays(GL::TRIANGLES, 0, 3)
       GL.BindVertexArray(0)
     end
