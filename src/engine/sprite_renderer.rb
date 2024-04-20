@@ -13,25 +13,25 @@ module Engine
     def start
       setup_vertex_attribute_buffer
       setup_vertex_buffer
+      setup_index_buffer
     end
 
     def update(delta_time)
       shader.use
       GL.BindVertexArray(@vao)
+      GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
 
       set_shader_per_frame_data
-      draw_array_data
+
+      GL.DrawElements(GL::TRIANGLES, 6, GL::UNSIGNED_INT, 0)
+      GL.BindVertexArray(0)
+      GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, 0)
     end
 
     private
 
     def shader
       @shader ||= Shader.new('./shaders/colour_vertex.glsl', './shaders/colour_frag.glsl')
-    end
-
-    def draw_array_data
-      GL.DrawArrays(GL::TRIANGLES, 0, 6)
-      GL.BindVertexArray(0)
     end
 
     def set_shader_per_frame_data
@@ -53,6 +53,22 @@ module Engine
       ])
     end
 
+    def setup_index_buffer
+      indices = [
+        0, 1, 2,
+        2, 3, 0
+      ]
+
+      ebo_buf = ' ' * 4
+      GL.GenBuffers(1, ebo_buf)
+      @ebo = ebo_buf.unpack('L')[0]
+      GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
+      GL.BufferData(
+        GL::ELEMENT_ARRAY_BUFFER, 6 * Fiddle::SIZEOF_INT,
+        indices.pack('I*'), GL::STATIC_DRAW
+      )
+    end
+
     def setup_vertex_attribute_buffer
       va0_buf = ' ' * 4
       GL.GenVertexArrays(1, va0_buf)
@@ -68,14 +84,12 @@ module Engine
         v1[:x], v1[:y], 0,
         v2[:x], v2[:y], 0,
         v3[:x], v3[:y], 0,
-        v1[:x], v1[:y], 0,
-        v3[:x], v3[:y], 0,
         v4[:x], v4[:y], 0
       ]
 
       GL.BindBuffer(GL::ARRAY_BUFFER, vbo)
       GL.BufferData(
-        GL::ARRAY_BUFFER, 6 * 3 * Fiddle::SIZEOF_FLOAT,
+        GL::ARRAY_BUFFER, 4 * 3 * Fiddle::SIZEOF_FLOAT,
         points.pack('F*'), GL::STATIC_DRAW
       )
 
