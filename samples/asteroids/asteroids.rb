@@ -10,14 +10,14 @@ Engine.start(
 ) do
   Engine::GameObject.new(
     "Ship",
-    pos: { x: 0, y: 0 },
+    pos: { x: 300, y: 300 },
     components:
       [ShipEngine.new,
        Gun.new,
        Engine::TriangleRenderer.new(
-         { x: 0, y: 0 },
-         { x: -0.1, y: 0.1 },
-         { x: 0.1, y: 0.1 },
+         { x: 0, y: 20 },
+         { x: -20, y: -40 },
+         { x: 20, y: -40 },
          { r: 1, g: 0, b: 0 }
        )]
   )

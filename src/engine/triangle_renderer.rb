@@ -20,14 +20,10 @@ module Engine
 
       @shader = Shader.new('./shaders/colour_vertex.glsl', './shaders/colour_frag.glsl')
 
-      world_v1 = game_object.local_to_world_coordinate(v1[:x], v1[:y])
-      world_v2 = game_object.local_to_world_coordinate(v2[:x], v2[:y])
-      world_v3 = game_object.local_to_world_coordinate(v3[:x], v3[:y])
-
       points = [
-        world_v1[:x], world_v1[:y], 0,
-        world_v2[:x], world_v2[:y], 0,
-        world_v3[:x], world_v3[:y], 0
+        v1[:x], v1[:y], 0,
+        v2[:x], v2[:y], 0,
+        v3[:x], v3[:y], 0
       ]
 
       GL.BindVertexArray(@vao)
@@ -45,6 +41,13 @@ module Engine
       GL.BindVertexArray(@vao)
       @shader.use
       @shader.set_vec3("colour", colour)
+      @shader.set_mat4("camera", [
+        2.0 / Engine.screen_width, 0, 0, 0,
+        0, 2.0 / Engine.screen_height, 0, 0,
+        0, 0, 1, 0,
+        -1, -1, 0, 1
+      ])
+      @shader.set_mat4("model", game_object.model_matrix)
       GL.DrawArrays(GL::TRIANGLES, 0, 3)
       GL.BindVertexArray(0)
     end

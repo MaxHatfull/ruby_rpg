@@ -37,6 +37,18 @@ module Engine
       { x: world_x, y: world_y, z: 0 }
     end
 
+    def model_matrix
+      theta = rotation * Math::PI / 180
+      cos_theta = Math.cos(theta)
+      sin_theta = Math.sin(theta)
+      [
+        cos_theta, sin_theta, 0, 0,
+        -sin_theta, cos_theta, 0, 0,
+        0, 0, 1, 0,
+        pos[:x], pos[:y], 0, 1
+      ]
+    end
+
     def self.update_all(delta_time)
       GameObject.objects.each do |object|
         object.components.each { |component| component.update(delta_time) }
