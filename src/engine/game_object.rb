@@ -2,7 +2,7 @@ module Engine
   class GameObject
     attr_accessor :name, :pos, :rotation, :components
 
-    def initialize(name = "Game Object", pos: { x: 0, y: 0 }, rotation: 0, components: [])
+    def initialize(name = "Game Object", pos: Vector.new(0, 0), rotation: 0, components: [])
       GameObject.object_spawned(self)
 
       @pos = pos
@@ -15,26 +15,28 @@ module Engine
     end
 
     def x
-      @pos[:x]
+      puts @pos
+      puts "name is #{@name}"
+      @pos.x
     end
 
     def x=(value)
-      @pos[:x] = value
+      @pos = Vector.new(value, @pos.y)
     end
 
     def y
-      @pos[:y]
+      @pos.y
     end
 
     def y=(value)
-      @pos[:y] = value
+      @pos = Vector.new(@pos.x, value)
     end
 
     def local_to_world_coordinate(local_x, local_y)
       angle = Math::PI * @rotation / 180.0
       world_x = x + local_x * Math.cos(angle) - local_y * Math.sin(angle)
       world_y = y + local_x * Math.sin(angle) + local_y * Math.cos(angle)
-      { x: world_x, y: world_y, z: 0 }
+      Vector.new(world_x, world_y)
     end
 
     def model_matrix
@@ -45,7 +47,7 @@ module Engine
         cos_theta, sin_theta, 0, 0,
         -sin_theta, cos_theta, 0, 0,
         0, 0, 1, 0,
-        pos[:x], pos[:y], 0, 1
+        x, y, 0, 1
       ]
     end
 

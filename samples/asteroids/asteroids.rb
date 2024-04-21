@@ -10,7 +10,7 @@ Engine.start(
 ) do
   Engine::GameObject.new(
     "Ship",
-    pos: { x: 300, y: 300 },
+    pos: Engine::Vector.new(300, 300),
     components:
       [ShipEngine.new,
        Gun.new,
