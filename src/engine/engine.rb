@@ -65,6 +65,10 @@ module Engine
     height_buf = ' ' * 8
     puts "OpenGL Version: #{GL.GetString(GL::VERSION)}"
     puts "GLSL Version: #{GL.GetString(GL::SHADING_LANGUAGE_VERSION)}"
+
+    GL.Enable(GL::BLEND)
+    GL.BlendFunc(GL::SRC_ALPHA, GL::ONE_MINUS_SRC_ALPHA)
+
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE
       @screen_width = width_buf.unpack('L')[0]
       @screen_height = height_buf.unpack('L')[0]
