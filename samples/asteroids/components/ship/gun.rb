@@ -20,11 +20,21 @@ class Gun < Engine::Component
       components: [
         Bullet.new,
         Engine::SpriteRenderer.new(
-          { x: -5, y: -5 },
-          { x: 5, y: -5 },
-          { x: 5, y: 5 },
-          { x: -5, y: 5 },
-          @bullet_texture
+          { x: -50, y: -50 },
+          { x: 50, y: -50 },
+          { x: 50, y: 50 },
+          { x: -50, y: 50 },
+          @bullet_texture,
+          [
+            { tl: { x: 1.0 / 6, y: 0 }, width: 1.0 / 6, height: 1 },
+            { tl: { x: 2.0 / 6, y: 0 }, width: 1.0 / 6, height: 1 },
+            { tl: { x: 3.0 / 6, y: 0 }, width: 1.0 / 6, height: 1 },
+            { tl: { x: 4.0 / 6, y: 0 }, width: 1.0 / 6, height: 1 },
+            { tl: { x: 5.0 / 6, y: 0 }, width: 1.0 / 6, height: 1 },
+            { tl: { x: 0, y: 0 }, width: 1.0 / 6, height: 1 }
+          ],
+          10,
+          false
         )
       ]
     )

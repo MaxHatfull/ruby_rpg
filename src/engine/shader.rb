@@ -44,6 +44,11 @@ module Engine
       GL.Uniform3f(loc, vec[:r], vec[:g], vec[:b])
     end
 
+    def set_vec4(name, vec)
+      loc = GL.GetUniformLocation(@program, name)
+      GL.Uniform4f(loc, vec[0], vec[1], vec[2], vec[3])
+    end
+
     def set_mat4(name, mat)
       loc = GL.GetUniformLocation(@program, name)
       GL.UniformMatrix4fv(loc, 1, GL::FALSE, mat.pack('F*'))

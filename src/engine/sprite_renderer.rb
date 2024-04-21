@@ -1,17 +1,22 @@
 module Engine
   class SpriteRenderer < Component
-    attr_reader :v1, :v2, :v3, :v4, :texture
+    attr_reader :v1, :v2, :v3, :v4, :texture, :frame_coords, :frame_rate, :loop
 
-    def initialize(v1, v2, v3, v4, texture)
+    def initialize(v1, v2, v3, v4, texture, frame_coords, frame_rate, loop = true)
       @v1 = v1
       @v2 = v2
       @v3 = v3
       @v4 = v4
       @texture = texture
-      @colour = { r: 1, g: 1, b: 0.5 }
+      @colour = { r: 1, g: 1, b: 1.0 }
+      @frame_coords = frame_coords
+      @frame_rate = frame_rate
+      @loop = loop
     end
 
     def start
+      @start_time = Time.now
+
       setup_vertex_attribute_buffer
       setup_vertex_buffer
       setup_index_buffer
@@ -36,11 +41,30 @@ module Engine
     end
 
     def set_shader_per_frame_data
-      shader.set_vec3("colour", @colour)
       set_shader_camera_matrix
       set_shader_model_matrix
       set_shader_texture
       set_shader_sprite_colour
+      set_shader_frame_data
+    end
+
+    def set_shader_frame_data
+      current_frame_index = (Time.now - @start_time) * @frame_rate
+      current_frame_index = if @loop
+                              current_frame_index.to_i % @frame_coords.length
+                            else
+                              [@frame_coords.length - 1, current_frame_index.to_i].min
+                            end
+
+      current_frame_coords =
+        [
+          @frame_coords[current_frame_index][:tl][:x],
+          @frame_coords[current_frame_index][:tl][:y],
+          @frame_coords[current_frame_index][:width],
+          @frame_coords[current_frame_index][:height]
+        ]
+      pp current_frame_coords
+      shader.set_vec4("frameCoords", current_frame_coords)
     end
 
     def set_shader_sprite_colour
@@ -94,10 +118,10 @@ module Engine
       GL.GenBuffers(1, vbo_buf)
       vbo = vbo_buf.unpack('L')[0]
       points = [
-        v1[:x], v1[:y], 0,  0, 0,
-        v2[:x], v2[:y], 0,  1, 0,
-        v3[:x], v3[:y], 0,  1, 1,
-        v4[:x], v4[:y], 0,  0, 1
+        v1[:x], v1[:y], 0, 0, 0,
+        v2[:x], v2[:y], 0, 1, 0,
+        v3[:x], v3[:y], 0, 1, 1,
+        v4[:x], v4[:y], 0, 0, 1
       ]
 
       GL.BindBuffer(GL::ARRAY_BUFFER, vbo)
