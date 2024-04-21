@@ -19,7 +19,7 @@ Engine.start(
          Engine::Vector.new(25, 25),
          Engine::Vector.new(25, -25),
          Engine::Vector.new(-25, -25),
-         Engine::Texture.new(File.join(__dir__, "Player.png")).texture
+         Engine::Texture.new(File.join(__dir__, "assets", "Player.png")).texture
        )]
   )
 end

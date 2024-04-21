@@ -3,7 +3,7 @@ class Gun < Engine::Component
   BULLET_SIZE = 5
 
   def start
-    @bullet_texture = Engine::Texture.new(File.join(__dir__, "..", "..", "square.png")).texture
+    @bullet_texture = Engine::Texture.new(File.join(__dir__, "..", "..", "assets", "square.png")).texture
   end
 
   def update(delta_time)
