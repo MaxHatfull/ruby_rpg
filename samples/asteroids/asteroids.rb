@@ -30,7 +30,7 @@ Engine.start(
       pos: Engine::Vector.new(rand(Engine.screen_width), rand(Engine.screen_height)),
       rotation: rand * 360,
       components:
-        [Asteroid.new,
+        [Asteroid.new(radius),
          Engine::SpriteRenderer.new(
            Engine::Vector.new(-radius, radius),
            Engine::Vector.new(radius, radius),

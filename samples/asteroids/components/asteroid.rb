@@ -1,8 +1,24 @@
 class Asteroid < Engine::Component
   SPEED = 100
 
-  def initialize
+  attr_reader :size
+
+  def initialize(size)
+    @size = size
     @speed = Engine::Vector.new(SPEED, 0).rotate(rand * 360)
+  end
+
+  def self.asteroids
+    @asteroids ||= []
+  end
+
+  def start
+    Asteroid.asteroids << self
+  end
+
+  def destroy!
+    Asteroid.asteroids.delete(self)
+    game_object.destroy!
   end
 
   def update(delta_time)
