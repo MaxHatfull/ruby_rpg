@@ -48,5 +48,10 @@ module Engine
       loc = GL.GetUniformLocation(@program, name)
       GL.UniformMatrix4fv(loc, 1, GL::FALSE, mat.pack('F*'))
     end
+
+    def set_int(name, int)
+      loc = GL.GetUniformLocation(@program, name)
+      GL.Uniform1i(loc, int)
+    end
   end
 end

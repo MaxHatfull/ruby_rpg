@@ -1,6 +1,10 @@
 class Gun < Engine::Component
   COOLDOWN = 0.1
 
+  def start
+    @bullet_texture = Engine::Texture.new(File.join(__dir__, "boom.png")).texture
+  end
+
   def update(delta_time)
     fire if Engine::Input.key_down?(GLFW::KEY_SPACE)
   end
@@ -19,7 +23,8 @@ class Gun < Engine::Component
           { x: -5, y: -5 },
           { x: 5, y: -5 },
           { x: 5, y: 5 },
-          { x: -5, y: 5 }
+          { x: -5, y: 5 },
+          @bullet_texture
         )
       ]
     )

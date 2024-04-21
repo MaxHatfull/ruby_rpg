@@ -1,13 +1,12 @@
 module Engine
-  class SpriteRenderer < Component
-    attr_reader :v1, :v2, :v3, :v4, :texture
+  class RectRenderer < Component
+    attr_reader :v1, :v2, :v3, :v4
 
-    def initialize(v1, v2, v3, v4, texture)
+    def initialize(v1, v2, v3, v4)
       @v1 = v1
       @v2 = v2
       @v3 = v3
       @v4 = v4
-      @texture = texture
       @colour = { r: 1, g: 1, b: 0.5 }
     end
 
@@ -32,25 +31,13 @@ module Engine
     private
 
     def shader
-      @shader ||= Shader.new('./shaders/sprite_vertex.glsl', './shaders/sprite_frag.glsl')
+      @shader ||= Shader.new('./shaders/colour_vertex.glsl', './shaders/colour_frag.glsl')
     end
 
     def set_shader_per_frame_data
       shader.set_vec3("colour", @colour)
       set_shader_camera_matrix
       set_shader_model_matrix
-      set_shader_texture
-      set_shader_sprite_colour
-    end
-
-    def set_shader_sprite_colour
-      shader.set_vec3("spriteColor", @colour)
-    end
-
-    def set_shader_texture
-      GL.ActiveTexture(GL::TEXTURE0)
-      GL.BindTexture(GL::TEXTURE_2D, texture)
-      shader.set_int("image", 0)
     end
 
     def set_shader_model_matrix
@@ -94,22 +81,20 @@ module Engine
       GL.GenBuffers(1, vbo_buf)
       vbo = vbo_buf.unpack('L')[0]
       points = [
-        v1[:x], v1[:y], 0,  0, 0,
-        v2[:x], v2[:y], 0,  1, 0,
-        v3[:x], v3[:y], 0,  1, 1,
-        v4[:x], v4[:y], 0,  0, 1
+        v1[:x], v1[:y], 0,
+        v2[:x], v2[:y], 0,
+        v3[:x], v3[:y], 0,
+        v4[:x], v4[:y], 0
       ]
 
       GL.BindBuffer(GL::ARRAY_BUFFER, vbo)
       GL.BufferData(
-        GL::ARRAY_BUFFER, 4 * 5 * Fiddle::SIZEOF_FLOAT,
+        GL::ARRAY_BUFFER, 4 * 3 * Fiddle::SIZEOF_FLOAT,
         points.pack('F*'), GL::STATIC_DRAW
       )
 
-      GL.VertexAttribPointer(0, 3, GL::FLOAT, GL::FALSE, 5 * Fiddle::SIZEOF_FLOAT, 0)
-      GL.VertexAttribPointer(1, 2, GL::FLOAT, GL::FALSE, 5 * Fiddle::SIZEOF_FLOAT, 3 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(0, 3, GL::FLOAT, GL::FALSE, 3 * Fiddle::SIZEOF_FLOAT, 0)
       GL.EnableVertexAttribArray(0)
-      GL.EnableVertexAttribArray(1)
     end
   end
 end

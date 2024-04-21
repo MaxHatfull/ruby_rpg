@@ -3,11 +3,12 @@ require 'glfw'
 
 require_relative 'input'
 require_relative 'game_object'
+require_relative 'texture'
 require_relative 'shader'
 require_relative 'component'
 require_relative "triangle_renderer"
 require_relative "sprite_renderer"
-
+require_relative "rect_renderer"
 
 GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
 GLFW.Init()
@@ -88,5 +89,15 @@ module Engine
 
   def self.screen_height
     @screen_height
+  end
+
+  def self.debug_opengl_call
+    until (error = GL.GetError) == 0
+    end
+    yield
+    until (error = GL.GetError) == 0
+      error = error.to_s(16)
+      puts "OpenGL Error: #{error}" unless error == 0
+    end
   end
 end
