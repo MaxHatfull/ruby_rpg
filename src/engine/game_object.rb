@@ -1,6 +1,6 @@
 module Engine
   class GameObject
-    attr_accessor :name, :pos, :rotation, :components
+    attr_accessor :name, :pos, :rotation, :components, :created_at
 
     def initialize(name = "Game Object", pos: Vector.new(0, 0), rotation: 0, components: [])
       GameObject.object_spawned(self)
@@ -9,6 +9,7 @@ module Engine
       @rotation = rotation
       @name = name
       @components = components
+      @created_at = Time.now
 
       components.each { |component| component.set_game_object(self) }
       components.each(&:start)
@@ -47,6 +48,10 @@ module Engine
         0, 0, 1, 0,
         x, y, 0, 1
       ]
+    end
+
+    def destroy!
+      GameObject.objects.delete(self)
     end
 
     def self.update_all(delta_time)
