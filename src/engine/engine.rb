@@ -70,9 +70,9 @@ module Engine
     GL.BlendFunc(GL::SRC_ALPHA, GL::ONE_MINUS_SRC_ALPHA)
 
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE
+      GLFW.GetFramebufferSize(@window, width_buf, height_buf)
       @screen_width = width_buf.unpack('L')[0]
       @screen_height = height_buf.unpack('L')[0]
-      GLFW.GetFramebufferSize(@window, width_buf, height_buf)
 
       GL.Clear(GL::COLOR_BUFFER_BIT) # Clear the screen
 

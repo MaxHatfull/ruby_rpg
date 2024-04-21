@@ -33,5 +33,9 @@ module Engine
     def magnitude
       @magnitude ||= Math.sqrt(@x * @x + @y * @y)
     end
+
+    def to_s
+      "(#{@x}, #{@y})"
+    end
   end
 end

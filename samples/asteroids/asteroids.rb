@@ -25,9 +25,10 @@ Engine.start(
 
   10.times do
     radius = rand(50..100)
+    pos = Engine::Vector.new(rand(Engine.screen_width), rand(Engine.screen_height))
     Engine::GameObject.new(
       "Asteroid",
-      pos: Engine::Vector.new(rand(Engine.screen_width), rand(Engine.screen_height)),
+      pos: pos,
       rotation: rand * 360,
       components:
         [Asteroid.new(radius),
