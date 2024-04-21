@@ -22,5 +22,16 @@ module Engine
     def /(scalar)
       Vector.new(@x / scalar, @y / scalar)
     end
+
+    def rotate(angle)
+      angle = Math::PI * angle / 180.0
+      x = @x * Math.cos(angle) - @y * Math.sin(angle)
+      y = @x * Math.sin(angle) + @y * Math.cos(angle)
+      Vector.new(x, y)
+    end
+
+    def magnitude
+      @magnitude ||= Math.sqrt(@x * @x + @y * @y)
+    end
   end
 end
