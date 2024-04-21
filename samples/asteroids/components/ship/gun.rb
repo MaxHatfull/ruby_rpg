@@ -1,5 +1,5 @@
 class Gun < Engine::Component
-  COOLDOWN = 0.1
+  COOLDOWN = 0.3
   BULLET_SIZE = 5
 
   def start

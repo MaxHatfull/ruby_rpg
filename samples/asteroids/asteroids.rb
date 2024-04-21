@@ -33,10 +33,10 @@ Engine.start(
       components:
         [Asteroid.new(radius),
          Engine::SpriteRenderer.new(
-           Engine::Vector.new(-radius, radius),
-           Engine::Vector.new(radius, radius),
-           Engine::Vector.new(radius, -radius),
-           Engine::Vector.new(-radius, -radius),
+           Engine::Vector.new(-radius / 2, radius / 2),
+           Engine::Vector.new(radius / 2, radius / 2),
+           Engine::Vector.new(radius / 2, -radius / 2),
+           Engine::Vector.new(-radius / 2, -radius / 2),
            Engine::Texture.new(File.join(__dir__, "assets", "Asteroid_01.png")).texture
          )]
     )

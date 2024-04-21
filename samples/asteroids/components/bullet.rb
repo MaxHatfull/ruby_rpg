@@ -15,35 +15,68 @@ class Bullet < Engine::Component
       if (game_object.pos - asteroid.game_object.pos).magnitude < asteroid.size
         game_object.destroy!
         asteroid.destroy!
-        Engine::GameObject.new(
-          "Explosion",
-          pos: game_object.pos,
-          components: [
-            Engine::SpriteRenderer.new(
-              Engine::Vector.new(-100, 100),
-              Engine::Vector.new(100, 100),
-              Engine::Vector.new(100, -100),
-              Engine::Vector.new(-100, -100),
-              Engine::Texture.new(File.join(__dir__, "..", "assets", "boom.png")).texture,
-              [
-                { tl: Engine::Vector.new(1.0 / 6, 0), width: 1.0 / 6, height: 1 },
-                { tl: Engine::Vector.new(2.0 / 6, 0), width: 1.0 / 6, height: 1 },
-                { tl: Engine::Vector.new(3.0 / 6, 0), width: 1.0 / 6, height: 1 },
-                { tl: Engine::Vector.new(4.0 / 6, 0), width: 1.0 / 6, height: 1 },
-                { tl: Engine::Vector.new(5.0 / 6, 0), width: 1.0 / 6, height: 1 },
-                { tl: Engine::Vector.new(0, 0), width: 1.0 / 6, height: 1 },
-              ],
-              20,
-              false
-            )
-          ]
-        )
+        play_explosion_effect
+        spawn_asteroids(asteroid.size / 2) if asteroid.size > 50
         break
       end
     end
   end
 
   private
+
+  def spawn_asteroids(size)
+    3.times do
+      Engine::GameObject.new(
+        "Asteroid",
+        pos: game_object.pos + Engine::Vector.new(rand(-50..50), rand(-50..50)),
+        rotation: rand * 360,
+        components: [
+          Engine::SpriteRenderer.new(
+            Engine::Vector.new(-size / 2, size / 2),
+            Engine::Vector.new(size / 2, size / 2),
+            Engine::Vector.new(size / 2, -size / 2),
+            Engine::Vector.new(-size / 2, -size / 2),
+            asteroid_texture.texture
+          ),
+          Asteroid.new(size)
+        ]
+      )
+    end
+  end
+
+  def asteroid_texture
+    @asteroid_texture ||= Engine::Texture.new(File.join(__dir__, "..", "assets", "Asteroid_01.png"))
+  end
+
+  def play_explosion_effect
+    Engine::GameObject.new(
+      "Explosion",
+      pos: game_object.pos,
+      components: [
+        Engine::SpriteRenderer.new(
+          Engine::Vector.new(-100, 100),
+          Engine::Vector.new(100, 100),
+          Engine::Vector.new(100, -100),
+          Engine::Vector.new(-100, -100),
+          explosion_texture.texture,
+          [
+            { tl: Engine::Vector.new(1.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Engine::Vector.new(2.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Engine::Vector.new(3.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Engine::Vector.new(4.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Engine::Vector.new(5.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Engine::Vector.new(0, 0), width: 1.0 / 6, height: 1 },
+          ],
+          20,
+          false
+        )
+      ]
+    )
+  end
+
+  def explosion_texture
+    @explosion_texture ||= Engine::Texture.new(File.join(__dir__, "..", "assets", "boom.png"))
+  end
 
   def clamp_to_screen
     if game_object.x > Engine.screen_width
