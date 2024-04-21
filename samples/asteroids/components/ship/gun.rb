@@ -21,10 +21,10 @@ class Gun < Engine::Component
       components: [
         Bullet.new,
         Engine::SpriteRenderer.new(
-          { x: -BULLET_SIZE / 2, y: BULLET_SIZE / 2 },
-          { x: BULLET_SIZE / 2, y: BULLET_SIZE / 2 },
-          { x: BULLET_SIZE / 2, y: -BULLET_SIZE / 2 },
-          { x: -BULLET_SIZE / 2, y: -BULLET_SIZE / 2 },
+          Engine::Vector.new(-BULLET_SIZE / 2, BULLET_SIZE / 2),
+          Engine::Vector.new(BULLET_SIZE / 2, BULLET_SIZE / 2),
+          Engine::Vector.new(BULLET_SIZE / 2, -BULLET_SIZE / 2),
+          Engine::Vector.new(-BULLET_SIZE / 2, -BULLET_SIZE / 2),
           @bullet_texture,
         )
       ]

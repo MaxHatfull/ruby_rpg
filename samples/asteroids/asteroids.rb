@@ -15,11 +15,11 @@ Engine.start(
       [ShipEngine.new,
        Gun.new,
        Engine::SpriteRenderer.new(
-          { x: -25, y: 25 },
-          { x: 25, y: 25 },
-          { x: 25, y: -25 },
-          { x: -25, y: -25 },
-          Engine::Texture.new(File.join(__dir__, "Player.png")).texture
-        )]
+         Engine::Vector.new(-25, 25),
+         Engine::Vector.new(25, 25),
+         Engine::Vector.new(25, -25),
+         Engine::Vector.new(-25, -25),
+         Engine::Texture.new(File.join(__dir__, "Player.png")).texture
+       )]
   )
 end

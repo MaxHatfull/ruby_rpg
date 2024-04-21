@@ -15,8 +15,6 @@ module Engine
     end
 
     def x
-      puts @pos
-      puts "name is #{@name}"
       @pos.x
     end
 

@@ -9,7 +9,7 @@ module Engine
       @v4 = bl
       @texture = texture
       @colour = { r: 1, g: 1, b: 1.0 }
-      @frame_coords = frame_coords || [{ tl: { x: 0, y: 0 }, width: 1, height: 1 }]
+      @frame_coords = frame_coords || [{ tl: Vector.new(0, 0), width: 1, height: 1 }]
       @frame_rate = frame_rate || 1
       @loop = loop
     end
@@ -58,12 +58,11 @@ module Engine
 
       current_frame_coords =
         [
-          @frame_coords[current_frame_index][:tl][:x],
-          @frame_coords[current_frame_index][:tl][:y],
+          @frame_coords[current_frame_index][:tl].x,
+          @frame_coords[current_frame_index][:tl].y,
           @frame_coords[current_frame_index][:width],
           @frame_coords[current_frame_index][:height]
         ]
-      pp current_frame_coords
       shader.set_vec4("frameCoords", current_frame_coords)
     end
 
@@ -118,10 +117,10 @@ module Engine
       GL.GenBuffers(1, vbo_buf)
       vbo = vbo_buf.unpack('L')[0]
       points = [
-        v1[:x], v1[:y], 0, 0, 0,
-        v2[:x], v2[:y], 0, 1, 0,
-        v3[:x], v3[:y], 0, 1, 1,
-        v4[:x], v4[:y], 0, 0, 1
+        v1.x, v1.y, 0, 0, 0,
+        v2.x, v2.y, 0, 1, 0,
+        v3.x, v3.y, 0, 1, 1,
+        v4.x, v4.y, 0, 0, 1
       ]
 
       GL.BindBuffer(GL::ARRAY_BUFFER, vbo)

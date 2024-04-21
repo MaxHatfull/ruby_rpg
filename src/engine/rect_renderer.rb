@@ -81,10 +81,10 @@ module Engine
       GL.GenBuffers(1, vbo_buf)
       vbo = vbo_buf.unpack('L')[0]
       points = [
-        v1[:x], v1[:y], 0,
-        v2[:x], v2[:y], 0,
-        v3[:x], v3[:y], 0,
-        v4[:x], v4[:y], 0
+        v1.x, v1.y, 0,
+        v2.x, v2.y, 0,
+        v3.x, v3.y, 0,
+        v4.x, v4.y, 0
       ]
 
       GL.BindBuffer(GL::ARRAY_BUFFER, vbo)
