@@ -14,11 +14,12 @@ Engine.start(
     components:
       [ShipEngine.new,
        Gun.new,
-       Engine::TriangleRenderer.new(
-         { x: 0, y: 20 },
-         { x: -20, y: -40 },
-         { x: 20, y: -40 },
-         { r: 1, g: 0, b: 0 }
-       )]
+       Engine::SpriteRenderer.new(
+          { x: -25, y: 25 },
+          { x: 25, y: 25 },
+          { x: 25, y: -25 },
+          { x: -25, y: -25 },
+          Engine::Texture.new(File.join(__dir__, "Player.png")).texture
+        )]
   )
 end

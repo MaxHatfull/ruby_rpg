@@ -2,15 +2,15 @@ module Engine
   class SpriteRenderer < Component
     attr_reader :v1, :v2, :v3, :v4, :texture, :frame_coords, :frame_rate, :loop
 
-    def initialize(v1, v2, v3, v4, texture, frame_coords, frame_rate, loop = true)
+    def initialize(v1, v2, v3, v4, texture, frame_coords = nil, frame_rate = nil, loop = true)
       @v1 = v1
       @v2 = v2
       @v3 = v3
       @v4 = v4
       @texture = texture
       @colour = { r: 1, g: 1, b: 1.0 }
-      @frame_coords = frame_coords
-      @frame_rate = frame_rate
+      @frame_coords = frame_coords || [{ tl: { x: 0, y: 0 }, width: 1, height: 1 }]
+      @frame_rate = frame_rate || 1
       @loop = loop
     end
 
