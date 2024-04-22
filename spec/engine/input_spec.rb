@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'rspec'
-require_relative "../../src/engine/engine"
-
 describe Engine::Input do
   describe ".key_down?" do
     it "returns false when the key is not pressed" do

@@ -1,19 +1,29 @@
 # frozen_string_literal: true
 
-require_relative "../../../../src/engine/engine"
-
 include TestDriver
 
 describe "Ship" do
   describe "When placed in the scene" do
-    xit "renders the ship" do
+    it "renders the ship" do
       within_game_context do
         at(0) do
-          GameObject.new("Ship", x: 100, y: 100,
-                         components: [ShipEngine.new, Gun.new]
+          Engine::GameObject.new(
+            "Ship",
+            pos: Engine::Vector.new(100, 100),
+            components: [
+              ShipEngine.new,
+              Gun.new,
+              Engine::SpriteRenderer.new(
+                Engine::Vector.new(-25, 25),
+                Engine::Vector.new(25, 25),
+                Engine::Vector.new(25, -25),
+                Engine::Vector.new(-25, -25),
+                Engine::Texture.new(File.join(__dir__, "../../../../samples/asteroids", "assets", "Player.png")).texture
+              )
+            ]
           )
         end
-        at(1) do
+        at(10) do
           Engine.screenshot("spec/asteroids/components/ship/ship.png")
           expect(true).to eq(true)
           Engine.close

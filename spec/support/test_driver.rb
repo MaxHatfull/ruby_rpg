@@ -9,7 +9,7 @@ module TestDriver
       instance_eval(&block)
     end
 
-    def update
+    def update(delta_time)
       if @timed_instructions[@tick]
         @timed_instructions[@tick].call
       end
@@ -23,8 +23,9 @@ module TestDriver
   end
 
   def within_game_context(&block)
-    Engine.start(base_dir: "./samples/asteroids", title: 'Ruby RPG', width: 1920, height: 1080, background: 'navy') do
-      GameObject.new("Test Driver", components: [TestDriverComponent.new(&block)])
+    Engine.load("./samples/asteroids")
+    Engine.start(title: 'Ruby RPG', width: 1920, height: 1080, background: 'navy') do
+      Engine::GameObject.new("Test Driver", components: [TestDriverComponent.new(&block)])
     end
   end
 end

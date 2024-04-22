@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'rspec'
-require_relative "../../src/engine/engine"
-
 describe Engine::Component do
   describe ".new" do
     it 'creates the component' do
