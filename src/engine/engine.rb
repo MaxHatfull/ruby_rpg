@@ -16,7 +16,10 @@ GLFW.Init()
 
 module Engine
   def self.load(base_dir)
-    Dir[File.join(base_dir, "components", "**/*.rb")].each { |file| require file }
+    base_dir = File.expand_path(base_dir)
+    Dir[File.join(base_dir, "components", "**/*.rb")].each do |file|
+      require file
+    end
   end
 
   def self.start(**args, &block)

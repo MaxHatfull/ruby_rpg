@@ -31,7 +31,7 @@ describe "Ship" do
       end
     end
 
-    xit "renders the ship again" do
+    it "renders the ship again" do
       within_game_context do
         at(0) do
           GameObject.new("Ship", x: 100, y: 100,
