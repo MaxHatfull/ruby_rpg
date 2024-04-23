@@ -10,6 +10,8 @@ module Engine
 
     def self.take_screenshot
       file = @scheduled_screenshot
+      FileUtils.mkdir_p(File.dirname(file))
+
       @scheduled_screenshot = nil
       width = Engine.screen_width
       height = Engine.screen_height
