@@ -10,6 +10,8 @@ class Bullet
       rotation: rotation,
       components: [
         Projectile.new,
+        ConstantDrift.new(500),
+        DestroyAfter.new(2),
         Engine::Components::SpriteRenderer.new(
           Vector.new(-BULLET_SIZE / 2, BULLET_SIZE / 2),
           Vector.new(BULLET_SIZE / 2, BULLET_SIZE / 2),

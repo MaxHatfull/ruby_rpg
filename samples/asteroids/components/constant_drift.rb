@@ -1,28 +1,14 @@
-class Asteroid < Engine::Component
-  SPEED = 100
+# frozen_string_literal: true
 
-  attr_reader :size
+class ConstantDrift < Engine::Component
+  include Engine::Types
 
-  def initialize(size)
-    @size = size
-    @speed = Vector.new(SPEED, 0).rotate(rand * 360)
-  end
-
-  def self.asteroids
-    @asteroids ||= []
-  end
-
-  def start
-    Asteroid.asteroids << self
-  end
-
-  def destroy!
-    Asteroid.asteroids.delete(self)
-    game_object.destroy!
+  def initialize(drift)
+    @drift = drift
   end
 
   def update(delta_time)
-    game_object.pos += @speed * delta_time
+    game_object.pos = game_object.local_to_world_coordinate(0, @drift * delta_time)
     clamp_to_screen
   end
 
