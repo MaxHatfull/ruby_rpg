@@ -4,6 +4,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   Engine::GameObject.new(
     "Ship",
     pos: Engine::Vector.new(300, 300),
+    rotation: 45,
     components:
       [ShipEngine.new,
        Gun.new,

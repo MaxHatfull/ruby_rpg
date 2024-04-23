@@ -44,7 +44,7 @@ describe Engine::Vector do
       v = Engine::Vector.new(1, 0)
       result = v.rotate(90)
       expect(result.x).to be_within(0.0001).of(0)
-      expect(result.y).to be_within(0.0001).of(1)
+      expect(result.y).to be_within(0.0001).of(-1)
     end
   end
 

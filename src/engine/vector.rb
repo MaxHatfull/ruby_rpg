@@ -25,8 +25,8 @@ module Engine
 
     def rotate(angle)
       angle = Math::PI * angle / 180.0
-      x = @x * Math.cos(angle) - @y * Math.sin(angle)
-      y = @x * Math.sin(angle) + @y * Math.cos(angle)
+      x = @x * Math.cos(angle) + @y * Math.sin(angle)
+      y = - @x * Math.sin(angle) + @y * Math.cos(angle)
       Vector.new(x, y)
     end
 

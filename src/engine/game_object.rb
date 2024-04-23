@@ -33,8 +33,8 @@ module Engine
 
     def local_to_world_coordinate(local_x, local_y)
       angle = Math::PI * @rotation / 180.0
-      world_x = x + local_x * Math.cos(angle) - local_y * Math.sin(angle)
-      world_y = y + local_x * Math.sin(angle) + local_y * Math.cos(angle)
+      world_x = x + local_x * Math.cos(angle) + local_y * Math.sin(angle)
+      world_y = y - local_x * Math.sin(angle) + local_y * Math.cos(angle)
       Vector.new(world_x, world_y)
     end
 
@@ -43,8 +43,8 @@ module Engine
       cos_theta = Math.cos(theta)
       sin_theta = Math.sin(theta)
       [
-        cos_theta, sin_theta, 0, 0,
-        -sin_theta, cos_theta, 0, 0,
+        cos_theta, -sin_theta, 0, 0,
+        sin_theta, cos_theta, 0, 0,
         0, 0, 1, 0,
         x, y, 0, 1
       ]

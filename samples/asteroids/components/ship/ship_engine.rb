@@ -16,8 +16,8 @@ class ShipEngine < Engine::Component
     game_object.pos += @speed * delta_time
     clamp_to_screen
 
-    torque = Engine::Input.key_down?(GLFW::KEY_LEFT) ? TURNING_SPEED : 0
-    torque += Engine::Input.key_down?(GLFW::KEY_RIGHT) ? -TURNING_SPEED : 0
+    torque = Engine::Input.key_down?(GLFW::KEY_LEFT) ? -TURNING_SPEED : 0
+    torque += Engine::Input.key_down?(GLFW::KEY_RIGHT) ? TURNING_SPEED : 0
     game_object.rotation += torque * delta_time
   end
 

@@ -106,7 +106,7 @@ describe Engine::GameObject do
       result = object.local_to_world_coordinate(10, 0)
 
       expect(result.x).to be_within(0.0001).of(10)
-      expect(result.y).to be_within(0.0001).of(30)
+      expect(result.y).to be_within(0.0001).of(10)
     end
   end
 
@@ -117,8 +117,8 @@ describe Engine::GameObject do
       result = object.model_matrix
 
       expected_matrix = [
-        0, 1, 0, 0,
-        -1, 0, 0, 0,
+        0, -1, 0, 0,
+        1, 0, 0, 0,
         0, 0, 1, 0,
         10, 20, 0, 1
       ]
