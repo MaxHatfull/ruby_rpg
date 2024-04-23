@@ -29,9 +29,8 @@ module Engine
 
   def self.load(base_dir)
     base_dir = File.expand_path(base_dir)
-    Dir[File.join(base_dir, "components", "**/*.rb")].each do |file|
-      require file
-    end
+    Dir[File.join(base_dir, "components", "**/*.rb")].each { |file| require file }
+    Dir[File.join(base_dir, "game_objects", "**/*.rb")].each { |file| require file }
     GL.load_lib
     set_opengl_version
   end

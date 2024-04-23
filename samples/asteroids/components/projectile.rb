@@ -1,4 +1,4 @@
-class Bullet < Engine::Component
+class Projectile < Engine::Component
   SPEED = 500
   LIFE_SPAN = 2
 

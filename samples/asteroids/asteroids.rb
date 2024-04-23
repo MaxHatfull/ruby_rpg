@@ -2,22 +2,10 @@ require_relative "../../src/engine/engine"
 
 include Engine::Types
 
+ASSETS_DIR = File.expand_path(File.join(__dir__, "assets"))
+
 Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
-  Engine::GameObject.new(
-    "Ship",
-    pos: Vector.new(300, 300),
-    rotation: 45,
-    components:
-      [ShipEngine.new,
-       Gun.new,
-       Engine::Components::SpriteRenderer.new(
-         Vector.new(-25, 25),
-         Vector.new(25, 25),
-         Vector.new(25, -25),
-         Vector.new(-25, -25),
-         Engine::Texture.new(File.join(__dir__, "assets", "Player.png")).texture
-       )]
-  )
+  Ship.new(Vector.new(1920 / 2, 1080 / 2), 90)
 
   10.times do
     radius = rand(50..100)
