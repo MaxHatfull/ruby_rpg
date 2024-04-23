@@ -29,13 +29,14 @@ describe "Ship" do
           )
         end
         at(10) do
-          Engine::Screenshoter.screenshot(file_name)
+          Engine::Screenshoter.screenshot(temp_file_name)
           expect(true).to eq(true)
           Engine.stop_game
         end
       end
 
       expect(temp_file_name).to match_screenshot(file_name)
+      File.delete(temp_file_name) if File.exist?(temp_file_name)
     end
 
     it "renders the ship again" do
@@ -70,6 +71,7 @@ describe "Ship" do
       end
 
       expect(temp_file_name).to match_screenshot(file_name)
+      File.delete(temp_file_name) if File.exist?(temp_file_name)
     end
   end
 end
