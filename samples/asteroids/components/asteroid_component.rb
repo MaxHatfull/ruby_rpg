@@ -1,11 +1,8 @@
 class AsteroidComponent < Engine::Component
-  SPEED = 100
-
   attr_reader :size
 
   def initialize(size)
     @size = size
-    @speed = Vector.new(SPEED, 0).rotate(rand * 360)
   end
 
   def self.asteroids
@@ -18,26 +15,19 @@ class AsteroidComponent < Engine::Component
 
   def destroy!
     AsteroidComponent.asteroids.delete(self)
+    split if size > 40
     game_object.destroy!
-  end
-
-  def update(delta_time)
-    game_object.pos += @speed * delta_time
-    clamp_to_screen
   end
 
   private
 
-  def clamp_to_screen
-    if game_object.x > Engine.screen_width
-      game_object.x = 0
-    elsif game_object.x < 0
-      game_object.x = Engine.screen_width
-    end
-    if game_object.y > Engine.screen_height
-      game_object.y = 0
-    elsif game_object.y < 0
-      game_object.y = Engine.screen_height
+  def split
+    3.times do
+      Asteroid.new(
+        game_object.pos + Vector.new(rand(-50..50), rand(-50..50)),
+        rand(360),
+        size / 2
+      )
     end
   end
 end

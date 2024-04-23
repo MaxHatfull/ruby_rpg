@@ -1,10 +1,6 @@
 class Gun < Engine::Component
   COOLDOWN = 0.3
 
-  def start
-    @bullet_texture = Engine::Texture.new(File.join(__dir__, "..", "..", "assets", "square.png")).texture
-  end
-
   def update(delta_time)
     fire if Engine::Input.key_down?(GLFW::KEY_SPACE)
   end

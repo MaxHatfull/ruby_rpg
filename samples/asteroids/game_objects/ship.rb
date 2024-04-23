@@ -10,6 +10,7 @@ class Ship
       rotation: rotation,
       components:
         [ShipEngine.new,
+         ClampToScreen.new,
          Gun.new,
          Engine::Components::SpriteRenderer.new(
            Vector.new(-25, 25),
