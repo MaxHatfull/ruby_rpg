@@ -20,7 +20,7 @@ class Gun < Engine::Component
       rotation: game_object.rotation,
       components: [
         Bullet.new,
-        Engine::SpriteRenderer.new(
+        Engine::Components::SpriteRenderer.new(
           Vector.new(-BULLET_SIZE / 2, BULLET_SIZE / 2),
           Vector.new(BULLET_SIZE / 2, BULLET_SIZE / 2),
           Vector.new(BULLET_SIZE / 2, -BULLET_SIZE / 2),

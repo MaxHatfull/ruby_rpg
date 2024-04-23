@@ -8,9 +8,9 @@ require_relative 'game_object'
 require_relative 'texture'
 require_relative 'shader'
 require_relative 'component'
-require_relative "triangle_renderer"
-require_relative "sprite_renderer"
-require_relative "rect_renderer"
+require_relative "components/triangle_renderer"
+require_relative "components/sprite_renderer"
+require_relative "components/rect_renderer"
 
 GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
 GLFW.Init()

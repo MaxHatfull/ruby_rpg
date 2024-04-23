@@ -31,7 +31,7 @@ class Bullet < Engine::Component
         pos: game_object.pos + Vector.new(rand(-50..50), rand(-50..50)),
         rotation: rand * 360,
         components: [
-          Engine::SpriteRenderer.new(
+          Engine::Components::SpriteRenderer.new(
             Vector.new(-size / 2, size / 2),
             Vector.new(size / 2, size / 2),
             Vector.new(size / 2, -size / 2),
@@ -53,7 +53,7 @@ class Bullet < Engine::Component
       "Explosion",
       pos: game_object.pos,
       components: [
-        Engine::SpriteRenderer.new(
+        Engine::Components::SpriteRenderer.new(
           Vector.new(-100, 100),
           Vector.new(100, 100),
           Vector.new(100, -100),

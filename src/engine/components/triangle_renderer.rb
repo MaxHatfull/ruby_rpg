@@ -1,5 +1,5 @@
-module Engine
-  class TriangleRenderer < Component
+module Engine::Components
+  class TriangleRenderer < Engine::Component
     attr_reader :v1, :v2, :v3, :colour
 
     def initialize(v1, v2, v3, colour)

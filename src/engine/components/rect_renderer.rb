@@ -1,5 +1,5 @@
-module Engine
-  class RectRenderer < Component
+module Engine::Components
+  class RectRenderer < Engine::Component
     attr_reader :v1, :v2, :v3, :v4
 
     def initialize(v1, v2, v3, v4)

@@ -19,7 +19,7 @@ describe "Ship" do
             components: [
               ShipEngine.new,
               Gun.new,
-              Engine::SpriteRenderer.new(
+              Engine::Components::SpriteRenderer.new(
                 Vector.new(-25, 25),
                 Vector.new(25, 25),
                 Vector.new(25, -25),
@@ -53,7 +53,7 @@ describe "Ship" do
             components: [
               ShipEngine.new,
               Gun.new,
-              Engine::SpriteRenderer.new(
+              Engine::Components::SpriteRenderer.new(
                 Vector.new(-25, 25),
                 Vector.new(25, 25),
                 Vector.new(25, -25),

@@ -1,5 +1,5 @@
-module Engine
-  class SpriteRenderer < Component
+module Engine::Components
+  class SpriteRenderer < Engine::Component
     attr_reader :v1, :v2, :v3, :v4, :texture, :frame_coords, :frame_rate, :loop
 
     def initialize(tl, tr, br, bl, texture, frame_coords = nil, frame_rate = nil, loop = true)
@@ -37,7 +37,7 @@ module Engine
     private
 
     def shader
-      @shader ||= Shader.new('./shaders/sprite_vertex.glsl', './shaders/sprite_frag.glsl')
+      @shader ||= Engine::Shader.new('./shaders/sprite_vertex.glsl', './shaders/sprite_frag.glsl')
     end
 
     def set_shader_per_frame_data
