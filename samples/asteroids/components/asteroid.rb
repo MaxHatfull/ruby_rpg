@@ -5,7 +5,7 @@ class Asteroid < Engine::Component
 
   def initialize(size)
     @size = size
-    @speed = Engine::Vector.new(SPEED, 0).rotate(rand * 360)
+    @speed = Vector.new(SPEED, 0).rotate(rand * 360)
   end
 
   def self.asteroids

@@ -28,14 +28,14 @@ class Bullet < Engine::Component
     3.times do
       Engine::GameObject.new(
         "Asteroid",
-        pos: game_object.pos + Engine::Vector.new(rand(-50..50), rand(-50..50)),
+        pos: game_object.pos + Vector.new(rand(-50..50), rand(-50..50)),
         rotation: rand * 360,
         components: [
           Engine::SpriteRenderer.new(
-            Engine::Vector.new(-size / 2, size / 2),
-            Engine::Vector.new(size / 2, size / 2),
-            Engine::Vector.new(size / 2, -size / 2),
-            Engine::Vector.new(-size / 2, -size / 2),
+            Vector.new(-size / 2, size / 2),
+            Vector.new(size / 2, size / 2),
+            Vector.new(size / 2, -size / 2),
+            Vector.new(-size / 2, -size / 2),
             asteroid_texture.texture
           ),
           Asteroid.new(size)
@@ -54,18 +54,18 @@ class Bullet < Engine::Component
       pos: game_object.pos,
       components: [
         Engine::SpriteRenderer.new(
-          Engine::Vector.new(-100, 100),
-          Engine::Vector.new(100, 100),
-          Engine::Vector.new(100, -100),
-          Engine::Vector.new(-100, -100),
+          Vector.new(-100, 100),
+          Vector.new(100, 100),
+          Vector.new(100, -100),
+          Vector.new(-100, -100),
           explosion_texture.texture,
           [
-            { tl: Engine::Vector.new(1.0 / 6, 0), width: 1.0 / 6, height: 1 },
-            { tl: Engine::Vector.new(2.0 / 6, 0), width: 1.0 / 6, height: 1 },
-            { tl: Engine::Vector.new(3.0 / 6, 0), width: 1.0 / 6, height: 1 },
-            { tl: Engine::Vector.new(4.0 / 6, 0), width: 1.0 / 6, height: 1 },
-            { tl: Engine::Vector.new(5.0 / 6, 0), width: 1.0 / 6, height: 1 },
-            { tl: Engine::Vector.new(0, 0), width: 1.0 / 6, height: 1 },
+            { tl: Vector.new(1.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Vector.new(2.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Vector.new(3.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Vector.new(4.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Vector.new(5.0 / 6, 0), width: 1.0 / 6, height: 1 },
+            { tl: Vector.new(0, 0), width: 1.0 / 6, height: 1 },
           ],
           20,
           false

@@ -1,4 +1,4 @@
-module Engine
+module Engine::Types
   class Vector
     attr_accessor :x, :y
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 include TestDriver
+include Engine::Types
 
 describe "Ship" do
   describe "When placed in the scene" do
@@ -13,16 +14,16 @@ describe "Ship" do
         at(0) do
           Engine::GameObject.new(
             "Ship",
-            pos: Engine::Vector.new(100, 100),
+            pos: Vector.new(100, 100),
             rotation: 90,
             components: [
               ShipEngine.new,
               Gun.new,
               Engine::SpriteRenderer.new(
-                Engine::Vector.new(-25, 25),
-                Engine::Vector.new(25, 25),
-                Engine::Vector.new(25, -25),
-                Engine::Vector.new(-25, -25),
+                Vector.new(-25, 25),
+                Vector.new(25, 25),
+                Vector.new(25, -25),
+                Vector.new(-25, -25),
                 Engine::Texture.new(File.join(__dir__, "../../../../samples/asteroids", "assets", "Player.png")).texture
               )
             ]
@@ -47,16 +48,16 @@ describe "Ship" do
         at(0) do
           Engine::GameObject.new(
             "Ship",
-            pos: Engine::Vector.new(100, 200),
+            pos: Vector.new(100, 200),
             rotation: 45,
             components: [
               ShipEngine.new,
               Gun.new,
               Engine::SpriteRenderer.new(
-                Engine::Vector.new(-25, 25),
-                Engine::Vector.new(25, 25),
-                Engine::Vector.new(25, -25),
-                Engine::Vector.new(-25, -25),
+                Vector.new(-25, 25),
+                Vector.new(25, 25),
+                Vector.new(25, -25),
+                Vector.new(-25, -25),
                 Engine::Texture.new(File.join(__dir__, "../../../../samples/asteroids", "assets", "Player.png")).texture
               )
             ]

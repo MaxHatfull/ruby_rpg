@@ -1,15 +1,17 @@
 class ShipEngine < Engine::Component
+  include Engine::Types
+
   ACCELERATION = 500
   MAX_SPEED = 400
   TURNING_SPEED = 200
 
   def initialize
-    @speed = Engine::Vector.new(0, 0)
+    @speed = Vector.new(0, 0)
   end
 
   def update(delta_time)
     acceleration = Engine::Input.key_down?(GLFW::KEY_UP) ? ACCELERATION : 0
-    @speed += Engine::Vector.new(0, acceleration * delta_time).rotate(game_object.rotation)
+    @speed += Vector.new(0, acceleration * delta_time).rotate(game_object.rotation)
     if @speed.magnitude > MAX_SPEED
       @speed = @speed / @speed.magnitude * MAX_SPEED
     end

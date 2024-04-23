@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+include Engine::Types
+
 describe Engine::GameObject do
   describe ".new" do
     it 'creates the object' do
@@ -7,7 +9,7 @@ describe Engine::GameObject do
     end
 
     it "sets the position of the object" do
-      object = Engine::GameObject.new(pos: Engine::Vector.new(10, 20))
+      object = Engine::GameObject.new(pos: Vector.new(10, 20))
 
       expect(object.x).to eq(10)
       expect(object.y).to eq(20)
@@ -65,7 +67,7 @@ describe Engine::GameObject do
 
   describe "#x" do
     it "returns the x position of the object" do
-      object = Engine::GameObject.new(pos: Engine::Vector.new(10, 20))
+      object = Engine::GameObject.new(pos: Vector.new(10, 20))
 
       expect(object.x).to eq(10)
     end
@@ -83,7 +85,7 @@ describe Engine::GameObject do
 
   describe "#y" do
     it "returns the y position of the object" do
-      object = Engine::GameObject.new(pos: Engine::Vector.new(10, 20))
+      object = Engine::GameObject.new(pos: Vector.new(10, 20))
 
       expect(object.y).to eq(20)
     end
@@ -101,7 +103,7 @@ describe Engine::GameObject do
 
   describe "#local_to_world_coordinate" do
     it "converts local coordinates to world coordinates" do
-      object = Engine::GameObject.new(pos: Engine::Vector.new(10, 20), rotation: 90)
+      object = Engine::GameObject.new(pos: Vector.new(10, 20), rotation: 90)
 
       result = object.local_to_world_coordinate(10, 0)
 
@@ -112,7 +114,7 @@ describe Engine::GameObject do
 
   describe "#model_matrix" do
     it "returns the model matrix of the object" do
-      object = Engine::GameObject.new(pos: Engine::Vector.new(10, 20), rotation: 90)
+      object = Engine::GameObject.new(pos: Vector.new(10, 20), rotation: 90)
 
       result = object.model_matrix
 

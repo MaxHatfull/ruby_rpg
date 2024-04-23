@@ -2,6 +2,8 @@ module Engine
   class GameObject
     attr_accessor :name, :pos, :rotation, :components, :created_at
 
+    include Types
+
     def initialize(name = "Game Object", pos: Vector.new(0, 0), rotation: 0, components: [])
       GameObject.object_spawned(self)
 

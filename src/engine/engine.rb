@@ -3,7 +3,7 @@ require 'glfw'
 
 require_relative 'screenshoter'
 require_relative 'input'
-require_relative 'vector'
+require_relative 'types/vector'
 require_relative 'game_object'
 require_relative 'texture'
 require_relative 'shader'
