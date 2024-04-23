@@ -134,8 +134,17 @@ describe Engine::GameObject do
       object = Engine::GameObject.new
 
       object.destroy!
-
       expect(Engine::GameObject.objects).not_to include(object)
+    end
+  end
+
+  describe ".destroy_all" do
+    it "destroys all objects" do
+      object = Engine::GameObject.new("a")
+      object2 = Engine::GameObject.new("b")
+
+      Engine::GameObject.destroy_all
+      expect(Engine::GameObject.objects).to be_empty
     end
   end
 end

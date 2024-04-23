@@ -23,8 +23,11 @@ module TestDriver
   end
 
   def within_game_context(&block)
-    Engine.load("./samples/asteroids")
-    Engine.start(title: 'Ruby RPG', width: 1920, height: 1080, background: 'navy') do
+    if !Engine.engine_started?
+      Engine.load("./samples/asteroids")
+      Engine.open_window(1920, 1080)
+    end
+    Engine.main_game_loop do
       Engine::GameObject.new("Test Driver", components: [TestDriverComponent.new(&block)])
     end
   end

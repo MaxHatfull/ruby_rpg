@@ -54,6 +54,10 @@ module Engine
       GameObject.objects.delete(self)
     end
 
+    def self.destroy_all
+      GameObject.objects.dup.each(&:destroy!)
+    end
+
     def self.update_all(delta_time)
       GameObject.objects.each do |object|
         object.components.each { |component| component.update(delta_time) }
