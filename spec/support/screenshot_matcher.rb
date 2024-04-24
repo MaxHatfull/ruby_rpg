@@ -1,9 +1,14 @@
 # spec/support/screenshot_matcher.rb
 
-RSpec::Matchers.define :match_screenshot do |expected|
+RSpec::Matchers.define :match_screenshot_on_disk do |expected|
   match do |actual|
     expected_image = ChunkyPNG::Image.from_file(expected)
-    actual_image = ChunkyPNG::Image.from_file(actual)
+    actual_image = actual
+
+    if ENV["UPDATE_SCREENSHOTS"]
+      actual_image.save(expected)
+      return true
+    end
 
     return false unless actual_image.width == expected_image.width && actual_image.height == expected_image.height
 
@@ -21,16 +26,17 @@ RSpec::Matchers.define :match_screenshot do |expected|
       end
     end
 
-    diff_location = File.join(File.dirname(actual), "diff_#{File.basename(actual)}")
+    diff_location = File.join(File.dirname(expected), "temp", "diff_#{File.basename(expected)}")
+    FileUtils.mkdir_p(File.dirname(diff_location))
     diff_image.save(diff_location) if failed
     !failed
   end
 
   failure_message do |actual|
-    "expected that #{actual} would match #{expected}"
+    "expected that image would match #{expected}"
   end
 
   failure_message_when_negated do |actual|
-    "expected that #{actual} would not match #{expected}"
+    "expected that image would not match #{expected}"
   end
 end

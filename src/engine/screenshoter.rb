@@ -1,17 +1,14 @@
 module Engine
   class Screenshoter
-    def self.screenshot(file)
-      @scheduled_screenshot = file
+    def self.screenshot(&block)
+      @after_screenshot = block
     end
 
     def self.scheduled_screenshot
-      @scheduled_screenshot
+      @after_screenshot != nil
     end
 
     def self.take_screenshot
-      file = @scheduled_screenshot
-      FileUtils.mkdir_p(File.dirname(file))
-
       @scheduled_screenshot = nil
       width = Engine.screen_width
       height = Engine.screen_height
@@ -29,7 +26,9 @@ module Engine
           y += 1
         end
       end
-      png.save(file)
+      block = @after_screenshot
+      @after_screenshot = nil
+      block.call(png)
     end
   end
 end
