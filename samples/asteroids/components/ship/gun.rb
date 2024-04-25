@@ -1,14 +1,18 @@
-class Gun < Engine::Component
-  COOLDOWN = 0.3
+# frozen_string_literal: true
 
-  def update(delta_time)
-    fire if Engine::Input.key_down?(GLFW::KEY_SPACE)
-  end
+module Asteroids
+  class Gun < Engine::Component
+    COOLDOWN = 0.3
 
-  def fire
-    return if @last_fire && Time.now - @last_fire < COOLDOWN
-    @last_fire = Time.now
+    def update(delta_time)
+      fire if Engine::Input.key_down?(GLFW::KEY_SPACE)
+    end
 
-    Bullet.new(game_object.local_to_world_coordinate(0, 20), game_object.rotation)
+    def fire
+      return if @last_fire && Time.now - @last_fire < COOLDOWN
+      @last_fire = Time.now
+
+      Bullet.new(game_object.local_to_world_coordinate(0, 20), game_object.rotation)
+    end
   end
 end

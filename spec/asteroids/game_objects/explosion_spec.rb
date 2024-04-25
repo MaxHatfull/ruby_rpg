@@ -4,6 +4,7 @@ require_relative "../../../samples/asteroids/game_objects/explosion"
 
 include TestDriver
 include Engine::Types
+include Asteroids
 
 describe Explosion do
   before do
