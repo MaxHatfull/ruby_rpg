@@ -5,13 +5,9 @@ require_relative "../../../samples/asteroids/game_objects/explosion"
 include TestDriver
 include Engine::Types
 
-describe Exception do
+describe Explosion do
   before do
     stub_const("ASSETS_DIR", File.expand_path(File.join(__dir__, "..", "..", "..", "samples", "asteroids", "assets")))
-  end
-
-  after do
-    Engine.stop_game
   end
 
   describe "When placed in the scene" do

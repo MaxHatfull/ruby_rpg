@@ -10,10 +10,6 @@ describe Ship do
     stub_const("ASSETS_DIR", File.expand_path(File.join(__dir__, "..", "..", "..", "samples", "asteroids", "assets")))
   end
 
-  after do
-    Engine.stop_game
-  end
-
   describe "When placed in the scene" do
     it "renders the ship" do
       within_game_context do
