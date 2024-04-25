@@ -16,8 +16,6 @@ describe Ship do
 
   describe "When placed in the scene" do
     it "renders the ship" do
-      file_name = "spec/asteroids/game_objects/ship.png"
-
       within_game_context do
         at(0) { Ship.new(Vector.new(100, 100), 90) }
         at(1) { check_screenshot(__dir__ + "/ship_1.png") }
