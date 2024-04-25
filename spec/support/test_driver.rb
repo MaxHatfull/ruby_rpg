@@ -19,6 +19,23 @@ module TestDriver
     def at(tick, &block)
       @timed_instructions[tick] = block
     end
+
+    def till(tick, &block)
+      max_tick = @timed_instructions.keys.max || 0
+      ((max_tick + 1)..tick).each do |frame|
+        @timed_instructions[frame] = block
+      end
+    end
+
+    def press(key)
+      Engine::Input.instance_variable_get(:@keys)[key] = true
+    end
+
+    def check_screenshot(file)
+      Engine::Screenshoter.screenshot do |screenshot|
+        expect(screenshot).to match_screenshot_on_disk(file)
+      end
+    end
   end
 
   def set_tick(tick)

@@ -19,29 +19,17 @@ describe Ship do
       file_name = "spec/asteroids/game_objects/ship.png"
 
       within_game_context do
-        at(0) do
-          Ship.new(Vector.new(100, 100), 90)
-        end
-        at(10) do
-          Engine::Screenshoter.screenshot do |screenshot|
-            expect(screenshot).to match_screenshot_on_disk(file_name)
-          end
-          Engine.stop_game
-        end
-      end
-    end
-
-    it "renders the ship again" do
-      file_name = "spec/asteroids/game_objects/ship2.png"
-
-      within_game_context do
-        at(0) do
-          Ship.new(Vector.new(100, 200), 45)
-        end
-        at(5) do
-          Engine::Screenshoter.screenshot do |screenshot|
-            expect(screenshot).to match_screenshot_on_disk(file_name)
-          end
+        at(0) { Ship.new(Vector.new(100, 100), 90) }
+        at(1) { check_screenshot(__dir__ + "/ship_1.png") }
+        at(2) { check_screenshot(__dir__ + "/ship_2.png") }
+        till(5) { press(GLFW::KEY_LEFT) }
+        at(6) { check_screenshot(__dir__ + "/ship_3.png") }
+        till(10) { press(GLFW::KEY_RIGHT) }
+        at(11) { check_screenshot(__dir__ + "/ship_4.png") }
+        till(15) { press(GLFW::KEY_UP) }
+        at(16) { check_screenshot(__dir__ + "/ship_5.png") }
+        at(20) do
+          check_screenshot(__dir__ + "/ship_6.png")
           Engine.stop_game
         end
       end
