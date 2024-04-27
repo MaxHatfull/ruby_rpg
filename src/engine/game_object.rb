@@ -4,11 +4,12 @@ module Engine
 
     include Types
 
-    def initialize(name = "Game Object", pos: Vector.new(0, 0), rotation: 0, components: [])
+    def initialize(name = "Game Object", pos: Vector.new(0, 0), rotation: 0, scale: Vector.new(1, 1, 1), components: [])
       GameObject.object_spawned(self)
 
       @pos = pos
       @rotation = rotation
+      @scale = scale
       @name = name
       @components = components
       @created_at = Time.now
@@ -44,11 +45,12 @@ module Engine
       theta = rotation * Math::PI / 180
       cos_theta = Math.cos(theta)
       sin_theta = Math.sin(theta)
+
       [
-        cos_theta, -sin_theta, 0, 0,
-        sin_theta, cos_theta, 0, 0,
-        0, 0, 1, 0,
-        x, y, 0, 1
+        @scale.x * cos_theta, -@scale.y * sin_theta, 0, 0,
+        @scale.x * sin_theta, @scale.y * cos_theta, 0, 0,
+        0, 0, @scale.z, 0,
+        @pos.x, @pos.y, 0, 1
       ]
     end
 

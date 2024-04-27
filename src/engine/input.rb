@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Engine
   class Input
     def self.key_down?(key)
