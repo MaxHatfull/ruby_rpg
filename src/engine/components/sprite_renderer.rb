@@ -9,7 +9,7 @@ module Engine::Components
       @v4 = bl
       @texture = texture
       @colour = { r: 1, g: 1, b: 1.0 }
-      @frame_coords = frame_coords || [{ tl: Vector.new(0, 0), width: 1, height: 1 }]
+      @frame_coords = frame_coords || [{ tl: Vector[0, 0], width: 1, height: 1 }]
       @frame_rate = frame_rate || 1
       @loop = loop
     end
@@ -58,8 +58,8 @@ module Engine::Components
 
       current_frame_coords =
         [
-          @frame_coords[current_frame_index][:tl].x,
-          @frame_coords[current_frame_index][:tl].y,
+          @frame_coords[current_frame_index][:tl][0],
+          @frame_coords[current_frame_index][:tl][1],
           @frame_coords[current_frame_index][:width],
           @frame_coords[current_frame_index][:height]
         ]
@@ -81,12 +81,13 @@ module Engine::Components
     end
 
     def set_shader_camera_matrix
-      shader.set_mat4("camera", [
-        2.0 / Engine.screen_width, 0, 0, 0,
-        0, 2.0 / Engine.screen_height, 0, 0,
-        0, 0, 1, 0,
-        -1, -1, 0, 1
-      ])
+      camera_matrix = Matrix[
+        [2.0 / Engine.screen_width, 0, 0, 0],
+        [0, 2.0 / Engine.screen_height, 0, 0],
+        [0, 0, 1, 0],
+        [-1, -1, 0, 1]
+      ]
+      shader.set_mat4("camera", camera_matrix)
     end
 
     def setup_index_buffer
@@ -117,10 +118,10 @@ module Engine::Components
       GL.GenBuffers(1, vbo_buf)
       vbo = vbo_buf.unpack('L')[0]
       points = [
-        v1.x, v1.y, 0, 0, 0,
-        v2.x, v2.y, 0, 1, 0,
-        v3.x, v3.y, 0, 1, 1,
-        v4.x, v4.y, 0, 0, 1
+        v1[0], v1[1], 0, 0, 0,
+        v2[0], v2[1], 0, 1, 0,
+        v3[0], v3[1], 0, 1, 1,
+        v4[0], v4[1], 0, 0, 1
       ]
 
       GL.BindBuffer(GL::ARRAY_BUFFER, vbo)

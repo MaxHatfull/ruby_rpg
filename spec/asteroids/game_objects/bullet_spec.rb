@@ -3,7 +3,6 @@
 require_relative "../../../samples/asteroids/game_objects/bullet"
 
 include TestDriver
-include Engine::Types
 include Asteroids
 
 describe Bullet do
@@ -14,7 +13,7 @@ describe Bullet do
   describe "When placed in the scene" do
     it "renders the moving bullet" do
       within_game_context do
-        at(0) { Bullet.new(Vector.new(100, 100), 45) }
+        at(0) { Bullet.new(Vector[100, 100], 45) }
         at(1) { check_screenshot("spec/asteroids/game_objects/bullet_1.png") }
         at(5) { check_screenshot("spec/asteroids/game_objects/bullet_2.png") }
         at(30) do

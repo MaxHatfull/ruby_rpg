@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-include Engine::Types
-
 describe Engine::GameObject do
   describe ".new" do
     it 'creates the object' do
@@ -9,7 +7,7 @@ describe Engine::GameObject do
     end
 
     it "sets the position of the object" do
-      object = Engine::GameObject.new(pos: Vector.new(10, 20))
+      object = Engine::GameObject.new(pos: Vector[10, 20])
 
       expect(object.x).to eq(10)
       expect(object.y).to eq(20)
@@ -18,7 +16,7 @@ describe Engine::GameObject do
     it "sets the rotation of the object" do
       object = Engine::GameObject.new(rotation: 90)
 
-      expect(object.rotation).to eq(90)
+      expect(object.rotation).to eq(Vector[0, 0, 90])
     end
 
     it "sets the name of the object" do
@@ -67,7 +65,7 @@ describe Engine::GameObject do
 
   describe "#x" do
     it "returns the x position of the object" do
-      object = Engine::GameObject.new(pos: Vector.new(10, 20))
+      object = Engine::GameObject.new(pos: Vector[10, 20])
 
       expect(object.x).to eq(10)
     end
@@ -85,7 +83,7 @@ describe Engine::GameObject do
 
   describe "#y" do
     it "returns the y position of the object" do
-      object = Engine::GameObject.new(pos: Vector.new(10, 20))
+      object = Engine::GameObject.new(pos: Vector[10, 20])
 
       expect(object.y).to eq(20)
     end
@@ -102,31 +100,46 @@ describe Engine::GameObject do
   end
 
   describe "#local_to_world_coordinate" do
+    it "converts local coordinates to world coordinates when the object is at 0,0" do
+      object = Engine::GameObject.new(pos: Vector[0.0, 0.0])
+
+      result = object.local_to_world_coordinate(Vector[10.0, 0.0, 0.0])
+
+      expect(result).to eq(Vector[10, 0, 0])
+    end
+
     it "converts local coordinates to world coordinates" do
-      object = Engine::GameObject.new(pos: Vector.new(10, 20), rotation: 90)
+      object = Engine::GameObject.new(pos: Vector[10.0, 20.0], rotation: 0.0)
 
-      result = object.local_to_world_coordinate(10, 0)
+      result = object.local_to_world_coordinate(Vector[10.0, 0.0, 0.0])
 
-      expect(result.x).to be_within(0.0001).of(10)
-      expect(result.y).to be_within(0.0001).of(10)
+      expect(result).to eq(Vector[20, 20, 0])
+    end
+
+    it "converts local coordinates to world coordinates when rotated" do
+      object = Engine::GameObject.new(pos: Vector[10, 20], rotation: 90)
+
+      result = object.local_to_world_coordinate(Vector[10, 0, 0])
+
+      expect(result).to eq(Vector[10, 10, 0])
     end
   end
 
   describe "#model_matrix" do
     it "returns the model matrix of the object" do
-      object = Engine::GameObject.new(pos: Vector.new(10, 20), rotation: 90)
+      object = Engine::GameObject.new(pos: Vector[10, 20], rotation: 90)
 
       result = object.model_matrix
 
-      expected_matrix = [
-        0, -1, 0, 0,
-        1, 0, 0, 0,
-        0, 0, 1, 0,
-        10, 20, 0, 1
-      ]
+      expected_matrix = Matrix[
+        [0, -1, 0, 0],
+        [1, 0, 0, 0],
+        [0, 0, 1, 0],
+        [10, 20, 0, 1]
+      ].to_a.flatten
 
       expected_matrix.each_with_index do |value, index|
-        expect(result[index]).to be_within(0.0001).of(value)
+        expect(result.to_a.flatten[index]).to be_within(0.0001).of(value)
       end
     end
   end

@@ -1,51 +1,49 @@
 # frozen_string_literal: true
 
-include Engine::Types
-
 describe Engine::ObjFile do
   let(:cube_obj) { File.expand_path(File.join(__dir__, "/cube.obj")) }
   let(:obj_file) { Engine::ObjFile.new(cube_obj) }
 
   let(:cube_vertices) do
     [
-      Vector.new(1.0, -1.0, -1.0),
-      Vector.new(1.0, -1.0, 1.0),
-      Vector.new(-1.0, -1.0, 1.0),
-      Vector.new(-1.0, -1.0, -1.0),
-      Vector.new(1.0, 1.0, -1.0),
-      Vector.new(1.0, 1.0, 1.0),
-      Vector.new(-1.0, 1.0, 1.0),
-      Vector.new(-1.0, 1.0, -1.0)
+      Vector[1.0, -1.0, -1.0],
+      Vector[1.0, -1.0, 1.0],
+      Vector[-1.0, -1.0, 1.0],
+      Vector[-1.0, -1.0, -1.0],
+      Vector[1.0, 1.0, -1.0],
+      Vector[1.0, 1.0, 1.0],
+      Vector[-1.0, 1.0, 1.0],
+      Vector[-1.0, 1.0, -1.0]
     ]
   end
 
   let(:cube_normals) do
     [
-      Vector.new(0.0, -1.0, 0.0),
-      Vector.new(0.0, 1.0, 0.0),
-      Vector.new(1.0, 0.0, 0.0),
-      Vector.new(0.0, 0.0, 1.0),
-      Vector.new(-1.0, 0.0, 0.0),
-      Vector.new(0.0, 0.0, -1.0),
+      Vector[0.0, -1.0, 0.0],
+      Vector[0.0, 1.0, 0.0],
+      Vector[1.0, 0.0, 0.0],
+      Vector[0.0, 0.0, 1.0],
+      Vector[-1.0, 0.0, 0.0],
+      Vector[0.0, 0.0, -1.0],
     ]
   end
 
   let(:cube_texture_coords) do
     [
-      Vector.new(1, 0.333333),
-      Vector.new(1, 0.666667),
-      Vector.new(0.666667, 0.666667),
-      Vector.new(0.666667, 0.333333),
-      Vector.new(0.666667, 0.000000),
-      Vector.new(0, 0.333333),
-      Vector.new(0, 0),
-      Vector.new(0.333333, 0.000000),
-      Vector.new(0.333333, 1.000000),
-      Vector.new(0, 1),
-      Vector.new(0, 0.666667),
-      Vector.new(0.333333, 0.333333),
-      Vector.new(0.333333, 0.666667),
-      Vector.new(1, 0),
+      Vector[1, 0.333333],
+      Vector[1, 0.666667],
+      Vector[0.666667, 0.666667],
+      Vector[0.666667, 0.333333],
+      Vector[0.666667, 0.000000],
+      Vector[0, 0.333333],
+      Vector[0, 0],
+      Vector[0.333333, 0.000000],
+      Vector[0.333333, 1.000000],
+      Vector[0, 1],
+      Vector[0, 0.666667],
+      Vector[0.333333, 0.333333],
+      Vector[0.333333, 0.666667],
+      Vector[1, 0],
     ]
   end
 
@@ -109,9 +107,9 @@ describe Engine::ObjFile do
       }
     end.map do |data|
       [
-        data[:vertex].x, data[:vertex].y, data[:vertex].z,
-        data[:texture_coord].x, data[:texture_coord].y,
-        data[:normal].x, data[:normal].y, data[:normal].z
+        data[:vertex][0], data[:vertex][1], data[:vertex][2],
+        data[:texture_coord][0], data[:texture_coord][1],
+        data[:normal][0], data[:normal][1], data[:normal][2]
       ]
     end.flatten
   end

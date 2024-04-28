@@ -1,14 +1,17 @@
+require "matrix"
+
 module Engine
   class GameObject
-    attr_accessor :name, :pos, :rotation, :components, :created_at
+    attr_accessor :name, :pos, :rotation, :scale, :components, :created_at
 
-    include Types
-
-    def initialize(name = "Game Object", pos: Vector.new(0, 0), rotation: 0, scale: Vector.new(1, 1, 1), components: [])
+    def initialize(name = "Game Object", pos: Vector[0, 0, 0], rotation: 0, scale: Vector[1, 1, 1], components: [])
       GameObject.object_spawned(self)
-
-      @pos = pos
-      @rotation = rotation
+      @pos = Vector[pos[0], pos[1], pos[2] || 0]
+      if rotation.is_a?(Numeric)
+        @rotation = Vector[0, 0, rotation]
+      else
+        @rotation = rotation
+      end
       @scale = scale
       @name = name
       @components = components
@@ -19,39 +22,60 @@ module Engine
     end
 
     def x
-      @pos.x
+      @pos[0]
     end
 
     def x=(value)
-      @pos = Vector.new(value, @pos.y)
+      @pos = Vector[value, y, z]
     end
 
     def y
-      @pos.y
+      @pos[1]
     end
 
     def y=(value)
-      @pos = Vector.new(@pos.x, value)
+      @pos = Vector[x, value, z]
     end
 
-    def local_to_world_coordinate(local_x, local_y)
-      angle = Math::PI * @rotation / 180.0
-      world_x = x + local_x * Math.cos(angle) + local_y * Math.sin(angle)
-      world_y = y - local_x * Math.sin(angle) + local_y * Math.cos(angle)
-      Vector.new(world_x, world_y)
+    def z
+      @pos[2]
+    end
+
+    def z=(value)
+      @pos = Vector[x, y, value]
+    end
+
+    def local_to_world_coordinate(local)
+      local_x4 = Vector[local[0], local[1], local[2], 1.0]
+      world = model_matrix.transpose * local_x4
+      world = world.to_a.flatten
+      Vector[world[0], world[1], world[2]]
+    end
+
+    def local_to_world_direction(local)
+      local_to_world_coordinate(local) - pos
     end
 
     def model_matrix
-      theta = rotation * Math::PI / 180
-      cos_theta = Math.cos(theta)
-      sin_theta = Math.sin(theta)
+      rot = rotation * Math::PI / 180
 
-      [
-        @scale.x * cos_theta, -@scale.y * sin_theta, 0, 0,
-        @scale.x * sin_theta, @scale.y * cos_theta, 0, 0,
-        0, 0, @scale.z, 0,
-        @pos.x, @pos.y, 0, 1
+      # Apply translation
+      translation_matrix = Matrix[
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [x, y, z, 1]
       ]
+
+      # Apply rotation
+      rot_x = Matrix[[1, 0, 0, 0], [0, Math.cos(rot[0]), -Math.sin(rot[0]), 0], [0, Math.sin(rot[0]), Math.cos(rot[0]), 0], [0, 0, 0, 1]]
+      rot_y = Matrix[[Math.cos(rot[1]), 0, Math.sin(rot[1]), 0], [0, 1, 0, 0], [-Math.sin(rot[1]), 0, Math.cos(rot[1]), 0], [0, 0, 0, 1]]
+      rot_z = Matrix[[Math.cos(rot[2]), -Math.sin(rot[2]), 0, 0], [Math.sin(rot[2]), Math.cos(rot[2]), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
+
+      # Apply scale
+      scale_matrix = Matrix[[scale[0], 0, 0, 0], [0, scale[1], 0, 0], [0, 0, scale[2], 0], [0, 0, 0, 1]]
+
+      rot_x * rot_y * rot_z * scale_matrix * translation_matrix
     end
 
     def destroy!

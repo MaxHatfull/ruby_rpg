@@ -2,8 +2,6 @@
 
 module Engine
   class ObjFile
-    include Types
-
     def initialize(file_path)
       @file_path = file_path
       @file_data = File.readlines(file_path)
@@ -13,7 +11,7 @@ module Engine
       @vertices ||=
         @file_data.select { |line| line.start_with?("v ") }.map do |line|
           _, x, y, z = line.split(" ")
-          Vector.new(x.to_f, y.to_f, z.to_f)
+          Vector[x.to_f, y.to_f, z.to_f]
         end
     end
 
@@ -21,7 +19,7 @@ module Engine
       @normals ||=
         @file_data.select { |line| line.start_with?("vn ") }.map do |line|
           _, x, y, z = line.split(" ")
-          Vector.new(x.to_f, y.to_f, z.to_f)
+          Vector[x.to_f, y.to_f, z.to_f]
         end
     end
 
@@ -29,7 +27,7 @@ module Engine
       @texture_coords ||=
         @file_data.select { |line| line.start_with?("vt ") }.map do |line|
           _, x, y = line.split(" ")
-          Vector.new(x.to_f, y.to_f)
+          Vector[x.to_f, y.to_f]
         end
     end
 
@@ -70,9 +68,9 @@ module Engine
           }
         end.map do |data|
           [
-            data[:vertex].x, data[:vertex].y, data[:vertex].z,
-            data[:texture_coord].x, data[:texture_coord].y,
-            data[:normal].x, data[:normal].y, data[:normal].z
+            data[:vertex][0], data[:vertex][1], data[:vertex][2],
+            data[:texture_coord][0], data[:texture_coord][1],
+            data[:normal][0], data[:normal][1], data[:normal][2]
           ]
         end.flatten
     end

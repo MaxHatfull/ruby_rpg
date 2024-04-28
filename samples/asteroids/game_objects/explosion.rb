@@ -8,18 +8,18 @@ module Asteroids
         pos: pos,
         components: [
           Engine::Components::SpriteRenderer.new(
-            Vector.new(-100, 100),
-            Vector.new(100, 100),
-            Vector.new(100, -100),
-            Vector.new(-100, -100),
+            Vector[-100, 100],
+            Vector[100, 100],
+            Vector[100, -100],
+            Vector[-100, -100],
             Explosion.explosion_texture.texture,
             [
-              { tl: Vector.new(1.0 / 6, 0), width: 1.0 / 6, height: 1 },
-              { tl: Vector.new(2.0 / 6, 0), width: 1.0 / 6, height: 1 },
-              { tl: Vector.new(3.0 / 6, 0), width: 1.0 / 6, height: 1 },
-              { tl: Vector.new(4.0 / 6, 0), width: 1.0 / 6, height: 1 },
-              { tl: Vector.new(5.0 / 6, 0), width: 1.0 / 6, height: 1 },
-              { tl: Vector.new(0, 0), width: 1.0 / 6, height: 1 },
+              { tl: Vector[1.0 / 6, 0], width: 1.0 / 6, height: 1 },
+              { tl: Vector[2.0 / 6, 0], width: 1.0 / 6, height: 1 },
+              { tl: Vector[3.0 / 6, 0], width: 1.0 / 6, height: 1 },
+              { tl: Vector[4.0 / 6, 0], width: 1.0 / 6, height: 1 },
+              { tl: Vector[5.0 / 6, 0], width: 1.0 / 6, height: 1 },
+              { tl: Vector[0, 0], width: 1.0 / 6, height: 1 },
             ],
             20,
             false

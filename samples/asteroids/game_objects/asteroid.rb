@@ -12,10 +12,10 @@ module Asteroids
            ConstantDrift.new(rand(150)),
            ClampToScreen.new,
            Engine::Components::SpriteRenderer.new(
-             Vector.new(-radius / 2, radius / 2),
-             Vector.new(radius / 2, radius / 2),
-             Vector.new(radius / 2, -radius / 2),
-             Vector.new(-radius / 2, -radius / 2),
+             Vector[-radius / 2, radius / 2],
+             Vector[radius / 2, radius / 2],
+             Vector[radius / 2, -radius / 2],
+             Vector[-radius / 2, -radius / 2],
              Asteroid.asteroid_texture
            )]
       )

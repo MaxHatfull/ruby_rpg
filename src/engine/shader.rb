@@ -51,7 +51,7 @@ module Engine
 
     def set_mat4(name, mat)
       loc = GL.GetUniformLocation(@program, name)
-      GL.UniformMatrix4fv(loc, 1, GL::FALSE, mat.pack('F*'))
+      GL.UniformMatrix4fv(loc, 1, GL::FALSE, mat.to_a.flatten.pack('F*'))
     end
 
     def set_int(name, int)
