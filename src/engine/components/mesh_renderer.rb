@@ -51,7 +51,7 @@ module Engine::Components
       shader.set_mat4("camera", [
         2.0 / Engine.screen_width, 0, 0, 0,
         0, 2.0 / Engine.screen_height, 0, 0,
-        0, 0, 0.001, 0,
+        0, 0, -0.001, 0,
         -1, -1, 0, 1
       ])
     end

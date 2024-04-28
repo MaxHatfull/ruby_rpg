@@ -48,12 +48,16 @@ module Engine
 
     GL.Enable(GL::CULL_FACE)
     GL.CullFace(GL::BACK)
+
+    GL.Enable(GL::DEPTH_TEST)
+    GL.DepthFunc(GL::LESS)
+
   end
 
   def self.main_game_loop(&first_frame_block)
     @game_stopped = false
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE || @game_stopped
-      GL.Clear(GL::COLOR_BUFFER_BIT) # Clear the screen
+      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
 
       update_screen_size
       if first_frame_block

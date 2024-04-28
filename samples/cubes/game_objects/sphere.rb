@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Cubes
-  class Cube
+  class Sphere
     def initialize(pos, rotation, size)
       Engine::GameObject.new(
         "Cube",
@@ -11,7 +11,7 @@ module Cubes
         components: [
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
-            ASSETS_DIR + "/cube.obj",
+            ASSETS_DIR + "/sphere.obj",
             Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture
             ),
         ]
