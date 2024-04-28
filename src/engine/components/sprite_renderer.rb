@@ -92,8 +92,8 @@ module Engine::Components
 
     def setup_index_buffer
       indices = [
-        0, 1, 2,
-        2, 3, 0
+        0, 2, 1,
+        2, 0, 3
       ]
 
       ebo_buf = ' ' * 4

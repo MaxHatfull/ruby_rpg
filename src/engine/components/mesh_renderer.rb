@@ -1,9 +1,10 @@
 module Engine::Components
   class MeshRenderer < Engine::Component
-    attr_reader :mesh
+    attr_reader :mesh, :texture
 
-    def initialize(mesh)
+    def initialize(mesh, texture)
       @mesh = Engine::ObjFile.new(mesh)
+      @texture = texture
     end
 
     def start
@@ -33,6 +34,13 @@ module Engine::Components
     def set_shader_per_frame_data
       set_shader_camera_matrix
       set_shader_model_matrix
+      set_shader_texture
+    end
+
+    def set_shader_texture
+      GL.ActiveTexture(GL::TEXTURE0)
+      GL.BindTexture(GL::TEXTURE_2D, texture)
+      shader.set_int("image", 0)
     end
 
     def set_shader_model_matrix
@@ -43,7 +51,7 @@ module Engine::Components
       shader.set_mat4("camera", [
         2.0 / Engine.screen_width, 0, 0, 0,
         0, 2.0 / Engine.screen_height, 0, 0,
-        0, 0, 1, 0,
+        0, 0, 0.001, 0,
         -1, -1, 0, 1
       ])
     end

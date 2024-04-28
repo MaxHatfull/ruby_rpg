@@ -45,6 +45,9 @@ module Engine
     set_opengl_blend_mode
     @engine_started = true
     GL.ClearColor(0.0, 0.0, 0.0, 1.0)
+
+    GL.Enable(GL::CULL_FACE)
+    GL.CullFace(GL::BACK)
   end
 
   def self.main_game_loop(&first_frame_block)
