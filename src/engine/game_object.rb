@@ -59,23 +59,29 @@ module Engine
     def model_matrix
       rot = rotation * Math::PI / 180
 
-      # Apply translation
-      translation_matrix = Matrix[
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [x, y, z, 1]
+      cos_x = Math.cos(rot[0])
+      cos_y = Math.cos(rot[1])
+      cos_z = Math.cos(rot[2])
+
+      sin_x = Math.sin(rot[0])
+      sin_y = Math.sin(rot[1])
+      sin_z = Math.sin(rot[2])
+
+      rotation = Matrix[
+        [cos_y * cos_z,                         -cos_y * sin_z,                        sin_y,          0],
+        [cos_x * sin_z + sin_x * sin_y * cos_z, cos_x * cos_z - sin_x * sin_y * sin_z, -sin_x * cos_y, 0],
+        [sin_x * sin_z - cos_x * sin_y * cos_z, sin_x * cos_z + cos_x * sin_y * sin_z, cos_x * cos_y,  0],
+        [0,                                     0,                                     0,              1]
       ]
 
-      # Apply rotation
-      rot_x = Matrix[[1, 0, 0, 0], [0, Math.cos(rot[0]), -Math.sin(rot[0]), 0], [0, Math.sin(rot[0]), Math.cos(rot[0]), 0], [0, 0, 0, 1]]
-      rot_y = Matrix[[Math.cos(rot[1]), 0, Math.sin(rot[1]), 0], [0, 1, 0, 0], [-Math.sin(rot[1]), 0, Math.cos(rot[1]), 0], [0, 0, 0, 1]]
-      rot_z = Matrix[[Math.cos(rot[2]), -Math.sin(rot[2]), 0, 0], [Math.sin(rot[2]), Math.cos(rot[2]), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
+      scale_translation = Matrix[
+        [scale[0], 0, 0, 0],
+        [0, scale[1], 0, 0],
+        [0, 0, scale[2], 0],
+        [x, y, z,        1]
+      ]
 
-      # Apply scale
-      scale_matrix = Matrix[[scale[0], 0, 0, 0], [0, scale[1], 0, 0], [0, 0, scale[2], 0], [0, 0, 0, 1]]
-
-      rot_x * rot_y * rot_z * scale_matrix * translation_matrix
+      rotation * scale_translation
     end
 
     def destroy!

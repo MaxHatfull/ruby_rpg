@@ -52,6 +52,7 @@ module Engine
     GL.Enable(GL::DEPTH_TEST)
     GL.DepthFunc(GL::LESS)
 
+    GLFW.SwapInterval(0)
   end
 
   def self.main_game_loop(&first_frame_block)
@@ -96,7 +97,9 @@ module Engine
   def self.update
     @old_time = @time || Time.now
     @time = Time.now
+    @frame = (@frame || 0) + 1
     delta_time = @time - @old_time
+    puts "FPS: #{1 / delta_time}" if @frame % 1000 == 0
     GameObject.update_all(delta_time)
   end
 
