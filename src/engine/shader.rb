@@ -63,5 +63,10 @@ module Engine
       loc = GL.GetUniformLocation(@program, name)
       GL.Uniform1i(loc, int)
     end
+
+    def set_float(name, float)
+      loc = GL.GetUniformLocation(@program, name)
+      GL.Uniform1f(loc, float)
+    end
   end
 end

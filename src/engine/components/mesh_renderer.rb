@@ -36,6 +36,17 @@ module Engine::Components
       set_shader_camera_pos
       set_shader_model_matrix
       set_shader_texture
+      set_shader_lights
+    end
+
+    def set_shader_lights
+      shader.set_float("pointLights[0].constant", 0.01)
+      shader.set_float("pointLights[0].linear", 0.001)
+      shader.set_float("pointLights[0].quadratic", 0)
+      shader.set_vec3("pointLights[0].position", Vector[0, Engine.screen_height, 1500])
+      shader.set_vec3("pointLights[0].ambient", Vector[0.03, 0.03, 0.03])
+      shader.set_vec3("pointLights[0].diffuse", Vector[1, 0, 0])
+      shader.set_vec3("pointLights[0].specular", Vector[0, 0, 1.0])
     end
 
     def set_shader_texture
