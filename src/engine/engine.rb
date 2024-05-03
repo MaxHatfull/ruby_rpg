@@ -12,6 +12,7 @@ require_relative "components/triangle_renderer"
 require_relative "components/sprite_renderer"
 require_relative "components/rect_renderer"
 require_relative "components/mesh_renderer"
+require_relative "components/point_light"
 
 GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
 GLFW.Init()

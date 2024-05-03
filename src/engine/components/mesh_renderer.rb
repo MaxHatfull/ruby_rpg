@@ -40,13 +40,15 @@ module Engine::Components
     end
 
     def set_shader_lights
-      shader.set_float("pointLights[0].constant", 0.01)
-      shader.set_float("pointLights[0].linear", 0.001)
-      shader.set_float("pointLights[0].quadratic", 0)
-      shader.set_vec3("pointLights[0].position", Vector[0, Engine.screen_height, 1500])
-      shader.set_vec3("pointLights[0].ambient", Vector[0.03, 0.03, 0.03])
-      shader.set_vec3("pointLights[0].diffuse", Vector[1, 0, 0])
-      shader.set_vec3("pointLights[0].specular", Vector[0, 0, 1.0])
+      Engine::Components::PointLight.point_lights.each_with_index do |light, i|
+        shader.set_float("pointLights[#{i}].constant", light.constant)
+        shader.set_float("pointLights[#{i}].linear", light.linear)
+        shader.set_float("pointLights[#{i}].quadratic", light.quadratic)
+        shader.set_vec3("pointLights[#{i}].position", light.game_object.pos)
+        shader.set_vec3("pointLights[#{i}].ambient", light.ambient)
+        shader.set_vec3("pointLights[#{i}].diffuse", light.diffuse)
+        shader.set_vec3("pointLights[#{i}].specular", light.specular)
+      end
     end
 
     def set_shader_texture

@@ -20,7 +20,7 @@ struct PointLight {
     vec3 diffuse;
     vec3 specular;
 };
-#define NR_POINT_LIGHTS 1
+#define NR_POINT_LIGHTS 16
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
@@ -50,8 +50,7 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(cameraPos - FragPos);
 
-    float ambientStrength = 0.5;
-    vec3 result = ambientStrength * vec3(1.0, 1.0, 1.0);
+    vec3 result = vec3(0.0);
 
     for (int i = 0; i < NR_POINT_LIGHTS; i++) {
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
