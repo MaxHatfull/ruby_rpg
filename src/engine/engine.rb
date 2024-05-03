@@ -8,6 +8,7 @@ require_relative 'texture'
 require_relative 'obj_file'
 require_relative 'shader'
 require_relative 'component'
+require_relative "camera"
 require_relative "components/triangle_renderer"
 require_relative "components/sprite_renderer"
 require_relative "components/rect_renderer"
