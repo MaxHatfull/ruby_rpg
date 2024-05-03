@@ -48,7 +48,7 @@ module Engine
     def local_to_world_coordinate(local)
       local_x4 = Vector[local[0], local[1], local[2], 1.0]
       world = model_matrix.transpose * local_x4
-      world = world.to_a.flatten
+      world = world.to_a.flatten(1)
       Vector[world[0], world[1], world[2]]
     end
 
