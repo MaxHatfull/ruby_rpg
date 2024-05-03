@@ -32,11 +32,13 @@ module Engine
     base_dir = File.expand_path(base_dir)
     Dir[File.join(base_dir, "components", "**/*.rb")].each { |file| require file }
     Dir[File.join(base_dir, "game_objects", "**/*.rb")].each { |file| require file }
-    GL.load_lib
-    set_opengl_version
   end
 
   def self.open_window(width, height)
+    GL.load_lib
+    set_opengl_version
+    @old_time = Time.now
+    @time = Time.now
     GLFW.WindowHint(GLFW::DECORATED, 0)
     @key_callback = create_key_callbacks # This must be an instance variable to prevent garbage collection
     @window = GLFW.CreateWindow(width, height, "Simple example", nil, nil)
@@ -57,6 +59,8 @@ module Engine
 
   def self.main_game_loop(&first_frame_block)
     @game_stopped = false
+    @old_time = Time.now
+    @time = Time.now
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE || @game_stopped
       GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
 

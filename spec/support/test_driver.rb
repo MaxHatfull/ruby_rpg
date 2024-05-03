@@ -46,11 +46,11 @@ module TestDriver
     $current_tick ||= 0
   end
 
-  def within_game_context(frame_duration: 0.1, &block)
+  def within_game_context(frame_duration: 0.1, load_path:, &block)
     set_tick(0)
     allow(Time).to(receive(:now)) { current_tick * frame_duration }
+    Engine.load(load_path)
     if !Engine.engine_started?
-      Engine.load("./samples/asteroids")
       Engine.open_window(800, 600)
     end
     Engine.main_game_loop do
