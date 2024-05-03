@@ -33,6 +33,7 @@ module Engine::Components
 
     def set_shader_per_frame_data
       set_shader_camera_matrix
+      set_shader_camera_pos
       set_shader_model_matrix
       set_shader_texture
     end
@@ -54,6 +55,10 @@ module Engine::Components
         0, 0, -0.001, 0,
         -1, -1, 0, 1
       ])
+    end
+
+    def set_shader_camera_pos
+      shader.set_vec3("cameraPos", Vector[Engine.screen_width / 2, Engine.screen_height / 2, 0])
     end
 
     def setup_index_buffer

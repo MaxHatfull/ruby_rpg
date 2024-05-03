@@ -41,7 +41,12 @@ module Engine
 
     def set_vec3(name, vec)
       loc = GL.GetUniformLocation(@program, name)
-      GL.Uniform3f(loc, vec[:r], vec[:g], vec[:b])
+      vector = if vec.is_a?(Vector)
+                  vec
+                else
+                  Vector[vec[:r], vec[:g], vec[:b]]
+               end
+      GL.Uniform3f(loc, vector[0], vector[1], vector[2])
     end
 
     def set_vec4(name, vec)
