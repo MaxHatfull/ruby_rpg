@@ -12,9 +12,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   Engine::GameObject.new(
     "light", pos: Vector[0, 1000, 1000], components: [
     Engine::Components::PointLight.new(
-      constant: 0,
-      linear: 0,
-      quadratic: 0.000001,
+      range: 1000,
       ambient: Vector[0, 0, 0],
       diffuse: Vector[0, 0, 1],
       specular: Vector[0, 0, 1]
@@ -24,9 +22,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   Engine::GameObject.new(
     "light", pos: Vector[Engine.screen_width, 1000, 1000], components: [
     Engine::Components::PointLight.new(
-      constant: 0,
-      linear: 0,
-      quadratic: 0.000001,
+      range: 1000,
       ambient: Vector[0, 0, 0],
       diffuse: Vector[1, 0, 1],
       specular: Vector[1, 0, 1]
@@ -36,9 +32,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   Engine::GameObject.new(
     "light", pos: Vector[Engine.screen_width / 2, 1500, 1000], components: [
     Engine::Components::PointLight.new(
-      constant: 0,
-      linear: 0,
-      quadratic: 0.000001,
+      range: 1000,
       ambient: Vector[0, 0, 0],
       diffuse: Vector[0, 1, 0],
       specular: Vector[0, 1, 0]

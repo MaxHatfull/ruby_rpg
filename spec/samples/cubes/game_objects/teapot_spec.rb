@@ -17,9 +17,7 @@ describe Cubes::Teapot do
           Engine::GameObject.new(
             "light", pos: Vector[Engine.screen_width / 2, 500, 100], components: [
             Engine::Components::PointLight.new(
-              constant: 0,
-              linear: 0.0001,
-              quadratic: 0.00001,
+              range: 300,
               ambient: Vector[0.5, 0.5, 0.5],
               diffuse: Vector[1, 1, 1],
               specular: Vector[1, 1, 1]

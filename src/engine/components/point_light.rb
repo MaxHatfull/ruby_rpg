@@ -2,12 +2,10 @@
 
 module Engine::Components
   class PointLight < Engine::Component
-    attr_accessor :constant, :linear, :quadratic, :ambient, :diffuse, :specular
+    attr_accessor :range, :ambient, :diffuse, :specular
 
-    def initialize(constant: 0.01, linear: 0.01, quadratic: 0, ambient: Vector[0.01, 0.01, 0.01], diffuse: Vector[1, 1, 1], specular: Vector[1, 1, 1])
-      @constant = constant
-      @linear = linear
-      @quadratic = quadratic
+    def initialize(range: 300, ambient: Vector[0.01, 0.01, 0.01], diffuse: Vector[1, 1, 1], specular: Vector[1, 1, 1])
+      @range = range
       @ambient = ambient
       @diffuse = diffuse
       @specular = specular

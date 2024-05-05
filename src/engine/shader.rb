@@ -23,6 +23,8 @@ module Engine
         puts vertex_log.strip
         puts fragment_log.strip
       end
+      @uniform_cache = {}
+      @uniform_locations = {}
     end
 
     def compile_shader(shader, type)
@@ -40,33 +42,50 @@ module Engine
     end
 
     def set_vec3(name, vec)
-      loc = GL.GetUniformLocation(@program, name)
+      return if @uniform_cache[name] == vec
+      @uniform_cache[name] = vec
       vector = if vec.is_a?(Vector)
-                  vec
-                else
-                  Vector[vec[:r], vec[:g], vec[:b]]
+                 vec
+               else
+                 Vector[vec[:r], vec[:g], vec[:b]]
                end
-      GL.Uniform3f(loc, vector[0], vector[1], vector[2])
+      GL.Uniform3f(uniform_location(name), vector[0], vector[1], vector[2])
     end
 
     def set_vec4(name, vec)
-      loc = GL.GetUniformLocation(@program, name)
-      GL.Uniform4f(loc, vec[0], vec[1], vec[2], vec[3])
+      return if @uniform_cache[name] == vec
+      @uniform_cache[name] = vec
+      GL.Uniform4f(uniform_location(name), vec[0], vec[1], vec[2], vec[3])
     end
 
     def set_mat4(name, mat)
-      loc = GL.GetUniformLocation(@program, name)
-      GL.UniformMatrix4fv(loc, 1, GL::FALSE, mat.to_a.flatten(1).pack('F*'))
+      return if @uniform_cache[name] == mat
+      @uniform_cache[name] = mat
+      mat_array = [
+        mat[0, 0], mat[0, 1], mat[0, 2], mat[0, 3],
+        mat[1, 0], mat[1, 1], mat[1, 2], mat[1, 3],
+        mat[2, 0], mat[2, 1], mat[2, 2], mat[2, 3],
+        mat[3, 0], mat[3, 1], mat[3, 2], mat[3, 3]
+      ]
+      GL.UniformMatrix4fv(uniform_location(name), 1, GL::FALSE, mat_array.pack('F*'))
     end
 
     def set_int(name, int)
-      loc = GL.GetUniformLocation(@program, name)
-      GL.Uniform1i(loc, int)
+      return if @uniform_cache[name] == int
+      @uniform_cache[name] = int
+      GL.Uniform1i(uniform_location(name), int)
     end
 
     def set_float(name, float)
-      loc = GL.GetUniformLocation(@program, name)
-      GL.Uniform1f(loc, float)
+      return if @uniform_cache[name] == float
+      @uniform_cache[name] = float
+      GL.Uniform1f(uniform_location(name), float)
+    end
+
+    private
+
+    def uniform_location(name)
+      @uniform_locations[name] ||= GL.GetUniformLocation(@program, name)
     end
   end
 end

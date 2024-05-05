@@ -12,9 +12,7 @@ uniform vec3 cameraPos;
 struct PointLight {
     vec3 position;
 
-    float constant;
-    float linear;
-    float quadratic;
+    float sqrRange;
 
     vec3 ambient;
     vec3 diffuse;
@@ -31,8 +29,8 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     vec3 reflectDir = reflect(lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 15);
 
-    float distance = length(light.position - fragPos);
-    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+    float sqrDistance = dot(light.position - fragPos, light.position - fragPos);
+    float attenuation = light.sqrRange / sqrDistance;
 
     vec3 ambient = light.ambient;
     vec3 diffuse = light.diffuse  * diff;

@@ -41,9 +41,7 @@ module Engine::Components
 
     def set_shader_lights
       Engine::Components::PointLight.point_lights.each_with_index do |light, i|
-        shader.set_float("pointLights[#{i}].constant", light.constant)
-        shader.set_float("pointLights[#{i}].linear", light.linear)
-        shader.set_float("pointLights[#{i}].quadratic", light.quadratic)
+        shader.set_float("pointLights[#{i}].sqrRange", light.range * light.range)
         shader.set_vec3("pointLights[#{i}].position", light.game_object.pos)
         shader.set_vec3("pointLights[#{i}].ambient", light.ambient)
         shader.set_vec3("pointLights[#{i}].diffuse", light.diffuse)
