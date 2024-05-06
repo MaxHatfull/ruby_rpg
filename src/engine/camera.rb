@@ -13,6 +13,7 @@ module Engine
 
     def pos=(new_pos)
       @pos = new_pos
+      @matrix = nil
     end
 
     def self.instance
@@ -25,12 +26,13 @@ module Engine
     end
 
     def matrix
-      Matrix[
-        [right[0], up[0], -front[0], 0],
-        [right[1], up[1], -front[1], 0],
-        [right[2], up[2], -front[2], 0],
-        [-pos.dot(right), -pos.dot(up), pos.dot(front), 1]
-      ]
+      @matrix ||=
+        Matrix[
+          [right[0], up[0], -front[0], 0],
+          [right[1], up[1], -front[1], 0],
+          [right[2], up[2], -front[2], 0],
+          [-pos.dot(right), -pos.dot(up), pos.dot(front), 1]
+        ]
     end
   end
 end
