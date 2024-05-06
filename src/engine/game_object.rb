@@ -67,21 +67,12 @@ module Engine
       sin_y = Math.sin(rot[1])
       sin_z = Math.sin(rot[2])
 
-      rotation = Matrix[
-        [cos_y * cos_z,                         -cos_y * sin_z,                        sin_y,          0],
-        [cos_x * sin_z + sin_x * sin_y * cos_z, cos_x * cos_z - sin_x * sin_y * sin_z, -sin_x * cos_y, 0],
-        [sin_x * sin_z - cos_x * sin_y * cos_z, sin_x * cos_z + cos_x * sin_y * sin_z, cos_x * cos_y,  0],
-        [0,                                     0,                                     0,              1]
+      Matrix[
+        [scale[0] * (cos_y * cos_z), scale[0] * (-cos_y * sin_z), scale[0] * sin_y, 0],
+        [scale[1] * (cos_x * sin_z + sin_x * sin_y * cos_z), scale[1] * (cos_x * cos_z - sin_x * sin_y * sin_z), scale[1] * -sin_x * cos_y, 0],
+        [scale[2] * (sin_x * sin_z - cos_x * sin_y * cos_z), scale[2] * (sin_x * cos_z + cos_x * sin_y * sin_z), scale[2] * cos_x * cos_y, 0],
+        [x, y, z, 1]
       ]
-
-      scale_translation = Matrix[
-        [scale[0], 0, 0, 0],
-        [0, scale[1], 0, 0],
-        [0, 0, scale[2], 0],
-        [x, y, z,        1]
-      ]
-
-      rotation * scale_translation
     end
 
     def destroy!
