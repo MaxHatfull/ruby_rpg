@@ -7,7 +7,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   Cube.new(Vector[1920 / 4, 1080 / 2, 500], 90, 100)
   Sphere.new(Vector[1920 / 2, 1080 / 2, 500], 90, 100)
   Teapot.new(Vector[3 * 1920 / 4, 1080 / 2, 500], 90, 200)
-  #Plane.new(Vector[1000, 0, 500], 0, 1000)
+  Plane.new(Vector[1000, -100, 500], 0, 500)
 
   Engine::GameObject.new(
     "light", pos: Vector[0, 1000, 1000], components: [
@@ -38,4 +38,11 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
       specular: Vector[0, 1, 0]
     )
   ])
+
+  Engine::GameObject.new("Camera rotator",
+                         components: [
+                           Cubes::CameraRotator.new
+                         ])
+
+  Engine::Camera.instance.rotate(-30, Vector[1, 0, 0])
 end

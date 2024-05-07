@@ -57,6 +57,9 @@ module Engine
     GL.DepthFunc(GL::LESS)
 
     GLFW.SwapInterval(0)
+
+    # lock cursor
+    GLFW.SetInputMode(@window, GLFW::CURSOR, GLFW::CURSOR_DISABLED)
   end
 
   def self.main_game_loop(&first_frame_block)

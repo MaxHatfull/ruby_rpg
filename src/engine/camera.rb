@@ -16,6 +16,20 @@ module Engine
       @matrix = nil
     end
 
+    def rotate(angle, axis)
+      axis = axis.normalize
+      theta = angle * Math::PI / 180
+      rotation_matrix = Matrix[
+        [Math.cos(theta) + axis[0] * axis[0] * (1 - Math.cos(theta)), axis[0] * axis[1] * (1 - Math.cos(theta)) - axis[2] * Math.sin(theta), axis[0] * axis[2] * (1 - Math.cos(theta)) + axis[1] * Math.sin(theta)],
+        [axis[1] * axis[0] * (1 - Math.cos(theta)) + axis[2] * Math.sin(theta), Math.cos(theta) + axis[1] * axis[1] * (1 - Math.cos(theta)), axis[1] * axis[2] * (1 - Math.cos(theta)) - axis[0] * Math.sin(theta)],
+        [axis[2] * axis[0] * (1 - Math.cos(theta)) - axis[1] * Math.sin(theta), axis[2] * axis[1] * (1 - Math.cos(theta)) + axis[0] * Math.sin(theta), Math.cos(theta) + axis[2] * axis[2] * (1 - Math.cos(theta))]
+      ]
+      @front = rotation_matrix * @front
+      @right = rotation_matrix * @right
+      @up = rotation_matrix * @up
+      @matrix = nil
+    end
+
     def self.instance
       @instance ||= new(
         pos: Vector[Engine.screen_width / 2.0, Engine.screen_height / 2.0, 1000.0],
