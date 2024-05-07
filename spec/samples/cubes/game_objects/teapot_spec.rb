@@ -23,6 +23,12 @@ describe Cubes::Teapot do
               specular: Vector[1, 1, 1]
             )
           ])
+          Engine::GameObject.new(
+            "camera", pos: Vector[Engine.screen_width / 2, Engine.screen_height / 2, 1000],
+            components: [
+              Engine::Components::OrthographicCamera.new(width: Engine.screen_width, height: Engine.screen_height, far: 2000)
+            ]
+          )
         end
         at(1) { check_screenshot(__dir__ + "/teapot.png") }
         at(20) { Engine.stop_game }

@@ -6,16 +6,16 @@ module Cubes
 
     def update(delta_time)
       if Engine::Input.key_down?(GLFW::KEY_LEFT)
-        Engine::Camera.instance.rotate(delta_time * ROTATION_SPEED, Vector[0, 1, 0])
+        game_object.rotation[1] += ROTATION_SPEED * delta_time
       end
       if Engine::Input.key_down?(GLFW::KEY_RIGHT)
-        Engine::Camera.instance.rotate(-delta_time * ROTATION_SPEED, Vector[0, 1, 0])
+        game_object.rotation[1] -= ROTATION_SPEED * delta_time
       end
       if Engine::Input.key_down?(GLFW::KEY_UP)
-        Engine::Camera.instance.rotate(delta_time * ROTATION_SPEED, Engine::Camera.instance.right.normalize)
+        game_object.rotation[0] += ROTATION_SPEED * delta_time
       end
       if Engine::Input.key_down?(GLFW::KEY_DOWN)
-        Engine::Camera.instance.rotate(-delta_time * ROTATION_SPEED, Engine::Camera.instance.right.normalize)
+        game_object.rotation[0] -= ROTATION_SPEED * delta_time
       end
     end
   end
