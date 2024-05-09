@@ -2,6 +2,10 @@ module Engine::Components
   class SpriteRenderer < Engine::Component
     attr_reader :v1, :v2, :v3, :v4, :texture, :frame_coords, :frame_rate, :loop
 
+    def renderer?
+      true
+    end
+
     def initialize(tl, tr, br, bl, texture, frame_coords = nil, frame_rate = nil, loop = true)
       @v1 = tl
       @v2 = tr

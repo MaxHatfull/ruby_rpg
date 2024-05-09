@@ -2,6 +2,10 @@ module Engine::Components
   class MeshRenderer < Engine::Component
     attr_reader :mesh, :texture
 
+    def renderer?
+      true
+    end
+
     def initialize(mesh, texture)
       @mesh = Engine::ObjFile.new(mesh)
       @texture = texture

@@ -2,7 +2,7 @@ require "matrix"
 
 module Engine
   class GameObject
-    attr_accessor :name, :pos, :rotation, :scale, :components, :created_at
+    attr_accessor :name, :pos, :rotation, :scale, :components, :renderers, :created_at
 
     def initialize(name = "Game Object", pos: Vector[0, 0, 0], rotation: 0, scale: Vector[1, 1, 1], components: [])
       GameObject.object_spawned(self)
@@ -14,7 +14,8 @@ module Engine
       end
       @scale = scale
       @name = name
-      @components = components
+      @components = components.select { |component| !component.renderer? }
+      @renderers = components.select { |component| component.renderer? }
       @created_at = Time.now
 
       components.each { |component| component.set_game_object(self) }
@@ -103,6 +104,18 @@ module Engine
     def self.update_all(delta_time)
       GameObject.objects.each do |object|
         object.components.each { |component| component.update(delta_time) }
+      end
+    end
+
+    def self.render_all(delta_time)
+      GameObject.objects.each do |object|
+        object.renderers.each { |renderer| renderer.update(delta_time) }
+      end
+    end
+
+    def self.cache_matrices
+      GameObject.objects.each do |object|
+        object.model_matrix
       end
     end
 

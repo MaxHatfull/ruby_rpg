@@ -1,5 +1,6 @@
 require 'opengl'
 require 'glfw'
+require 'concurrent'
 
 require_relative 'screenshoter'
 require_relative 'input'
@@ -67,17 +68,30 @@ module Engine
     @game_stopped = false
     @old_time = Time.now
     @time = Time.now
+    update_screen_size
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE || @game_stopped
-      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
-
-      update_screen_size
       if first_frame_block
         first_frame_block.call
         first_frame_block = nil
       end
-      update
 
-      GLFW.SwapBuffers(@window)
+      @old_time = @time || Time.now
+      @time = Time.now
+      delta_time = @time - @old_time
+
+      print_fps(delta_time)
+      GameObject.update_all(delta_time)
+      GameObject.cache_matrices
+      @swap_buffers_promise.wait! if @swap_buffers_promise
+      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
+      GameObject.render_all(delta_time)
+
+      update_screen_size
+
+      @swap_buffers_promise = Concurrent::Promise.new do
+        GLFW.SwapBuffers(@window)
+      end
+      @swap_buffers_promise.execute
 
       if Screenshoter.scheduled_screenshot
         Screenshoter.take_screenshot
@@ -104,13 +118,9 @@ module Engine
 
   private
 
-  def self.update
-    @old_time = @time || Time.now
-    @time = Time.now
+  def self.print_fps(delta_time)
     @frame = (@frame || 0) + 1
-    delta_time = @time - @old_time
     puts "FPS: #{1 / delta_time}" if @frame % 1000 == 0
-    GameObject.update_all(delta_time)
   end
 
   def self.set_opengl_blend_mode
