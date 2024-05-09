@@ -81,7 +81,7 @@ module Engine
 
       print_fps(delta_time)
       GameObject.update_all(delta_time)
-      GameObject.cache_matrices
+
       @swap_buffers_promise.wait! if @swap_buffers_promise
       GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
       GameObject.render_all(delta_time)
@@ -119,8 +119,13 @@ module Engine
   private
 
   def self.print_fps(delta_time)
+    @time_since_last_fps_print = (@time_since_last_fps_print || 0) + delta_time
     @frame = (@frame || 0) + 1
-    puts "FPS: #{1 / delta_time}" if @frame % 1000 == 0
+    if @time_since_last_fps_print > 1
+      puts "FPS: #{@frame / @time_since_last_fps_print}"
+      @time_since_last_fps_print = 0
+      @frame = 0
+    end
   end
 
   def self.set_opengl_blend_mode

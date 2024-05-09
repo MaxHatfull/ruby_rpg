@@ -113,12 +113,6 @@ module Engine
       end
     end
 
-    def self.cache_matrices
-      GameObject.objects.each do |object|
-        object.model_matrix
-      end
-    end
-
     def self.object_spawned(object)
       objects << object
     end
