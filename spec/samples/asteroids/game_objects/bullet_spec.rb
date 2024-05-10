@@ -13,7 +13,9 @@ describe Asteroids::Bullet do
     it "renders the moving bullet" do
       within_game_context(load_path: "./samples/asteroids") do
         at(0) { Asteroids::Bullet.new(Vector[100, 100], 45) }
-        at(1) { check_screenshot(File.join(__dir__, "bullet_1.png")) }
+        at(1) do
+          check_screenshot(File.join(__dir__, "bullet_1.png"))
+        end
         at(5) { check_screenshot(File.join(__dir__, "bullet_2.png")) }
         at(30) do
           check_screenshot(File.join(__dir__, "bullet_3.png"))

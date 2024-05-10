@@ -12,9 +12,12 @@ describe Asteroids::Explosion do
   describe "When placed in the scene" do
     it "renders the explosion" do
       within_game_context(frame_duration: 0.05, load_path: "./samples/asteroids") do
-        at(0) { Asteroids::Explosion.new(Vector[100, 100]) }
-        till(5) { check_screenshot(File.join(__dir__, "explosion_#{current_tick}.png")) }
-        at(6) { Engine.stop_game }
+        at(0) do
+          Asteroids::Explosion.new(Vector[100, 100])
+          check_screenshot(File.join(__dir__, "explosion_0.png"))
+        end
+        till(4) { check_screenshot(File.join(__dir__, "explosion_#{current_tick}.png")) }
+        at(5) { Engine.stop_game }
       end
     end
   end

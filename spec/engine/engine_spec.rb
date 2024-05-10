@@ -1,19 +1,14 @@
 # frozen_string_literal: true
 
 describe Engine do
-  describe ".update" do
-    it 'calls update on gameobjects' do
-      expect(Engine::GameObject).to receive(:update_all)
+  describe ".start" do
+    it "starts the game engine" do
+      expect(Engine).to receive(:load).with("base_dir")
+      expect(Engine).to receive(:open_window).with(600, 800)
+      expect(Engine).to receive(:main_game_loop)
+      expect(Engine).to receive(:terminate)
 
-      @old_time = @time || Time.now
-      @time = Time.now
-      delta_time = @time - @old_time
-      Engine.print_fps(delta_time)
-      GameObject.update_all(delta_time)
-      GameObject.cache_matrices
-      @swap_buffers_promise.wait! if @swap_buffers_promise
-      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
-      GameObject.render_all(delta_time)
+      Engine.start(width: 600, height: 800, base_dir: "base_dir")
     end
   end
 end

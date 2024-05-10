@@ -28,7 +28,13 @@ RSpec::Matchers.define :match_screenshot_on_disk do |expected|
     if failed
       diff_location = File.join(File.dirname(expected), "temp", "diff_#{File.basename(expected)}")
       FileUtils.mkdir_p(File.dirname(diff_location))
+      File.delete(diff_location) if File.exist?(diff_location)
       diff_image.save(diff_location)
+
+      actual_location = File.join(File.dirname(expected), "temp", "actual_#{File.basename(expected)}")
+      FileUtils.mkdir_p(File.dirname(actual_location))
+      File.delete(actual_location) if File.exist?(actual_location)
+      actual_image.save(actual_location)
     end
     !failed
   end

@@ -69,6 +69,8 @@ module Engine
     @old_time = Time.now
     @time = Time.now
     update_screen_size
+    GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
+
     until GLFW.WindowShouldClose(@window) == GLFW::TRUE || @game_stopped
       if first_frame_block
         first_frame_block.call
@@ -83,8 +85,11 @@ module Engine
       GameObject.update_all(delta_time)
 
       @swap_buffers_promise.wait! if @swap_buffers_promise
-      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
       GameObject.render_all(delta_time)
+      if Screenshoter.scheduled_screenshot
+        Screenshoter.take_screenshot
+      end
+      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
 
       update_screen_size
 
@@ -93,9 +98,6 @@ module Engine
       end
       @swap_buffers_promise.execute
 
-      if Screenshoter.scheduled_screenshot
-        Screenshoter.take_screenshot
-      end
 
       GLFW.PollEvents
     end
@@ -113,6 +115,7 @@ module Engine
 
   def self.stop_game
     @game_stopped = true
+    @swap_buffers_promise.wait! if @swap_buffers_promise && !@swap_buffers_promise.complete?
     GameObject.destroy_all
   end
 
