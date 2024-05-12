@@ -85,12 +85,11 @@ module Engine
       GameObject.update_all(delta_time)
 
       @swap_buffers_promise.wait! if @swap_buffers_promise
+      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
       GameObject.render_all(delta_time)
       if Screenshoter.scheduled_screenshot
         Screenshoter.take_screenshot
       end
-      GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
-
       update_screen_size
 
       @swap_buffers_promise = Concurrent::Promise.new do
