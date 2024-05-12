@@ -15,7 +15,7 @@ module Engine::Components
     def matrix
       @matrix ||=
         begin
-          camera_pos = game_object.pos - game_object.forward * @far
+          camera_pos = game_object.pos - game_object.forward * (@far / 2)
           Matrix[
             [right[0], up[0], -front[0], 0],
             [right[1], up[1], -front[1], 0],
@@ -44,7 +44,7 @@ module Engine::Components
     end
 
     def front
-      @front ||= game_object.forward / @far
+      @front ||= game_object.forward / (@far / 2)
     end
   end
 end

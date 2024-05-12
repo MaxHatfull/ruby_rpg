@@ -162,4 +162,22 @@ describe Engine::GameObject do
       expect(Engine::GameObject.objects).to be_empty
     end
   end
+
+  describe "#right, #up and #forward" do
+    it "returns the right vector of the object" do
+      object = Engine::GameObject.new(pos: Vector[10, 20, 0], rotation: Vector[0, 0, 0])
+
+      expect((object.right - Vector[1, 0, 0]).magnitude).to be_within(0.0001).of(0)
+      expect((object.up - Vector[0, 1, 0]).magnitude).to be_within(0.0001).of(0)
+      expect((object.forward - Vector[0, 0, 1]).magnitude).to be_within(0.0001).of(0)
+    end
+
+    it "returns the right vector of the object when rotated" do
+      object = Engine::GameObject.new(pos: Vector[10, 20, 0], rotation: Vector[0, 90, 0])
+
+      expect((object.right - Vector[0, 0, 1]).magnitude).to be_within(0.0001).of(0)
+      expect((object.up - Vector[0, 1, 0]).magnitude).to be_within(0.0001).of(0)
+      expect((object.forward - Vector[-1, 0, 0]).magnitude).to be_within(0.0001).of(0)
+    end
+  end
 end

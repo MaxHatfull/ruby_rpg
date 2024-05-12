@@ -24,7 +24,7 @@ describe Cubes::Teapot do
             )
           ])
           Engine::GameObject.new(
-            "camera", pos: Vector[Engine.screen_width / 2, Engine.screen_height / 2, 1000],
+            "Camera", pos: Vector[Engine.screen_width / 2, Engine.screen_height / 2, 1000],
             components: [
               Engine::Components::OrthographicCamera.new(width: Engine.screen_width, height: Engine.screen_height, far: 2000)
             ]
