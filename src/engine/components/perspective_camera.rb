@@ -41,7 +41,7 @@ module Engine::Components
       Matrix[
         [1 / (Math.tan(fov / 2) * @aspect), 0, 0, 0],
         [0, 1 / Math.tan(fov / 2), 0, 0],
-        [0, 0, @far / (@near - @far), @far * @near / (@near - @far)],
+        [0, 0, (@far + @near) / (@near - @far), 2 * @far * @near / (@near - @far)],
         [0, 0, -1, 0]
       ]
     end
