@@ -2,7 +2,7 @@
 
 module Cubes
   class CameraRotator < Engine::Component
-    ROTATION_SPEED = 100
+    ROTATION_SPEED = 60
     MOVE_SPEED = 500
 
     def update(delta_time)

@@ -68,7 +68,7 @@ module Engine::Components
     end
 
     def set_shader_camera_pos
-      shader.set_vec3("cameraPos", Vector[Engine.screen_width / 2, Engine.screen_height / 2, 0])
+      shader.set_vec3("cameraPos", Engine::Camera.instance.game_object.pos)
     end
 
     def setup_index_buffer

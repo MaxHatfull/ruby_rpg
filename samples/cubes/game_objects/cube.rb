@@ -13,7 +13,7 @@ module Cubes
           Engine::Components::MeshRenderer.new(
             ASSETS_DIR + "/cube.obj",
             Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture
-            ),
+          ),
         ]
       )
     end
