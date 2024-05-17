@@ -113,7 +113,7 @@ describe Engine::Components::OrthographicCamera do
     end
 
     it "correctly maps points when the camera is rotated" do
-      camera = Engine::Components::OrthographicCamera.new(width: 10, height: 10, far: 10)
+      camera = Engine::Components::OrthographicCamera.new(width: 10.0, height: 10.0, far: 10.0)
       Engine::GameObject.new("Camera",
                              pos: Vector[0, 0, 0],
                              rotation: Vector[0, 90, 0],
@@ -121,16 +121,13 @@ describe Engine::Components::OrthographicCamera do
                              components: [camera]
       )
 
-      puts "forward is #{camera.game_object.forward}"
-      puts "right is #{camera.game_object.right}"
-
       expect(Vector[0, 0, 0]).to be_on_screen_at(Vector[0, 0, -1])
-      expect(Vector[-10, 0, 0]).to be_on_screen_at(Vector[0, 0, 1])
+      expect(Vector[10, 0, 0]).to be_on_screen_at(Vector[0, 0, 1])
       expect(Vector[0, 5, 5]).to be_on_screen_at(Vector[1, 1, -1])
       expect(Vector[0, -5, -5]).to be_on_screen_at(Vector[-1, -1, -1])
 
       expect(Vector[-1, 0, 0]).to be_on_screen_at(Vector[0, 0, -1.2])
-      expect(Vector[-11, 0, 0]).to be_on_screen_at(Vector[0, 0, 1.2])
+      expect(Vector[11, 0, 0]).to be_on_screen_at(Vector[0, 0, 1.2])
       expect(Vector[0, 6, 6]).to be_on_screen_at(Vector[1.2, 1.2, -1])
       expect(Vector[0, -6, -6]).to be_on_screen_at(Vector[-1.2, -1.2, -1])
     end

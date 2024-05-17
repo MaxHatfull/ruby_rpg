@@ -49,7 +49,7 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(cameraPos - FragPos);
 
-    vec3 result = vec3(0.0);
+    vec3 result = vec3(0.3);
 
     for (int i = 0; i < NR_POINT_LIGHTS; i++) {
         if (pointLights[i].sqrRange == 0.0)

@@ -14,26 +14,19 @@ module Engine::Components
     def matrix
       @matrix ||=
         begin
-          (rotation * translation * projection).transpose
+          right = game_object.right
+          up = game_object.up
+          forward = game_object.forward
+
+          transformation_matrix = Matrix[
+            [right[0], right[1], right[2], -right.dot(game_object.pos)],
+            [up[0], up[1], up[2], -up.dot(game_object.pos)],
+            [forward[0], forward[1], forward[2], -forward.dot(game_object.pos)],
+            [0, 0, 0, 1]
+          ]
+
+          (projection * transformation_matrix).transpose
         end
-    end
-
-    def rotation
-      Matrix[
-        [game_object.forward[0], game_object.up[0], game_object.right[0], 0],
-        [game_object.forward[1], game_object.up[1], game_object.right[1], 0],
-        [game_object.forward[2], game_object.up[2], game_object.right[2], 0],
-        [0, 0, 0, 1]
-      ]
-    end
-
-    def translation
-      Matrix[
-        [1, 0, 0, -game_object.pos[0]],
-        [0, 1, 0, -game_object.pos[1]],
-        [0, 0, 1, -game_object.pos[2]],
-        [0, 0, 0, 1]
-      ]
     end
 
     def projection
@@ -47,7 +40,7 @@ module Engine::Components
     end
 
     def update(delta_time)
-      @matrix = nil if game_object.rotation != @rotation
+      @matrix = nil
       @rotation = game_object.rotation
     end
   end
