@@ -51,6 +51,11 @@ module Engine::Components
         shader.set_vec3("pointLights[#{i}].diffuse", light.diffuse)
         shader.set_vec3("pointLights[#{i}].specular", light.specular)
       end
+      Engine::Components::DirectionLight.direction_lights.each_with_index do |light, i|
+        shader.set_vec3("directionalLights[#{i}].direction", light.game_object.forward)
+        shader.set_vec3("directionalLights[#{i}].diffuse", light.diffuse)
+        shader.set_vec3("directionalLights[#{i}].specular", light.specular)
+      end
     end
 
     def set_shader_texture

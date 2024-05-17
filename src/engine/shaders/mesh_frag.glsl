@@ -9,6 +9,15 @@ out vec4 color;
 uniform sampler2D image;
 uniform vec3 cameraPos;
 
+struct DirectionalLight {
+    vec3 direction;
+
+    vec3 diffuse;
+    vec3 specular;
+};
+#define NR_DIRECTIONAL_LIGHTS 4
+uniform DirectionalLight directionalLights[NR_DIRECTIONAL_LIGHTS];
+
 struct PointLight {
     vec3 position;
 
@@ -44,6 +53,19 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     return (ambient + diffuse + specular);
 }
 
+vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
+{
+    float diff = max(dot(normal, -light.direction), 0.0);
+
+    vec3 reflectDir = reflect(-light.direction, normal);
+    float spec = pow(max(dot(-viewDir, reflectDir), 0.0), 15);
+
+    vec3 diffuse = light.diffuse  * diff;
+    vec3 specular = light.specular * spec;
+
+    return (diffuse + specular);
+}
+
 void main()
 {
     vec3 norm = normalize(Normal);
@@ -58,6 +80,15 @@ void main()
         }
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     }
+
+    for (int i = 0; i < NR_DIRECTIONAL_LIGHTS; i++) {
+        if (directionalLights[i].diffuse + directionalLights[i].specular == vec3(0.0))
+        {
+            break;
+        }
+        result += CalcDirectionalLight(directionalLights[i], norm, FragPos, viewDir);
+    }
+
     vec4 tex = texture(image, TexCoord);
     color = tex * vec4(result, 1.0);
 }

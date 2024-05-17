@@ -48,6 +48,16 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
     components: [
       Cubes::CameraRotator.new,
       Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: 5000.0)
-    #Engine::Components::OrthographicCamera.new(width: 1920, height: 1080, far: 1000)
+    # Engine::Components::OrthographicCamera.new(width: 1920, height: 1080, far: 1000)
+    ])
+
+  Engine::GameObject.new(
+    "Direction Light",
+    rotation: Vector[-90, 0, 0],
+    components: [
+      Engine::Components::DirectionLight.new(
+        diffuse: Vector[0.2, 0.2, 0],
+        specular: Vector[0.2, 0.2, 0]
+      )
     ])
 end
