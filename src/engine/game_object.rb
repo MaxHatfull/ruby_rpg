@@ -2,9 +2,9 @@ require "matrix"
 
 module Engine
   class GameObject
-    attr_accessor :name, :pos, :rotation, :scale, :components, :renderers, :created_at
+    attr_accessor :name, :pos, :rotation, :scale, :components, :renderers, :created_at, :parent
 
-    def initialize(name = "Game Object", pos: Vector[0, 0, 0], rotation: 0, scale: Vector[1, 1, 1], components: [])
+    def initialize(name = "Game Object", pos: Vector[0, 0, 0], rotation: 0, scale: Vector[1, 1, 1], components: [], parent: nil)
       GameObject.object_spawned(self)
       @pos = Vector[pos[0], pos[1], pos[2] || 0]
       if rotation.is_a?(Numeric)
@@ -17,9 +17,26 @@ module Engine
       @components = components.select { |component| !component.renderer? }
       @renderers = components.select { |component| component.renderer? }
       @created_at = Time.now
+      @parent = parent
+      parent.add_child(self) if parent
 
       components.each { |component| component.set_game_object(self) }
       components.each(&:start)
+    end
+
+    def children
+      @children ||= Set.new
+    end
+
+    def add_child(child)
+      child.parent = self
+      children << child
+    end
+
+    def parent=(parent)
+      @parent.children.delete(self) if @parent
+      @parent = parent
+      parent.children << self if parent
     end
 
     def x
@@ -83,6 +100,8 @@ module Engine
 
     def destroy!
       GameObject.objects.delete(self)
+      parent.children.delete(self) if parent
+      children.each(&:destroy!)
     end
 
     def up

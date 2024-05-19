@@ -89,13 +89,13 @@ describe Engine::GameObject do
     end
   end
 
-  describe "#y=" do
-    it "sets the y position of the object" do
+  describe "#z=" do
+    it "sets the z position of the object" do
       object = Engine::GameObject.new
 
-      object.y = 20
+      object.z = 20
 
-      expect(object.y).to eq(20)
+      expect(object.z).to eq(20)
     end
   end
 
@@ -184,6 +184,76 @@ describe Engine::GameObject do
       expect((object.right - Vector[1, 0, 0]).magnitude).to be_within(0.0001).of(0)
       expect((object.up - Vector[0, 0, -1]).magnitude).to be_within(0.0001).of(0)
       expect((object.forward - Vector[0, 1, 0]).magnitude).to be_within(0.0001).of(0)
+    end
+  end
+
+  describe "parent" do
+    it "sets the parent of the object when creating the child" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new(parent: parent)
+
+      expect(object.parent).to eq(parent)
+    end
+
+    it "sets the children of the parent when creating the child" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new(parent: parent)
+
+      expect(parent.children).to include(object)
+    end
+
+    it "sets the parent of the object" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new
+
+      object.parent = parent
+
+      expect(object.parent).to eq(parent)
+    end
+
+    it "sets the children of the parent" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new
+
+      object.parent = parent
+
+      expect(parent.children).to include(object)
+    end
+
+    it "removes the object from the parent's children when destroyed" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new(parent: parent)
+
+      object.destroy!
+
+      expect(parent.children).not_to include(object)
+    end
+
+    it "destroys the children when the parent is destroyed" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new(parent: parent)
+
+      parent.destroy!
+
+      expect(Engine::GameObject.objects).not_to include(object)
+    end
+
+    it "sets the parent of the children to nil when the parent is removed" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new(parent: parent)
+
+      object.parent = nil
+
+      expect(object.parent).to be_nil
+    end
+
+    it "removes the object from the parent's children when the parent is removed" do
+      parent = Engine::GameObject.new
+      object = Engine::GameObject.new(parent: parent)
+
+      object.parent = nil
+
+      expect(parent.children).not_to include(object)
     end
   end
 end
