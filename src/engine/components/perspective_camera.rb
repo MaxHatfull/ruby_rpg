@@ -40,8 +40,10 @@ module Engine::Components
     end
 
     def update(delta_time)
-      @matrix = nil
-      @rotation = game_object.rotation
+      @matrix = nil if game_object.rotation != @rotation || game_object.pos != @pos || game_object.scale != @scale
+      @rotation = game_object.rotation.dup
+      @pos = game_object.pos.dup
+      @scale = game_object.scale.dup
     end
   end
 end

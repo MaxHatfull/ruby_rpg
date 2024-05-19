@@ -86,15 +86,21 @@ module Engine
     end
 
     def up
-      local_to_world_direction(Vector[0, 1, 0])
+      return @up if @cached_up_rotation == rotation
+      @cached_up_rotation = rotation.dup
+      @up = local_to_world_direction(Vector[0, 1, 0])
     end
 
     def right
-      local_to_world_direction(Vector[1, 0, 0])
+      return @right if @cached_right_rotation == rotation
+      @cached_right_rotation = rotation.dup
+      @right = local_to_world_direction(Vector[1, 0, 0])
     end
 
     def forward
-      local_to_world_direction(Vector[0, 0, 1])
+      return @forward if @cached_forward_rotation == rotation
+      @cached_forward_rotation = rotation.dup
+      @forward = local_to_world_direction(Vector[0, 0, 1])
     end
 
     def self.destroy_all
