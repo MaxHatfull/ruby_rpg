@@ -2,11 +2,10 @@
 
 module Engine::Components
   class DirectionLight < Engine::Component
-    attr_accessor :diffuse, :specular
+    attr_accessor :colour
 
-    def initialize(diffuse: Vector[1, 1, 1], specular: Vector[1, 1, 1])
-      @diffuse = diffuse
-      @specular = specular
+    def initialize(colour: [1.0, 1.0, 1.0])
+      @colour = colour
     end
 
     def start

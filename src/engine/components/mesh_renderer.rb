@@ -1,14 +1,17 @@
 module Engine::Components
   class MeshRenderer < Engine::Component
-    attr_reader :mesh, :texture
+    attr_reader :mesh, :texture, :specular_strength, :diffuse_strength, :specular_power
 
     def renderer?
       true
     end
 
-    def initialize(mesh, texture)
+    def initialize(mesh, texture, specular_strength: 1, diffuse_strength: 0.5, specular_power: 32.0)
       @mesh = Engine::ObjFile.new(mesh)
       @texture = texture
+      @specular_strength = specular_strength
+      @diffuse_strength = diffuse_strength
+      @specular_power = specular_power
     end
 
     def start
@@ -47,15 +50,15 @@ module Engine::Components
       Engine::Components::PointLight.point_lights.each_with_index do |light, i|
         shader.set_float("pointLights[#{i}].sqrRange", light.range * light.range)
         shader.set_vec3("pointLights[#{i}].position", light.game_object.pos)
-        shader.set_vec3("pointLights[#{i}].ambient", light.ambient)
-        shader.set_vec3("pointLights[#{i}].diffuse", light.diffuse)
-        shader.set_vec3("pointLights[#{i}].specular", light.specular)
+        shader.set_vec3("pointLights[#{i}].colour", light.colour)
       end
       Engine::Components::DirectionLight.direction_lights.each_with_index do |light, i|
         shader.set_vec3("directionalLights[#{i}].direction", light.game_object.forward)
-        shader.set_vec3("directionalLights[#{i}].diffuse", light.diffuse)
-        shader.set_vec3("directionalLights[#{i}].specular", light.specular)
+        shader.set_vec3("directionalLights[#{i}].colour", light.colour)
       end
+      shader.set_float("diffuseStrength", diffuse_strength)
+      shader.set_float("specularStrength", specular_strength)
+      shader.set_float("specularPower", specular_power)
     end
 
     def set_shader_texture

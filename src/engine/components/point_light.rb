@@ -2,13 +2,11 @@
 
 module Engine::Components
   class PointLight < Engine::Component
-    attr_accessor :range, :ambient, :diffuse, :specular
+    attr_accessor :range, :colour
 
-    def initialize(range: 300, ambient: Vector[0.01, 0.01, 0.01], diffuse: Vector[1, 1, 1], specular: Vector[1, 1, 1])
+    def initialize(range: 300, colour: [1.0, 1.0, 1.0])
       @range = range
-      @ambient = ambient
-      @diffuse = diffuse
-      @specular = specular
+      @colour = colour
     end
 
     def start

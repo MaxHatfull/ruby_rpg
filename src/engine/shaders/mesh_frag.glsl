@@ -8,24 +8,21 @@ out vec4 color;
 
 uniform sampler2D image;
 uniform vec3 cameraPos;
+uniform float diffuseStrength;
+uniform float specularStrength;
+uniform float specularPower;
 
 struct DirectionalLight {
     vec3 direction;
-
-    vec3 diffuse;
-    vec3 specular;
+    vec3 colour;
 };
 #define NR_DIRECTIONAL_LIGHTS 4
 uniform DirectionalLight directionalLights[NR_DIRECTIONAL_LIGHTS];
 
 struct PointLight {
     vec3 position;
-
     float sqrRange;
-
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
+    vec3 colour;
 };
 #define NR_POINT_LIGHTS 16
 uniform PointLight pointLights[NR_POINT_LIGHTS];
@@ -38,19 +35,14 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float diff = max(dot(normal, lightDir), 0.0);
 
     vec3 reflectDir = reflect(lightDir, normal);
-    float spec = pow(max(dot(-viewDir, reflectDir), 0.0), 15);
+    float spec = pow(max(dot(-viewDir, reflectDir), 0.0), specularPower);
 
     float attenuation = light.sqrRange / sqrDistance;
 
-    vec3 ambient = light.ambient;
-    vec3 diffuse = light.diffuse  * diff;
-    vec3 specular = light.specular * spec;
+    float diffuse = diff * diffuseStrength;
+    float specular = spec * specularStrength;
 
-    ambient *= attenuation;
-    diffuse *= attenuation;
-    specular *= attenuation;
-
-    return (ambient + diffuse + specular);
+    return light.colour * (diffuse + specular) * attenuation;
 }
 
 vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
@@ -58,12 +50,12 @@ vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fragPos, vec
     float diff = max(dot(normal, -light.direction), 0.0);
 
     vec3 reflectDir = reflect(-light.direction, normal);
-    float spec = pow(max(dot(-viewDir, reflectDir), 0.0), 15);
+    float spec = pow(max(dot(-viewDir, reflectDir), 0.0), specularPower);
 
-    vec3 diffuse = light.diffuse  * diff;
-    vec3 specular = light.specular * spec;
+    float diffuse = diff * diffuseStrength;
+    float specular = spec * specularStrength;
 
-    return (diffuse + specular);
+    return light.colour * (diffuse + specular);
 }
 
 void main()
@@ -82,7 +74,7 @@ void main()
     }
 
     for (int i = 0; i < NR_DIRECTIONAL_LIGHTS; i++) {
-        if (directionalLights[i].diffuse + directionalLights[i].specular == vec3(0.0))
+        if (directionalLights[i].colour == vec3(0.0))
         {
             break;
         }
