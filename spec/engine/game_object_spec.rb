@@ -123,6 +123,40 @@ describe Engine::GameObject do
 
       expect(result).to eq(Vector[10, 10, 0])
     end
+
+    context "when the object has a parent" do
+      let(:parent) { Engine::GameObject.new }
+      let(:object) { Engine::GameObject.new(parent: parent) }
+
+      it "converts local coordinates to world coordinates" do
+        parent.pos = Vector[10, 20, 0]
+        object.pos = Vector[10, 20, 0]
+        expect(object.local_to_world_coordinate(Vector[10, 0, 0])).to eq(Vector[30, 40, 0])
+
+        parent.pos = Vector[20, 30, 0]
+        object.pos = Vector[10, 20, 0]
+
+        expect(object.local_to_world_coordinate(Vector[10, 0, 0])).to eq(Vector[40, 50, 0])
+
+        parent.pos = Vector[200, 30, 0]
+        object.pos = Vector[20, 30, 0]
+
+        expect(object.local_to_world_coordinate(Vector[10, 0, 0])).to eq(Vector[230, 60, 0])
+
+        parent.pos = Vector[0, 0, 0]
+        parent.rotation = Vector[0, 90, 0]
+        object.pos = Vector[0, 0, 0]
+
+        expect(parent.local_to_world_coordinate(Vector[10, 0, 0])).to be_vector(Vector[0, 0, 10])
+        expect(object.local_to_world_coordinate(Vector[10, 0, 0])).to be_vector(Vector[0, 0, 10])
+
+        parent.pos = Vector[0, 0, 0]
+        parent.rotation = Vector[0, 90, 0]
+        object.pos = Vector[10, 0, 0]
+
+        expect(object.local_to_world_coordinate(Vector[10, 0, 0])).to be_vector(Vector[0, 0, 20])
+      end
+    end
   end
 
   describe "#model_matrix" do
@@ -140,6 +174,26 @@ describe Engine::GameObject do
 
       expected_matrix.each_with_index do |value, index|
         expect(result.to_a.flatten[index]).to be_within(0.0001).of(value)
+      end
+    end
+
+    context "when the object has a parent" do
+      it "returns the model matrix of the object" do
+        parent = Engine::GameObject.new(pos: Vector[10, 20, 0], rotation: Vector[0, 0, 90])
+        object = Engine::GameObject.new(pos: Vector[10, 20, 0], parent: parent)
+
+        result = object.model_matrix
+
+        expected_matrix = Matrix[
+          [0, -1, 0, 0],
+          [1, 0, 0, 0],
+          [0, 0, 1, 0],
+          [30, 10, 0, 1]
+        ].to_a.flatten
+
+        expected_matrix.each_with_index do |value, index|
+          expect(result.to_a.flatten[index]).to be_within(0.0001).of(value)
+        end
       end
     end
   end

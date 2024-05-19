@@ -74,7 +74,7 @@ module Engine
     end
 
     def model_matrix
-      cache_key = [@pos.to_a, @rotation.to_a, @scale.to_a]
+      cache_key = [@pos.dup, @rotation.dup, @scale.dup, @parent&.model_matrix&.to_a]
       @model_matrix = nil if @model_matrix_cache_key != cache_key
       @model_matrix_cache_key = cache_key
       @model_matrix ||=
@@ -96,6 +96,11 @@ module Engine
             [x, y, z, 1]
           ]
         end
+      if parent
+        @model_matrix * parent.model_matrix
+      else
+        @model_matrix
+      end
     end
 
     def destroy!
