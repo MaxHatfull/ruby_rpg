@@ -1,17 +1,18 @@
 module Engine::Components
   class MeshRenderer < Engine::Component
-    attr_reader :mesh, :texture, :specular_strength, :diffuse_strength, :specular_power
+    attr_reader :mesh, :texture, :specular_strength, :diffuse_strength, :specular_power, :ambient_light
 
     def renderer?
       true
     end
 
-    def initialize(mesh, texture, specular_strength: 1, diffuse_strength: 0.5, specular_power: 32.0)
+    def initialize(mesh, texture, specular_strength: 1, diffuse_strength: 0.5, specular_power: 32.0, ambient_light: Vector[0.1, 0.1, 0.1])
       @mesh = Engine::ObjFile.new(mesh)
       @texture = texture
       @specular_strength = specular_strength
       @diffuse_strength = diffuse_strength
       @specular_power = specular_power
+      @ambient_light = ambient_light
     end
 
     def start
@@ -59,6 +60,7 @@ module Engine::Components
       shader.set_float("diffuseStrength", diffuse_strength)
       shader.set_float("specularStrength", specular_strength)
       shader.set_float("specularPower", specular_power)
+      shader.set_vec3("ambientLight", ambient_light)
     end
 
     def set_shader_texture

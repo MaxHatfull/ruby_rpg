@@ -11,6 +11,7 @@ uniform vec3 cameraPos;
 uniform float diffuseStrength;
 uniform float specularStrength;
 uniform float specularPower;
+uniform vec3 ambientLight;
 
 struct DirectionalLight {
     vec3 direction;
@@ -63,7 +64,7 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(cameraPos - FragPos);
 
-    vec3 result = vec3(0.1);
+    vec3 result = ambientLight;
 
     for (int i = 0; i < NR_POINT_LIGHTS; i++) {
         if (pointLights[i].sqrRange == 0.0)
