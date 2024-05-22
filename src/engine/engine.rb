@@ -7,6 +7,7 @@ require_relative 'input'
 require_relative 'game_object'
 require_relative 'texture'
 require_relative 'obj_file'
+require_relative 'tangent_calculator'
 require_relative 'shader'
 require_relative 'component'
 require_relative "camera"

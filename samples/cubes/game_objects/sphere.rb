@@ -4,7 +4,7 @@ module Cubes
   class Sphere
     def initialize(pos, rotation, size)
       parent = Engine::GameObject.new(
-        "Cube",
+        "Sphere",
         pos: pos,
         rotation: rotation,
         scale: Vector[size, size, size],
@@ -12,12 +12,13 @@ module Cubes
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             ASSETS_DIR + "/sphere.obj",
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture
-            ),
+            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
+          ),
         ]
       )
       child = Engine::GameObject.new(
-        "Cube",
+        "Sphere",
         pos: pos,
         rotation: rotation,
         scale: Vector[1, 1, 1],
@@ -25,12 +26,13 @@ module Cubes
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             ASSETS_DIR + "/sphere.obj",
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture
+            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
           ),
         ]
       )
       second_child = Engine::GameObject.new(
-        "Cube",
+        "Sphere",
         pos: pos,
         rotation: rotation,
         scale: Vector[1, 1, 1],
@@ -38,7 +40,8 @@ module Cubes
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             ASSETS_DIR + "/sphere.obj",
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture
+            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
           ),
         ]
       )

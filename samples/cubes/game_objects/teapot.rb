@@ -12,8 +12,9 @@ module Cubes
           Cubes::Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             ASSETS_DIR + "/teapot.obj",
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture
-            ),
+            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
+          ),
         ]
       )
     end

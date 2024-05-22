@@ -7,7 +7,7 @@ module Cubes
     end
 
     def update(delta_time)
-      game_object.rotation += Vector[@speed, @speed, @speed] * delta_time
+      #game_object.rotation += Vector[@speed, @speed, @speed] * delta_time
     end
   end
 end

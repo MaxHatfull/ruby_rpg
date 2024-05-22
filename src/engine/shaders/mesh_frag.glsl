@@ -2,11 +2,14 @@
 
 in vec2 TexCoord;
 in vec3 Normal;
+in vec3 Tangent;
+in vec3 BiTangent;
 in vec3 FragPos;
 
 out vec4 color;
 
 uniform sampler2D image;
+uniform sampler2D normalMap;
 uniform vec3 cameraPos;
 uniform float diffuseStrength;
 uniform float specularStrength;
@@ -61,7 +64,9 @@ vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fragPos, vec
 
 void main()
 {
-    vec3 norm = normalize(Normal);
+    vec3 sampledNormal = normalize(texture(normalMap, TexCoord).rgb * 2.0 - 1.0);
+    mat3 TBN = mat3(normalize(Tangent), -normalize(BiTangent), normalize(Normal));
+    vec3 norm = normalize(TBN * sampledNormal);
     vec3 viewDir = normalize(cameraPos - FragPos);
 
     vec3 result = ambientLight;

@@ -1,14 +1,15 @@
 module Engine::Components
   class MeshRenderer < Engine::Component
-    attr_reader :mesh, :texture, :specular_strength, :diffuse_strength, :specular_power, :ambient_light
+    attr_reader :mesh, :texture, :normal_texture, :specular_strength, :diffuse_strength, :specular_power, :ambient_light
 
     def renderer?
       true
     end
 
-    def initialize(mesh, texture, specular_strength: 1, diffuse_strength: 0.5, specular_power: 32.0, ambient_light: Vector[0.1, 0.1, 0.1])
+    def initialize(mesh, texture, normal_texture: nil, specular_strength: 1, diffuse_strength: 0.5, specular_power: 32.0, ambient_light: Vector[0.1, 0.1, 0.1])
       @mesh = Engine::ObjFile.new(mesh)
       @texture = texture
+      @normal_texture = normal_texture
       @specular_strength = specular_strength
       @diffuse_strength = diffuse_strength
       @specular_power = specular_power
@@ -67,6 +68,9 @@ module Engine::Components
       GL.ActiveTexture(GL::TEXTURE0)
       GL.BindTexture(GL::TEXTURE_2D, texture)
       shader.set_int("image", 0)
+      GL.ActiveTexture(GL::TEXTURE1)
+      GL.BindTexture(GL::TEXTURE_2D, normal_texture)
+      shader.set_int("normalMap", 1)
     end
 
     def set_shader_model_matrix
@@ -113,12 +117,14 @@ module Engine::Components
         points.pack('F*'), GL::STATIC_DRAW
       )
 
-      GL.VertexAttribPointer(0, 3, GL::FLOAT, GL::FALSE, 8 * Fiddle::SIZEOF_FLOAT, 0)
-      GL.VertexAttribPointer(1, 2, GL::FLOAT, GL::FALSE, 8 * Fiddle::SIZEOF_FLOAT, 3 * Fiddle::SIZEOF_FLOAT)
-      GL.VertexAttribPointer(2, 3, GL::FLOAT, GL::FALSE, 8 * Fiddle::SIZEOF_FLOAT, 5 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(0, 3, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 0)
+      GL.VertexAttribPointer(1, 2, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 3 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(2, 3, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 5 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(3, 3, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 8 * Fiddle::SIZEOF_FLOAT)
       GL.EnableVertexAttribArray(0)
       GL.EnableVertexAttribArray(1)
       GL.EnableVertexAttribArray(2)
+      GL.EnableVertexAttribArray(3)
     end
   end
 end

@@ -98,18 +98,37 @@ describe Engine::ObjFile do
     ]
   end
 
+  let(:cube_tangents) do
+    [
+      Vector[0, 0, 1], Vector[0, 0, 1], Vector[0, 0, 1],
+      Vector[0, 0, -1], Vector[0, 0, -1], Vector[0, 0, -1],
+      Vector[0, -1, 0], Vector[0, -1, 0], Vector[0, -1, 0],
+      Vector[-1, 0, 0], Vector[-1, 0, 0], Vector[-1, 0, 0],
+      Vector[0, -1, 0], Vector[0, -1, 0], Vector[0, -1, 0],
+      Vector[0, -1, 0], Vector[0, -1, 0], Vector[0, -1, 0],
+      Vector[0, 0, 1], Vector[0, 0, 1], Vector[0, 0, 1],
+      Vector[0, 0, -1], Vector[0, 0, -1], Vector[0, 0, -1],
+      Vector[0, -1, 0], Vector[0, -1, 0], Vector[0, -1, 0],
+      Vector[-1, 0, 0], Vector[-1, 0, 0], Vector[-1, 0, 0],
+      Vector[0, -1, 0], Vector[0, -1, 0], Vector[0, -1, 0],
+      Vector[0, -1, 0], Vector[0, -1, 0], Vector[0, -1, 0],
+    ]
+  end
+
   let(:vertex_data) do
     (0..35).map do |i|
       {
         vertex: cube_vertices[cube_vertex_indices[i]],
         texture_coord: cube_texture_coords[cube_texture_indices[i]],
-        normal: cube_normals[cube_normal_indices[i]]
+        normal: cube_normals[cube_normal_indices[i]],
+        tangent: cube_tangents[i]
       }
     end.map do |data|
       [
         data[:vertex][0], data[:vertex][1], data[:vertex][2],
         data[:texture_coord][0], data[:texture_coord][1],
-        data[:normal][0], data[:normal][1], data[:normal][2]
+        data[:normal][0], data[:normal][1], data[:normal][2],
+        data[:tangent][0].to_f, data[:tangent][1].to_f, data[:tangent][2].to_f
       ]
     end.flatten
   end
@@ -174,10 +193,10 @@ describe Engine::ObjFile do
   describe "#vertex_data" do
     it "returns an array of vertex data" do
       obj_file.vertex_data.each_with_index do |v, i|
-        expect(v).to eq(vertex_data[i])
+        expect(v).to be_within(0.0001).of(vertex_data[i])
       end
 
-      expect(obj_file.vertex_data.size).to eq(36 * 3 + 36 * 2 + 36 * 3)
+      expect(obj_file.vertex_data.size).to eq(36 * 3 + 36 * 2 + 36 * 3 + 36 * 3)
     end
   end
 
