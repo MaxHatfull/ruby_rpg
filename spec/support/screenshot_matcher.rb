@@ -1,5 +1,7 @@
 # spec/support/screenshot_matcher.rb
 
+require "fileutils"
+
 RSpec::Matchers.define :match_screenshot_on_disk do |expected|
   match do |actual_image|
     if ENV["UPDATE_SCREENSHOTS"]

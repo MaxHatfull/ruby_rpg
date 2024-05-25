@@ -13,3 +13,5 @@ gem "matrix", "~> 0.3"
 gem "pry", "~> 0.14"
 
 gem "concurrent-ruby"
+
+gem 'os'

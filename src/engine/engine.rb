@@ -1,6 +1,7 @@
 require 'opengl'
 require 'glfw'
 require 'concurrent'
+require 'os'
 
 require_relative 'screenshoter'
 require_relative 'input'
@@ -20,7 +21,11 @@ require_relative "components/mesh_renderer"
 require_relative "components/point_light"
 require_relative "components/direction_light"
 
-GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
+if OS.windows?
+  GLFW.load_lib(File.expand_path(File.join(".", "glfw-3.4.bin.WIN64", "lib-static-ucrt", "glfw3.dll")))
+elsif OS.mac?
+  GLFW.load_lib("libglfw.dylib") # Give path to "glfw3.dll (Windows)" or "libglfw.dylib (macOS)" if needed
+end
 GLFW.Init()
 
 module Engine
@@ -42,7 +47,6 @@ module Engine
   end
 
   def self.open_window(width, height)
-    GL.load_lib
     set_opengl_version
     @old_time = Time.now
     @time = Time.now
@@ -51,6 +55,8 @@ module Engine
     @window = GLFW.CreateWindow(width, height, "Simple example", nil, nil)
     GLFW.MakeContextCurrent(@window)
     GLFW.SetKeyCallback(@window, @key_callback)
+    GL.load_lib
+
     set_opengl_blend_mode
     @engine_started = true
     GL.ClearColor(0.0, 0.0, 0.0, 1.0)
@@ -95,11 +101,14 @@ module Engine
       end
       update_screen_size
 
-      @swap_buffers_promise = Concurrent::Promise.new do
+      if OS.windows?
         GLFW.SwapBuffers(@window)
+      else
+        @swap_buffers_promise = Concurrent::Promise.new do
+          GLFW.SwapBuffers(@window)
+        end
+        @swap_buffers_promise.execute
       end
-      @swap_buffers_promise.execute
-
 
       GLFW.PollEvents
     end
@@ -149,7 +158,7 @@ module Engine
 
   def self.create_key_callbacks
     GLFW::create_callback(:GLFWkeyfun) do |window, key, scancode, action, mods|
-       Input.key_callback(key, action)
+      Input.key_callback(key, action)
     end
   end
 
