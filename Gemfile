@@ -17,3 +17,5 @@ gem "concurrent-ruby"
 gem 'os'
 
 gem "freetype"
+
+gem "rmagick"

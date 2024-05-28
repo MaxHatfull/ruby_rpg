@@ -2,7 +2,11 @@
 
 out vec4 color;
 
+in vec2 TexCoords;
+
+uniform sampler2D fontTexture;
+
 void main()
 {
-    color = vec4(1.0, 1.0, 1.0, 1.0);
+    color = texture(fontTexture, TexCoords);
 }

@@ -12,8 +12,6 @@ describe Engine::Components::PerspectiveCamera do
                                components: [camera]
         )
 
-        puts camera.matrix
-
         expect(Vector[0, 0, -1]).to be_on_screen_at(Vector[0, 0, -1])
         expect(Vector[1, 1, -1]).to be_on_screen_at(Vector[1, 1, -1])
         expect(Vector[-1, -1, -1]).to be_on_screen_at(Vector[-1, -1, -1])
