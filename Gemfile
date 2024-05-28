@@ -15,3 +15,5 @@ gem "pry", "~> 0.14"
 gem "concurrent-ruby"
 
 gem 'os'
+
+gem "freetype"

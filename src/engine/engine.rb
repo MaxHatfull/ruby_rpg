@@ -2,11 +2,15 @@ require 'opengl'
 require 'glfw'
 require 'concurrent'
 require 'os'
+require "freetype"
 
 require_relative 'screenshoter'
 require_relative 'input'
 require_relative 'game_object'
 require_relative 'texture'
+require_relative "font"
+require_relative 'path'
+require_relative 'polygon_mesh'
 require_relative 'obj_file'
 require_relative 'tangent_calculator'
 require_relative 'shader'
@@ -18,6 +22,7 @@ require_relative "components/triangle_renderer"
 require_relative "components/sprite_renderer"
 require_relative "components/rect_renderer"
 require_relative "components/mesh_renderer"
+require_relative "components/font_renderer"
 require_relative "components/point_light"
 require_relative "components/direction_light"
 

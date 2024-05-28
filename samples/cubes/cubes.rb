@@ -28,4 +28,12 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
       Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: 5000.0)
     # Engine::Components::OrthographicCamera.new(width: 1920, height: 1080, far: 1000)
     ])
+
+  Engine::GameObject.new(
+    "Text",
+    pos: Vector[1920 / 2, 1080 / 2, 0],
+    scale: Vector[1000, 1000, 1000],
+    components: [
+      Engine::Components::FontRenderer.new(Engine::Font.new(File.join(ASSETS_DIR, "arial.ttf")))
+    ])
 end
