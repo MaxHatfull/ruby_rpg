@@ -6,9 +6,11 @@ module Engine::Components
       true
     end
 
-    def initialize(font)
+    def initialize(font, string)
       @mesh = Engine::PolygonMesh.new([Vector[-0.5, 0.5], Vector[0.5, 0.5], Vector[0.5, -0.5], Vector[-0.5, -0.5]], [[0, 0], [1, 0], [1, 1], [0, 1]])
       @texture = font.texture.texture
+      @string = string
+      @font = font
     end
 
     def start
@@ -24,7 +26,7 @@ module Engine::Components
 
       set_shader_per_frame_data
 
-      GL.DrawElements(GL::TRIANGLES, mesh.index_data.length, GL::UNSIGNED_INT, 0)
+      GL.DrawElementsInstanced(GL::TRIANGLES, mesh.index_data.length, GL::UNSIGNED_INT, 0, @string.length)
       GL.BindVertexArray(0)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, 0)
     end
@@ -40,6 +42,7 @@ module Engine::Components
       set_shader_camera_pos
       set_shader_model_matrix
       set_shader_texture
+      set_shader_text
     end
 
     def set_shader_model_matrix
@@ -50,6 +53,16 @@ module Engine::Components
       GL.ActiveTexture(GL::TEXTURE0)
       GL.BindTexture(GL::TEXTURE_2D, texture)
       shader.set_int("fontTexture", 0)
+    end
+
+    def set_shader_text
+      @font.string_indices(@string).each.with_index do |c, i|
+        shader.set_int("text[#{i}]", c)
+      end
+      @offsets ||= @font.string_offsets(@string)
+      @offsets.each.with_index do |o, i|
+        shader.set_float("offsets[#{i}]", o)
+      end
     end
 
     def set_shader_camera_matrix
