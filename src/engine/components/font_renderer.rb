@@ -42,7 +42,6 @@ module Engine::Components
       set_shader_camera_pos
       set_shader_model_matrix
       set_shader_texture
-      set_shader_text
     end
 
     def set_shader_model_matrix
@@ -53,16 +52,6 @@ module Engine::Components
       GL.ActiveTexture(GL::TEXTURE0)
       GL.BindTexture(GL::TEXTURE_2D, texture)
       shader.set_int("fontTexture", 0)
-    end
-
-    def set_shader_text
-      @font.string_indices(@string).each.with_index do |c, i|
-        shader.set_int("text[#{i}]", c)
-      end
-      @offsets ||= @font.string_offsets(@string)
-      @offsets.each.with_index do |o, i|
-        shader.set_float("offsets[#{i}]", o)
-      end
     end
 
     def set_shader_camera_matrix
@@ -109,6 +98,26 @@ module Engine::Components
       GL.VertexAttribPointer(1, 2, GL::FLOAT, GL::FALSE, 5 * Fiddle::SIZEOF_FLOAT, 3 * Fiddle::SIZEOF_FLOAT)
       GL.EnableVertexAttribArray(0)
       GL.EnableVertexAttribArray(1)
+
+      text_indices = @font.string_indices(@string)
+      offsets = @font.string_offsets(@string)
+      instance_data = text_indices.zip(offsets).flatten
+
+      instance_vbo_buf = ' ' * 4
+      GL.GenBuffers(1, instance_vbo_buf)
+      instance_vbo = instance_vbo_buf.unpack('L')[0]
+      GL.BindBuffer(GL::ARRAY_BUFFER, instance_vbo)
+      GL.BufferData(
+        GL::ARRAY_BUFFER, @string.length * (Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT),
+        instance_data.pack('IF'*@string.length), GL::STATIC_DRAW
+      )
+
+      GL.VertexAttribIPointer(2, 1, GL::INT, Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT, 0)
+      GL.VertexAttribPointer(3, 1, GL::FLOAT, GL::FALSE, Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT, Fiddle::SIZEOF_INT)
+      GL.EnableVertexAttribArray(2)
+      GL.EnableVertexAttribArray(3)
+      GL.VertexAttribDivisor(2, 1)
+      GL.VertexAttribDivisor(3, 1)
     end
   end
 end

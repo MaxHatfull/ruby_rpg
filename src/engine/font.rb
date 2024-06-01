@@ -30,7 +30,7 @@ module Engine
           offsets << offsets.last + width
         end
       end
-      offsets.map { |offset| offset / 1024.0 }
+      offsets.map { |offset| (offset / 1024.0) / 2 }
     end
 
     private
@@ -91,7 +91,6 @@ module Engine
     end
 
     def coord(x)
-      puts "x: #{x}"
       x * CELL_SIZE
     end
   end
