@@ -18,25 +18,6 @@ module Engine
         end
     end
 
-    def import(destination)
-      image = Magick::Image.new(TEXTURE_SIZE, TEXTURE_SIZE,) do |options|
-        options.background_color = "transparent"
-      end
-
-      draw = Magick::Draw.new
-      (0...GLYPH_COUNT).each do |x|
-        (0...GLYPH_COUNT).each do |y|
-          index = x * GLYPH_COUNT + y
-          next if index >= 255
-          character = character(index)
-          write_character(character, draw, image, coord(x), coord(y))
-        end
-      end
-
-      FileUtils.mkdir_p(File.dirname(destination)) unless File.directory?(File.dirname(destination))
-      image.write(destination)
-    end
-
     def string_indices(string)
       string.chars.map { |char| index_table[char] }
     end
@@ -59,18 +40,6 @@ module Engine
 
     private
 
-    def write_character(character, draw, image, x, y)
-      font_path = File.expand_path(@font_file_path)
-
-      draw.annotate(image, CELL_SIZE, CELL_SIZE, x, y, character) do |_|
-        draw.gravity = Magick::WestGravity
-        draw.pointsize = CELL_SIZE - 5
-        draw.font = font_path
-        draw.fill = "white"
-        image.format = "PNG"
-      end
-    end
-
     def character(index)
       (index + 1).chr
     end
@@ -89,10 +58,6 @@ module Engine
           end
           hash
         end
-    end
-
-    def coord(x)
-      x * CELL_SIZE
     end
   end
 end
