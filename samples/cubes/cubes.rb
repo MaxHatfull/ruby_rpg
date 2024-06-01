@@ -1,5 +1,6 @@
 require_relative "../../src/engine/engine"
 
+ROOT = File.expand_path(File.join(__dir__))
 ASSETS_DIR = File.expand_path(File.join(__dir__, "assets"))
 
 Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
@@ -29,7 +30,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
     # Engine::Components::OrthographicCamera.new(width: 1920, height: 1080, far: 1000)
     ])
 
-  font_path = File.join(ASSETS_DIR, "arial.ttf")
+  font_path = "assets/arial.ttf"
   Engine::GameObject.new(
     "Text",
     pos: Vector[1920 / 2, 1080 / 2, 0],

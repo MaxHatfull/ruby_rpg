@@ -12,6 +12,7 @@ describe Engine::Font do
   describe "#string_offsets" do
     let(:widths) { { "H" => 100, "e" => 80, "l" => 30, "o" => 50 } }
     before do
+      stub_const("ROOT", "spec")
       allow(FreeType::API::Font).to receive(:open) do |&block|
         face = double("face")
         allow(face).to receive(:glyph) do |char|

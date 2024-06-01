@@ -11,35 +11,14 @@ module Engine
     end
 
     def texture
-      @texture ||= generate_texture
-    end
-
-    def string_indices(string)
-      string.chars.map { |char| index_table[char] }
-    end
-
-    def string_offsets(string)
-      offsets = []
-      FreeType::API::Font.open(@font_file_path) do |face|
-        widths = string.chars.map do |char|
-          face.glyph(char).char_width
+      @texture ||=
+        begin
+          path = File.expand_path(File.join(ROOT, "_imported", @font_file_path.gsub(".ttf",".png")))
+          Engine::Texture.new(path)
         end
-
-        offsets << 0
-        widths.each do |width|
-          offsets << offsets.last + width
-        end
-      end
-      offsets.map { |offset| (offset / 1024.0) / 2 }
     end
 
-    private
-
-    def generate_texture
-      path = File.expand_path(@font_file_path).gsub(/\.ttf$/, ".png")
-      File.delete(path) if File.exist?(path)
-      return Engine::Texture.new(path) if File.exist?(path)
-
+    def import(destination)
       image = Magick::Image.new(TEXTURE_SIZE, TEXTURE_SIZE,) do |options|
         options.background_color = "transparent"
       end
@@ -54,14 +33,36 @@ module Engine
         end
       end
 
-      image.write(path)
-      Engine::Texture.new(path)
+      FileUtils.mkdir_p(File.dirname(destination)) unless File.directory?(File.dirname(destination))
+      image.write(destination)
     end
+
+    def string_indices(string)
+      string.chars.map { |char| index_table[char] }
+    end
+
+    def string_offsets(string)
+      offsets = []
+      font_path = File.expand_path(File.join(ROOT, @font_file_path))
+      FreeType::API::Font.open(font_path) do |face|
+        widths = string.chars.map do |char|
+          face.glyph(char).char_width
+        end
+
+        offsets << 0
+        widths.each do |width|
+          offsets << offsets.last + width
+        end
+      end
+      offsets.map { |offset| (offset / 1024.0) / 2 }
+    end
+
+    private
 
     def write_character(character, draw, image, x, y)
       font_path = File.expand_path(@font_file_path)
 
-      draw.annotate(image, CELL_SIZE, CELL_SIZE, x, y, character) do
+      draw.annotate(image, CELL_SIZE, CELL_SIZE, x, y, character) do |_|
         draw.gravity = Magick::WestGravity
         draw.pointsize = CELL_SIZE - 5
         draw.font = font_path
