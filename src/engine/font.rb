@@ -18,6 +18,12 @@ module Engine
         end
     end
 
+    def vertex_data(string)
+      text_indices = string_indices(string)
+      offsets = string_offsets(string)
+      text_indices.zip(offsets).flatten
+    end
+
     def string_indices(string)
       string.chars.map { |char| index_table[char] }
     end

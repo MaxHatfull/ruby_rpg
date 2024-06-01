@@ -99,17 +99,13 @@ module Engine::Components
       GL.EnableVertexAttribArray(0)
       GL.EnableVertexAttribArray(1)
 
-      text_indices = @font.string_indices(@string)
-      offsets = @font.string_offsets(@string)
-      instance_data = text_indices.zip(offsets).flatten
-
       instance_vbo_buf = ' ' * 4
       GL.GenBuffers(1, instance_vbo_buf)
       instance_vbo = instance_vbo_buf.unpack('L')[0]
       GL.BindBuffer(GL::ARRAY_BUFFER, instance_vbo)
       GL.BufferData(
         GL::ARRAY_BUFFER, @string.length * (Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT),
-        instance_data.pack('IF'*@string.length), GL::STATIC_DRAW
+        @font.vertex_data(@string).pack('IF'*@string.length), GL::STATIC_DRAW
       )
 
       GL.VertexAttribIPointer(2, 1, GL::INT, Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT, 0)
