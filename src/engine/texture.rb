@@ -3,11 +3,22 @@ require 'chunky_png'
 module Engine
   class Texture
     attr_reader :texture
+    private_class_method :new
 
     def initialize(file_path)
       @file_path = file_path
       @texture = ' ' * 4
       load_texture
+    end
+
+    def self.for(file_path)
+      texture_cache[file_path]
+    end
+
+    def self.texture_cache
+      @texture_cache ||= Hash.new do |hash, key|
+        hash[key] = new(key)
+      end
     end
 
     def load_texture

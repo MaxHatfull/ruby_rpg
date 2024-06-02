@@ -16,7 +16,7 @@ module Asteroids
              Vector[25, 25],
              Vector[25, -25],
              Vector[-25, -25],
-             Engine::Texture.new(File.join(ASSETS_DIR, "Player.png")).texture
+             Engine::Texture.for(File.join(ASSETS_DIR, "Player.png")).texture
            )]
       )
     end

@@ -14,7 +14,7 @@ module Engine
       @texture ||=
         begin
           path = File.expand_path(File.join(ROOT, "_imported", @font_file_path.gsub(".ttf", ".png")))
-          Engine::Texture.new(path)
+          Engine::Texture.for(path)
         end
     end
 

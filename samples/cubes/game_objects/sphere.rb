@@ -12,8 +12,8 @@ module Cubes
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             Engine::Mesh.for("assets/sphere"),
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
-            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
+            Engine::Texture.for(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.for(ASSETS_DIR + "/brick_normal.png").texture
           ),
         ]
       )
@@ -26,8 +26,8 @@ module Cubes
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             Engine::Mesh.for("assets/sphere"),
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
-            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
+            Engine::Texture.for(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.for(ASSETS_DIR + "/brick_normal.png").texture
           ),
         ]
       )
@@ -40,8 +40,8 @@ module Cubes
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             Engine::Mesh.for("assets/sphere"),
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
-            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
+            Engine::Texture.for(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.for(ASSETS_DIR + "/brick_normal.png").texture
           ),
         ]
       )
