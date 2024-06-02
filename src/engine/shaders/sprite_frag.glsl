@@ -9,6 +9,9 @@ uniform vec4 frameCoords;
 void main()
 {
     vec2 interpolatedCoords = vec2(frameCoords.x + (TexCoords.x * frameCoords.z), frameCoords.y + TexCoords.y * frameCoords.w);;
-
-    color = vec4(spriteColor, 1.0) * texture(image, interpolatedCoords);
+    vec4 texColor = texture(image, interpolatedCoords);
+    if(texColor.a < 0.05)
+        discard;
+    else
+        color = vec4(spriteColor, 1.0) * texColor;
 }
