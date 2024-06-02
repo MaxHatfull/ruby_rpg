@@ -9,7 +9,6 @@ layout (location = 3) in vec3 tangent;
 out vec2 TexCoord;
 out vec3 Normal;
 out vec3 Tangent;
-out vec3 BiTangent;
 out vec3 FragPos;
 
 uniform mat4 camera;
@@ -18,10 +17,9 @@ uniform mat4 model;
 void main()
 {
     TexCoord = texCoord;
-    Normal = mat3(transpose(inverse(model))) * normal;
-    Tangent = mat3(transpose(inverse(model))) * tangent;
-    vec3 bitangent = cross(Normal, Tangent);
-    BiTangent = mat3(transpose(inverse(model))) * bitangent;
+    mat3 normalMatrix = mat3(transpose(inverse(model)));
+    Normal = normalMatrix * normal;
+    Tangent = normalMatrix * tangent;
     FragPos = vec3(model * vec4(vertex, 1.0));
     gl_Position = camera * model * vec4(vertex, 1.0);
 }
