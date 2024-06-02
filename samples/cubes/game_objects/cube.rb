@@ -11,7 +11,7 @@ module Cubes
         components: [
           Spinner.new(90),
           Engine::Components::MeshRenderer.new(
-            Engine::Mesh.new("assets/cube"),
+            Engine::Mesh.for("assets/cube"),
             Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
             normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
           ),
