@@ -186,11 +186,11 @@ module Engine
   end
 
   def self.debug_opengl_call
-    until (error = GL.GetError) == 0
-    end
+    errors = []
+    until GL.GetError == 0; end
     yield
     until (error = GL.GetError) == 0
-      error = error.to_s(16)
+      errors += error.to_s(16)
     end
   end
 
