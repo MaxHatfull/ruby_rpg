@@ -1,28 +1,23 @@
 # frozen_string_literal: true
 
 module Engine::Components
-  class SpriteRenderer < Engine::Component
-    attr_reader :v1, :v2, :v3, :v4, :texture, :frame_coords, :frame_rate, :loop
+  class UISpriteRenderer < Engine::Component
+    attr_reader :v1, :v2, :v3, :v4, :texture
 
-    def renderer?
+    def ui_renderer?
       true
     end
 
-    def initialize(tl, tr, br, bl, texture, frame_coords = nil, frame_rate = nil, loop = true)
+    def initialize(tl, tr, br, bl, texture)
       @v1 = tl
       @v2 = tr
       @v3 = br
       @v4 = bl
       @texture = texture
       @colour = { r: 1, g: 1, b: 1.0 }
-      @frame_coords = frame_coords || [{ tl: Vector[0, 0], width: 1, height: 1 }]
-      @frame_rate = frame_rate || 1
-      @loop = loop
     end
 
     def start
-      @start_time = Time.now
-
       setup_vertex_attribute_buffer
       setup_vertex_buffer
       setup_index_buffer
@@ -30,12 +25,14 @@ module Engine::Components
 
     def update(delta_time)
       shader.use
+
       GL.BindVertexArray(@vao)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
 
       set_shader_per_frame_data
 
       GL.DrawElements(GL::TRIANGLES, 6, GL::UNSIGNED_INT, 0)
+
       GL.BindVertexArray(0)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, 0)
     end
@@ -43,7 +40,7 @@ module Engine::Components
     private
 
     def shader
-      @shader ||= Engine::Shader.new('./shaders/sprite_vertex.glsl', './shaders/sprite_frag.glsl')
+      @shader ||= Engine::Shader.new('./shaders/ui_sprite_vertex.glsl', './shaders/ui_sprite_frag.glsl')
     end
 
     def set_shader_per_frame_data
@@ -51,25 +48,6 @@ module Engine::Components
       set_shader_model_matrix
       set_shader_texture
       set_shader_sprite_colour
-      set_shader_frame_data
-    end
-
-    def set_shader_frame_data
-      current_frame_index = (Time.now - @start_time) * @frame_rate
-      current_frame_index = if @loop
-                              current_frame_index.to_i % @frame_coords.length
-                            else
-                              [@frame_coords.length - 1, current_frame_index.to_i].min
-                            end
-
-      current_frame_coords =
-        [
-          @frame_coords[current_frame_index][:tl][0],
-          @frame_coords[current_frame_index][:tl][1],
-          @frame_coords[current_frame_index][:width],
-          @frame_coords[current_frame_index][:height]
-        ]
-      shader.set_vec4("frameCoords", current_frame_coords)
     end
 
     def set_shader_sprite_colour

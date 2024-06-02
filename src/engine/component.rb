@@ -6,6 +6,10 @@ module Engine
       false
     end
 
+    def ui_renderer?
+      false
+    end
+
     def set_game_object(game_object)
       @game_object = game_object
     end

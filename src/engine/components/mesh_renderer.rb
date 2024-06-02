@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Engine::Components
   class MeshRenderer < Engine::Component
     attr_reader :mesh, :texture, :normal_texture, :specular_strength, :diffuse_strength, :specular_power, :ambient_light

@@ -41,4 +41,14 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
     components: [
       Engine::Components::FontRenderer.new(Engine::Font.new(font_path), "Hello, world")
     ])
+
+  Engine::GameObject.new(
+    "UI image",
+    pos: Vector[100, 100, 0], rotation: Vector[0, 0, 0], scale: Vector[1, 1, 1],
+    components: [
+      Engine::Components::UISpriteRenderer.new(
+        Vector[100, 100], Vector[200, 100], Vector[200, 0], Vector[100, 0],
+        Engine::Texture.for(ASSETS_DIR + "/cube.png").texture
+        )
+    ])
 end

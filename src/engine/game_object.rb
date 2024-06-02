@@ -2,7 +2,7 @@ require "matrix"
 
 module Engine
   class GameObject
-    attr_accessor :name, :pos, :rotation, :scale, :components, :renderers, :created_at, :parent
+    attr_accessor :name, :pos, :rotation, :scale, :components, :renderers, :ui_renderers, :created_at, :parent
 
     def initialize(name = "Game Object", pos: Vector[0, 0, 0], rotation: 0, scale: Vector[1, 1, 1], components: [], parent: nil)
       GameObject.object_spawned(self)
@@ -14,8 +14,9 @@ module Engine
       end
       @scale = scale
       @name = name
-      @components = components.select { |component| !component.renderer? }
+      @components = components.select { |component| !component.renderer? && !component.ui_renderer? }
       @renderers = components.select { |component| component.renderer? }
+      @ui_renderers = components.select { |component| component.ui_renderer? }
       @created_at = Time.now
       @parent = parent
       parent.add_child(self) if parent
@@ -140,6 +141,12 @@ module Engine
     def self.render_all(delta_time)
       GameObject.objects.each do |object|
         object.renderers.each { |renderer| renderer.update(delta_time) }
+      end
+    end
+
+    def self.render_ui(delta_time)
+      GameObject.objects.each do |object|
+        object.ui_renderers.each { |renderer| renderer.update(delta_time) }
       end
     end
 

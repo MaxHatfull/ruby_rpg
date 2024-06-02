@@ -22,6 +22,7 @@ require_relative "components/orthographic_camera"
 require_relative "components/perspective_camera"
 require_relative "components/triangle_renderer"
 require_relative "components/sprite_renderer"
+require_relative "components/ui_sprite_renderer"
 require_relative "components/rect_renderer"
 require_relative "components/mesh_renderer"
 require_relative "components/font_renderer"
@@ -72,9 +73,6 @@ module Engine
     GL.Enable(GL::CULL_FACE)
     GL.CullFace(GL::BACK)
 
-    GL.Enable(GL::DEPTH_TEST)
-    GL.DepthFunc(GL::LESS)
-
     GLFW.SwapInterval(0)
 
     # lock cursor
@@ -103,7 +101,14 @@ module Engine
 
       @swap_buffers_promise.wait! if @swap_buffers_promise
       GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
+      GL.Enable(GL::DEPTH_TEST)
+      GL.DepthFunc(GL::LESS)
+
       GameObject.render_all(delta_time)
+
+      GL.Disable(GL::DEPTH_TEST)
+      GameObject.render_ui(delta_time)
+
       if Screenshoter.scheduled_screenshot
         Screenshoter.take_screenshot
       end
