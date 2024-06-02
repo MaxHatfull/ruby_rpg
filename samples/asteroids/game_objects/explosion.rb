@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Asteroids
-  class Explosion
-    def initialize(pos)
+  module Explosion
+    def self.create(pos)
       Engine::GameObject.new(
         "Explosion",
         pos: pos,

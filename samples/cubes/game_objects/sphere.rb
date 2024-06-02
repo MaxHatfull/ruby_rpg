@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Cubes
-  class Sphere
-    def initialize(pos, rotation, size)
+  module Sphere
+    def self.create(pos, rotation, size)
       parent = Engine::GameObject.new(
         "Sphere",
         pos: pos,

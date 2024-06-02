@@ -8,7 +8,7 @@ module Asteroids
           game_object.destroy!
           asteroid.destroy!
 
-          Explosion.new(game_object.pos)
+          Explosion.create(game_object.pos)
           break
         end
       end

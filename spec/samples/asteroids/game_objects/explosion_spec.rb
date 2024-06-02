@@ -13,7 +13,7 @@ describe Asteroids::Explosion do
     it "renders the explosion" do
       within_game_context(frame_duration: 0.05, load_path: "./samples/asteroids") do
         at(0) do
-          Asteroids::Explosion.new(Vector[100, 100])
+          Asteroids::Explosion.create(Vector[100, 100])
           check_screenshot(File.join(__dir__, "explosion_0.png"))
         end
         till(4) { check_screenshot(File.join(__dir__, "explosion_#{current_tick}.png")) }

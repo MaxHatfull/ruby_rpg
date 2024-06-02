@@ -13,7 +13,7 @@ describe Cubes::Teapot do
     it "renders the teapot" do
       within_game_context(load_path: "./samples/cubes") do
         at(0) do
-          Cubes::Teapot.new(Vector[100, 100], Vector[43, 68, 38], 500)
+          Cubes::Teapot.create(Vector[100, 100], Vector[43, 68, 38], 500)
           Engine::GameObject.new(
             "light", pos: Vector[Engine.screen_width / 2, 500, 100], components: [
             Engine::Components::PointLight.new(
@@ -38,7 +38,7 @@ describe Cubes::Teapot do
     it "renders the teapot" do
       within_game_context(load_path: "./samples/cubes") do
         at(0) do
-          Cubes::Teapot.new(Vector[100, 100], Vector[43, 68, 38], 500)
+          Cubes::Teapot.create(Vector[100, 100], Vector[43, 68, 38], 500)
           Engine::GameObject.new(
             "light", pos: Vector[Engine.screen_width / 2, 500, 100], components: [
             Engine::Components::PointLight.new(

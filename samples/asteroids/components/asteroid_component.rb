@@ -26,7 +26,7 @@ module Asteroids
 
     def split
       3.times do
-        Asteroid.new(
+        Asteroid.create(
           game_object.pos + Vector[rand(-50..50), rand(-50..50), 0],
           rand(360),
           size / 2

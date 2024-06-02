@@ -12,7 +12,7 @@ describe Asteroids::Ship do
   describe "When placed in the scene" do
     it "renders the ship" do
       within_game_context(load_path: "./samples/asteroids") do
-        at(0) { Asteroids::Ship.new(Vector[100, 100], 90) }
+        at(0) { Asteroids::Ship.create(Vector[100, 100], 90) }
         at(1) { check_screenshot(__dir__ + "/ship_1.png") }
         at(2) { check_screenshot(__dir__ + "/ship_2.png") }
         till(5) { press(GLFW::KEY_LEFT) }

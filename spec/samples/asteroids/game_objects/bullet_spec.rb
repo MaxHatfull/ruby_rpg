@@ -12,7 +12,7 @@ describe Asteroids::Bullet do
   describe "When placed in the scene" do
     it "renders the moving bullet" do
       within_game_context(load_path: "./samples/asteroids") do
-        at(0) { Asteroids::Bullet.new(Vector[100, 100], 45) }
+        at(0) { Asteroids::Bullet.create(Vector[100, 100], 45) }
         at(1) do
           check_screenshot(File.join(__dir__, "bullet_1.png"))
         end

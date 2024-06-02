@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Cubes
-  class Teapot
-    def initialize(pos, rotation, size)
+  module Teapot
+    def self.create(pos, rotation, size)
       Engine::GameObject.new(
         "Cube",
         pos: pos,

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Cubes
-  class Light
-    def initialize(pos, range, colour)
+  module Light
+    def self.create(pos, range, colour)
       Engine::GameObject.new(
         "Light",
         pos: pos,

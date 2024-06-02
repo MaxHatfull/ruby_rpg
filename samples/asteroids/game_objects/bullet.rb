@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Asteroids
-  class Bullet
+  module Bullet
     BULLET_SIZE = 5
 
-    def initialize(pos, rotation)
+    def self.create(pos, rotation)
       Engine::GameObject.new(
         "Bullet",
         pos: pos,

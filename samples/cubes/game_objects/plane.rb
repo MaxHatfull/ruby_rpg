@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Cubes
-  class Plane
-    def initialize(pos, rotation, size)
+  module Plane
+    def self.create(pos, rotation, size)
       Engine::GameObject.new(
         "Plane",
         pos: pos,
