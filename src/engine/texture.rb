@@ -30,9 +30,7 @@ module Engine
     end
 
     def read_image
-      image = ChunkyPNG::Image.from_file(@file_path)
-      #image.flip_vertically!
-      image
+      ChunkyPNG::Image.from_file(@file_path)
     end
   end
 end

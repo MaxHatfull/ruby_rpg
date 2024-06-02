@@ -7,12 +7,13 @@ module Cubes
         "Plane",
         pos: pos,
         rotation: rotation,
-        scale: Vector[size, size/2, size],
+        scale: Vector[size, size / 2, size],
         components: [
           Engine::Components::MeshRenderer.new(
-            ASSETS_DIR + "/cube.obj",
-            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture
-            ),
+            Engine::Mesh.new("assets/cube"),
+            Engine::Texture.new(ASSETS_DIR + "/chessboard.png").texture,
+            normal_texture: Engine::Texture.new(ASSETS_DIR + "/brick_normal.png").texture
+          ),
         ]
       )
     end

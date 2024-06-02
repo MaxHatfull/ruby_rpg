@@ -7,7 +7,7 @@ module Engine::Components
     end
 
     def initialize(mesh, texture, normal_texture: nil, specular_strength: 1, diffuse_strength: 0.5, specular_power: 32.0, ambient_light: Vector[0.1, 0.1, 0.1])
-      @mesh = Engine::ObjFile.new(mesh)
+      @mesh = mesh
       @texture = texture
       @normal_texture = normal_texture
       @specular_strength = specular_strength

@@ -6,7 +6,7 @@ include TestDriver
 
 describe Cubes::Teapot do
   before do
-    stub_const("ASSETS_DIR", File.expand_path(File.join(__dir__, "..", "..", "..", "..", "samples", "cubes", "assets")))
+    stub_const("ROOT", File.expand_path(File.join(__dir__, "..", "..", "..", "..", "samples", "cubes")))
   end
 
   describe "with an orthographic camera" do
