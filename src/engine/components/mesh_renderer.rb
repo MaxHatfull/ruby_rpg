@@ -2,20 +2,17 @@
 
 module Engine::Components
   class MeshRenderer < Engine::Component
-    attr_reader :mesh, :texture, :normal_texture, :specular_strength, :diffuse_strength, :specular_power, :ambient_light
+    attr_reader :mesh, :material, :texture, :normal_texture
 
     def renderer?
       true
     end
 
-    def initialize(mesh, texture, normal_texture: nil, specular_strength: 1, diffuse_strength: 0.5, specular_power: 32.0, ambient_light: Vector[0.1, 0.1, 0.1])
+    def initialize(mesh, material)
       @mesh = mesh
+      @material = material
       @texture = texture
       @normal_texture = normal_texture
-      @specular_strength = specular_strength
-      @diffuse_strength = diffuse_strength
-      @specular_power = specular_power
-      @ambient_light = ambient_light
     end
 
     def start
@@ -43,52 +40,11 @@ module Engine::Components
     end
 
     def set_shader_per_frame_data
-      set_shader_camera_matrix
-      set_shader_camera_pos
-      set_shader_model_matrix
-      set_shader_texture
-      set_shader_lights
-    end
+      material.set_mat4("camera", Engine::Camera.instance.matrix)
+      material.set_mat4("model", game_object.model_matrix)
+      material.set_vec3("cameraPos", Engine::Camera.instance.game_object.pos)
 
-    def set_shader_lights
-      Engine::Components::PointLight.point_lights.each_with_index do |light, i|
-        shader.set_float("pointLights[#{i}].sqrRange", light.range * light.range)
-        shader.set_vec3("pointLights[#{i}].position", light.game_object.pos)
-        shader.set_vec3("pointLights[#{i}].colour", light.colour)
-      end
-      Engine::Components::DirectionLight.direction_lights.each_with_index do |light, i|
-        shader.set_vec3("directionalLights[#{i}].direction", light.game_object.forward)
-        shader.set_vec3("directionalLights[#{i}].colour", light.colour)
-      end
-      shader.set_float("diffuseStrength", diffuse_strength)
-      shader.set_float("specularStrength", specular_strength)
-      shader.set_float("specularPower", specular_power)
-      shader.set_vec3("ambientLight", ambient_light)
-    end
-
-    def set_shader_texture
-      GL.ActiveTexture(GL::TEXTURE0)
-      GL.BindTexture(GL::TEXTURE_2D, texture)
-      shader.set_int("image", 0)
-      GL.ActiveTexture(GL::TEXTURE1)
-      if normal_texture
-        GL.BindTexture(GL::TEXTURE_2D, normal_texture)
-      else
-        GL.BindTexture(GL::TEXTURE_2D, 0)
-      end
-      shader.set_int("normalMap", 1)
-    end
-
-    def set_shader_model_matrix
-      shader.set_mat4("model", game_object.model_matrix)
-    end
-
-    def set_shader_camera_matrix
-      shader.set_mat4("camera", Engine::Camera.instance.matrix)
-    end
-
-    def set_shader_camera_pos
-      shader.set_vec3("cameraPos", Engine::Camera.instance.game_object.pos)
+      material.update_shader
     end
 
     def setup_index_buffer
