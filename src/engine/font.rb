@@ -25,23 +25,27 @@ module Engine
     end
 
     def string_indices(string)
-      string.chars.map { |char| index_table[char] }
+      string.chars.reject{|c| c == "\n"}.map { |char| index_table[char] }
     end
 
     def string_offsets(string)
       offsets = []
+      scale_factor = 1 / (1024.0 * 2)
+      horizontal_offset = 0.0
+      vertical_offset = 0.0
       font_path = File.expand_path(File.join(ROOT, @font_file_path))
       FreeType::API::Font.open(font_path) do |face|
-        widths = string.chars.map do |char|
-          face.glyph(char).char_width
-        end
-
-        offsets << 0
-        widths.each do |width|
-          offsets << offsets.last + width
+        string.chars.each do |char|
+          if char == "\n"
+            vertical_offset -= 1.0
+            horizontal_offset = 0.0
+            next
+          end
+          offsets << [horizontal_offset, vertical_offset]
+          horizontal_offset += face.glyph(char).char_width * scale_factor
         end
       end
-      offsets.map { |offset| (offset / 1024.0) / 2 }
+      offsets
     end
 
     private

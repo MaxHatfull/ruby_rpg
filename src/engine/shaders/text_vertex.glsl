@@ -4,7 +4,7 @@
 layout (location = 0) in vec3 vertex;
 layout (location = 1) in vec2 texCoords;
 layout (location = 2) in int textIndex;
-layout (location = 3) in float offset;
+layout (location = 3) in vec2 offset;
 
 uniform mat4 camera;
 uniform mat4 model;
@@ -20,7 +20,7 @@ vec2 getTexCoords()
 
 vec3 quadPosition()
 {
-    return vertex + vec3(offset, 0, 0);
+    return vertex + vec3(offset.x, offset.y, 0);
 }
 
 

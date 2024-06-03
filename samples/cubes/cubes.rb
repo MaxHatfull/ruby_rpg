@@ -40,7 +40,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
         )
     ])
 
-  Text.create(Vector[-200, 400, 0], Vector[0, 0, 0], 100, "Hello World")
+  Text.create(Vector[-200, 600, 0], Vector[0, 0, 0], 100, "Hello World\nNew Line")
 
   Engine::GameObject.new(
     "UI image",

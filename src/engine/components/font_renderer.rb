@@ -102,14 +102,17 @@ module Engine::Components
       instance_vbo_buf = ' ' * 4
       GL.GenBuffers(1, instance_vbo_buf)
       instance_vbo = instance_vbo_buf.unpack('L')[0]
-      GL.BindBuffer(GL::ARRAY_BUFFER, instance_vbo)
-      GL.BufferData(
-        GL::ARRAY_BUFFER, @string.length * (Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT),
-        @font.vertex_data(@string).pack('IF'*@string.length), GL::STATIC_DRAW
-      )
+      vertex_data = @font.vertex_data(@string)
+      string_length = @string.chars.reject{|c| c == "\n"}.length
 
-      GL.VertexAttribIPointer(2, 1, GL::INT, Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT, 0)
-      GL.VertexAttribPointer(3, 1, GL::FLOAT, GL::FALSE, Fiddle::SIZEOF_INT + Fiddle::SIZEOF_FLOAT, Fiddle::SIZEOF_INT)
+      GL.BindBuffer(GL::ARRAY_BUFFER, instance_vbo)
+      vertex_size = Fiddle::SIZEOF_INT + (Fiddle::SIZEOF_FLOAT * 2)
+      GL.BufferData(
+        GL::ARRAY_BUFFER, string_length * vertex_size,
+        vertex_data.pack('IFF' * string_length), GL::STATIC_DRAW
+      )
+      GL.VertexAttribIPointer(2, 1, GL::INT, vertex_size, 0)
+      GL.VertexAttribPointer(3, 2, GL::FLOAT, GL::FALSE, vertex_size, Fiddle::SIZEOF_INT)
       GL.EnableVertexAttribArray(2)
       GL.EnableVertexAttribArray(3)
       GL.VertexAttribDivisor(2, 1)
