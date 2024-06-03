@@ -5,42 +5,42 @@ ASSETS_DIR = File.expand_path(File.join(__dir__, "assets"))
 
 Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   include Cubes
-  Cube.create(Vector[1920 / 4, 1080 / 2, 0], 0, 100)
-  Sphere.create(Vector[1920 / 2, 1080 / 2, 0], 0, 100)
-  Teapot.create(Vector[3 * 1920 / 4, 1080 / 2, 0], 0, 200)
-  Plane.create(Vector[1000, -100, 0], 0, 1000)
+  (-3..3).each do |x|
+    Plane.create(Vector[x * 1000, 1000, -1000], Vector[0,0,0], 1000)
+    (0..3).each do |y|
+      Plane.create(Vector[x * 1000, 0, y * 1000], Vector[90,0,0], 1000)
+    end
+  end
 
-  Cubes::Light.create(Vector[0, 1500, 500], 1000, Vector[0, 0, 1])
-  Cubes::Light.create(Vector[Engine.screen_width, 1500, 500], 1000, Vector[1, 0, 1])
-  Cubes::Light.create(Vector[Engine.screen_width / 2, 1500, 500], 1000, Vector[0, 1, 0])
+  Cube.create(Vector[0, 200, 0], 0, 100)
+  Cube.create_bumped(Vector[500, 200, 0], 0, 100)
+  Teapot.create(Vector[1000, 200, 0], 0, 200)
+  Sphere.create(Vector[2000, 500, 0], 0, 100)
 
-  Engine::GameObject.new(
-    "Direction Light",
-    rotation: Vector[-90, 0, 30],
-    components: [
-      Engine::Components::DirectionLight.new(
-        colour: Vector[0.8, 0.8, 0.6],
-        )
-    ])
+  Cubes::Light.create(Vector[2500, 500, 0], 500, Vector[0, 0, 1])
+  Cubes::Light.create(Vector[1500, 600, 200], 500, Vector[1, 0, 1])
+  Cubes::Light.create(Vector[2000, 1000, 500], 500, Vector[0, 1, 0])
 
   Engine::GameObject.new(
     "Camera",
-    pos: Vector[1920 / 2, 1080 / 2, 500],
+    pos: Vector[0, 500, 700],
+    rotation: Vector[20, 0, 0],
     components: [
       Cubes::CameraRotator.new,
-      Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: 5000.0)
+      Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: 10000.0)
     # Engine::Components::OrthographicCamera.new(width: 1920, height: 1080, far: 1000)
     ])
 
-  font_path = "assets/arial.ttf"
   Engine::GameObject.new(
-    "Text",
-    pos: Vector[1920 / 2, 1080 / 2, 0],
-    scale: Vector[100, 100, 100],
-    rotation: Vector[0, 0, 0],
+    "Direction Light",
+    rotation: Vector[-60, 180, 30],
     components: [
-      Engine::Components::FontRenderer.new(Engine::Font.new(font_path), "Hello, world")
+      Engine::Components::DirectionLight.new(
+        colour: Vector[1.4, 1.4, 1.2],
+        )
     ])
+
+  Text.create(Vector[-200, 400, 0], Vector[0, 0, 0], 100, "Hello World")
 
   Engine::GameObject.new(
     "UI image",

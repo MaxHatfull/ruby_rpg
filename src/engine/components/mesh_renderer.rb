@@ -71,7 +71,11 @@ module Engine::Components
       GL.BindTexture(GL::TEXTURE_2D, texture)
       shader.set_int("image", 0)
       GL.ActiveTexture(GL::TEXTURE1)
-      GL.BindTexture(GL::TEXTURE_2D, normal_texture)
+      if normal_texture
+        GL.BindTexture(GL::TEXTURE_2D, normal_texture)
+      else
+        GL.BindTexture(GL::TEXTURE_2D, 0)
+      end
       shader.set_int("normalMap", 1)
     end
 

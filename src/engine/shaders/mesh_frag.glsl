@@ -63,12 +63,16 @@ vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fragPos, vec
 
 void main()
 {
-    vec3 sampledNormal = normalize(texture(normalMap, TexCoord).rgb * 2.0 - 1.0);
+    vec3 sampledNormal = texture(normalMap, TexCoord).rgb * 2.0 - 1.0;
+    if ( sampledNormal.r + sampledNormal.g + sampledNormal.b <= 0)
+    {
+        sampledNormal = vec3(0.0, 0.0, 1.0);
+    }
     vec3 n = normalize(Normal);
     vec3 t = normalize(Tangent);
     vec3 b = cross(t, n);
     mat3 TBN = mat3(t, b, n);
-    vec3 norm = normalize(TBN * sampledNormal);
+    vec3 norm = normalize(TBN * normalize(sampledNormal));
     vec3 viewDir = normalize(cameraPos - FragPos);
 
     vec3 result = ambientLight;
