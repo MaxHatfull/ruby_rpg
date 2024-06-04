@@ -2,7 +2,7 @@
 
 module Asteroids
   module Explosion
-    def self.create(pos)
+    def self.create(pos, colour: { r: 1, g: 1, b: 1 })
       Engine::GameObject.new(
         "Explosion",
         pos: pos,
@@ -22,7 +22,8 @@ module Asteroids
               { tl: Vector[0, 0], width: 1.0 / 6, height: 1 },
             ],
             20,
-            false
+            false,
+            colour
           )
         ]
       )
