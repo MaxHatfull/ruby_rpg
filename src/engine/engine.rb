@@ -61,7 +61,9 @@ module Engine
     @time = Time.now
     GLFW.WindowHint(GLFW::DECORATED, 0)
     @key_callback = create_key_callbacks # This must be an instance variable to prevent garbage collection
-    @window = GLFW.CreateWindow(width, height, "Simple example", nil, nil)
+    primary_monitor = GLFW.GetPrimaryMonitor
+
+    @window = GLFW.CreateWindow(width, height, "Ruby RPG", primary_monitor, nil)
     GLFW.MakeContextCurrent(@window)
     GLFW.SetKeyCallback(@window, @key_callback)
     GL.load_lib
