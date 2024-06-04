@@ -2,17 +2,28 @@
 
 module Asteroids
   class ShipEngine < Engine::Component
-    ACCELERATION = 500
-    MAX_SPEED = 400
-    TURNING_SPEED = 200
+    ACCELERATION = 800
+    DECELERATION = 800
+    MAX_SPEED = 600
+    TURNING_SPEED = 300
 
     def initialize
       @speed = Vector[0, 0, 0]
     end
 
     def update(delta_time)
-      acceleration = Engine::Input.key_down?(GLFW::KEY_UP) ? ACCELERATION : 0
-      @speed += game_object.local_to_world_direction(Vector[0.0, acceleration * delta_time, 0.0])
+      if Engine::Input.key_down?(GLFW::KEY_UP)
+        acceleration = ACCELERATION
+        deceleration = 0
+      elsif Engine::Input.key_down?(GLFW::KEY_DOWN)
+        acceleration = 0
+        deceleration = DECELERATION
+      else
+        acceleration = 0
+        deceleration = 0
+      end
+
+      @speed += game_object.local_to_world_direction(Vector[0.0, (acceleration - deceleration) * delta_time, 0.0])
       if @speed.magnitude > MAX_SPEED
         @speed = @speed / @speed.magnitude * MAX_SPEED
       end
