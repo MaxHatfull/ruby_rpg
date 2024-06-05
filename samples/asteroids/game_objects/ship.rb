@@ -3,7 +3,7 @@
 module Asteroids
   module Ship
     def self.create(pos, rotation)
-      Engine::GameObject.new(
+      ship = Engine::GameObject.new(
         "Ship",
         pos: pos,
         rotation: rotation,
@@ -19,6 +19,25 @@ module Asteroids
              Engine::Texture.for(File.join(ASSETS_DIR, "Player.png")).texture
            )]
       )
+
+      ship.add_child Engine::GameObject.new(
+        "Shield",
+        pos: Vector[0, 0, 0],
+        rotation: Vector[0, 0, 0],
+        components:
+          [
+            ShieldComponent.new,
+            Engine::Components::SpriteRenderer.new(
+              Vector[-50, 50],
+              Vector[50, 50],
+              Vector[50, -50],
+              Vector[-50, -50],
+              Engine::Texture.for(File.join(ASSETS_DIR, "Shield.png")).texture
+            )
+          ]
+      )
+
+      ship
     end
   end
 end
