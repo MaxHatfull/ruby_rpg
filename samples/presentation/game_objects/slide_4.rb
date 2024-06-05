@@ -3,20 +3,23 @@
 module Presentation
   module Slide4
     def self.create
-      parent = Engine::GameObject.new("Slide4")
-      parent.add_child Text.create(Vector[-350, 200, 0], Vector[0, 0, 0], 100, "Lighting")
-      parent.add_child Sphere.create(Vector[200, 0, 0], Vector[0, 0, 0], 50)
+      parent = Engine::GameObject.new("Slide5")
+      parent.add_child Text.create(Vector[-350, 200, 0], Vector[0, 0, 0], 100, "Cameras")
+      parent.add_child Teapot.create(Vector[200, 0, 0], Vector[0, 0, 0], 200)
 
       parent.add_child Text.create(
         Vector[-400, 100, 0], Vector[0, 0, 0], 20,
         [
-          "Mesh data contains normals",
-          "- Normals are vectors perpendicular to the surface",
-          "In the fragment shader, the normal is used to calculate the lighting",
-          "Basic lighting uses the Blinn-Phong model",
-          "- Ambient light",
-          "- Diffuse light",
-          "- Specular light",
+          "During rendering, points need to be transformed",
+          "Vertices are local to the model being rendered",
+          "First, the vertices are transformed into world space",
+          "Then, they are transformed into the camera's local space",
+          "Next they are transformed into clip space for rendering",
+          "", "", "",
+          "Perspective cameras are a bit different",
+          "The further from the camera, the smaller things are",
+          "This is done by using a 4th coordinate, w, in the vertex",
+          "The vertex is divided by w to get the final position",
         ].join("\n")
       )
 

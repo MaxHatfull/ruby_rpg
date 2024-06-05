@@ -10,7 +10,9 @@ module Presentation
         Slide3,
         Slide4,
         Slide5,
-        Slide6
+        Slide6,
+        Slide7,
+        Slide8
       ]
 
       @current_slide = 0
@@ -32,6 +34,10 @@ module Presentation
         new_slide = 5
       elsif Engine::Input.key_down?(GLFW::KEY_7)
         new_slide = 6
+      elsif Engine::Input.key_down?(GLFW::KEY_8)
+        new_slide = 7
+      elsif Engine::Input.key_down?(GLFW::KEY_9)
+        new_slide = 8
       end
 
       if !new_slide.nil? && new_slide != @current_slide

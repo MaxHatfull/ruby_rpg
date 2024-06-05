@@ -7,7 +7,7 @@ module Presentation
       parent.add_child Text.create(Vector[-350, 200, 0], Vector[0, 0, 0], 100, "Text")
       parent.add_child Plane.create(Vector[250, 0, 0], Vector[0, 0, 0], 200)
       parent.add_child Text.create(
-        Vector[-400, 100, 0], Vector[0, 0, 0], 20,
+        Vector[-500, 100, 0], Vector[0, 0, 0], 20,
         [
           "Text rendering is quite difficult",
           "There is a pre-processing step to generate a texture atlas",
@@ -15,7 +15,7 @@ module Presentation
           "For each character in the text, a quad is rendered",
           "The quad is positioned based on the string and character",
           "The quad is textured with the character",
-          "The texture coordinates are adjusted to show the correct character",
+          "The texture coords are adjusted to show the correct character",
         ].join("\n")
       )
 

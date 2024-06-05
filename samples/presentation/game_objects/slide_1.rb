@@ -5,7 +5,7 @@ module Presentation
     def self.create
       parent = Engine::GameObject.new("Slide2")
       parent.add_child Text.create(Vector[-350, 200, 0], Vector[0, 0, 0], 100, "What is Ruby RPG?")
-      parent.add_child Text.create(Vector[-350, 100, 0], Vector[0, 0, 0], 30, "- A game engine\n- An entity component system\n- Asset management")
+      parent.add_child Text.create(Vector[-350, 100, 0], Vector[0, 0, 0], 30, "- A game engine\n- An entity component system\n- Testable game development\n- Rednered using OpenGL")
       parent.add_child Text.create(
         Vector[-350, -50, 0], Vector[0, 0, 0], 30,
         [
