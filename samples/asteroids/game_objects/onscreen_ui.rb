@@ -12,7 +12,8 @@ module Asteroids
       parent.add_child Text.create(Vector[WINDOW_WIDTH - TEXT_SIZE, WINDOW_HEIGHT - TEXT_SIZE / 2, UI_Z_ORDER], 0, TEXT_SIZE, "TR" )
       parent.add_child Text.create(Vector[WINDOW_WIDTH - TEXT_SIZE, TEXT_SIZE / 2, UI_Z_ORDER], 0, TEXT_SIZE, "BR" )
 
-      Text.create(Vector[340, 240, UI_Z_ORDER], 0, 22, "SHIP" )
+      fps = Text.create(Vector[340, 240, UI_Z_ORDER], 0, 22, "SHIP" )
+      fps.renderers.first.update_string("Test")
 
       parent
     end

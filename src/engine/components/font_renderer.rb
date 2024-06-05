@@ -19,6 +19,13 @@ module Engine::Components
       setup_index_buffer
     end
 
+    alias_method :restart, :start
+
+    def update_string(string)
+      @string = string
+      restart
+    end
+
     def update(delta_time)
       shader.use
       GL.BindVertexArray(@vao)
