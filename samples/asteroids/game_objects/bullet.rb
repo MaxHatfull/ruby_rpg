@@ -11,7 +11,7 @@ module Asteroids
         rotation: rotation,
         components: [
           Projectile.new,
-          ConstantDrift.new(500),
+          ConstantDrift.new(900),
           DestroyAfter.new(2),
           Engine::Components::SpriteRenderer.new(
             Vector[-BULLET_SIZE / 2, BULLET_SIZE / 2],
