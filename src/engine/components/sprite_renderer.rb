@@ -3,18 +3,19 @@
 module Engine::Components
   class SpriteRenderer < Engine::Component
     attr_reader :v1, :v2, :v3, :v4, :texture, :frame_coords, :frame_rate, :loop
+    attr_accessor :colour
 
     def renderer?
       true
     end
 
-    def initialize(tl, tr, br, bl, texture, frame_coords = nil, frame_rate = nil, loop = true)
+    def initialize(tl, tr, br, bl, texture, frame_coords = nil, frame_rate = nil, loop = true, colour = { r: 1, g: 1, b: 1.0 })
       @v1 = tl
       @v2 = tr
       @v3 = br
       @v4 = bl
       @texture = texture
-      @colour = { r: 1, g: 1, b: 1.0 }
+      @colour = colour
       @frame_coords = frame_coords || [{ tl: Vector[0, 0], width: 1, height: 1 }]
       @frame_rate = frame_rate || 1
       @loop = loop
@@ -73,7 +74,7 @@ module Engine::Components
     end
 
     def set_shader_sprite_colour
-      shader.set_vec3("spriteColor", @colour)
+      shader.set_vec3("spriteColor", colour)
     end
 
     def set_shader_texture
