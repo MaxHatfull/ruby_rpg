@@ -19,7 +19,8 @@ Engine.start(width: WINDOW_WIDTH, height: WINDOW_HEIGHT, base_dir: File.dirname(
       Engine::Components::OrthographicCamera.new(width: WINDOW_WIDTH, height: WINDOW_HEIGHT, far: 2)
     ]
   )
-  OnscreenUI.create
+
+  DEBUG_UI = OnscreenUI.create
 
   10.times do
     Asteroid.create(
