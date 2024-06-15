@@ -11,8 +11,6 @@ module Engine::Components
     def initialize(mesh, material)
       @mesh = mesh
       @material = material
-      @texture = texture
-      @normal_texture = normal_texture
     end
 
     def start
@@ -22,11 +20,10 @@ module Engine::Components
     end
 
     def update(delta_time)
-      shader.use
+      set_shader_per_frame_data
+
       GL.BindVertexArray(@vao)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
-
-      set_shader_per_frame_data
 
       GL.DrawElements(GL::TRIANGLES, mesh.index_data.length, GL::UNSIGNED_INT, 0)
       GL.BindVertexArray(0)

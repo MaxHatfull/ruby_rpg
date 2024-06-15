@@ -2,51 +2,69 @@
 
 module Engine
   class Material
+    attr_reader :shader
+
     def initialize(shader)
       @shader = shader
     end
 
     def set_mat4(name, value)
-      @mat4s ||= {}
-      @mat4s[name] = value
+      mat4s[name] = value
     end
 
     def set_vec3(name, value)
-      @vec3s ||= {}
-      @vec3s[name] = value
+      vec3s[name] = value
     end
 
     def set_float(name, value)
-      @floats ||= {}
-      @floats[name] = value
+      floats[name] = value
     end
 
     def set_texture(name, value)
-      @textures ||= {}
-      @textures[name] = value
+      textures[name] = value
     end
 
     def update_shader
       shader.use
       update_light_data!
 
-      @mat4s.each do |name, value|
+      mat4s.each do |name, value|
         shader.set_mat4(name, value)
       end
-      @vec3s.each do |name, value|
+      vec3s.each do |name, value|
         shader.set_vec3(name, value)
       end
-      @floats.each do |name, value|
+      floats.each do |name, value|
         shader.set_float(name, value)
       end
-      @textures.each.with_index do |(name, value), slot|
-        GL.ActiveTexture(const_get("GL::TEXTURE#{slot}"))
-        GL.BindTexture(GL::TEXTURE_2D, value)
+      textures.each.with_index do |(name, value), slot|
+        GL.ActiveTexture(Object.const_get("GL::TEXTURE#{slot}"))
+        if value
+          GL.BindTexture(GL::TEXTURE_2D, value)
+        else
+          GL.BindTexture(GL::TEXTURE_2D, 0)
+        end
         shader.set_int(name, slot)
       end
     end
 
     private
+
+    def mat4s
+      @mat4s ||= {}
+    end
+
+    def vec3s
+      @vec3s ||= {}
+    end
+
+    def floats
+      @floats ||= {}
+    end
+
+    def textures
+      @textures ||= {}
+    end
 
     def update_light_data!
       Engine::Components::PointLight.point_lights.each_with_index do |light, i|
