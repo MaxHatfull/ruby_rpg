@@ -16,6 +16,10 @@ module Engine
       vec3s[name] = value
     end
 
+    def set_vec4(name, value)
+      vec4s[name] = value
+    end
+
     def set_float(name, value)
       floats[name] = value
     end
@@ -32,6 +36,9 @@ module Engine
       end
       vec3s.each do |name, value|
         shader.set_vec3(name, value)
+      end
+      vec4s.each do |name, value|
+        shader.set_vec4(name, value)
       end
       floats.each do |name, value|
         shader.set_float(name, value)
@@ -55,6 +62,10 @@ module Engine
 
     def vec3s
       @vec3s ||= {}
+    end
+
+    def vec4s
+      @vec4s ||= {}
     end
 
     def floats

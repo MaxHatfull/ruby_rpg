@@ -2,19 +2,18 @@
 
 module Engine::Components
   class UISpriteRenderer < Engine::Component
-    attr_reader :v1, :v2, :v3, :v4, :texture
+    attr_reader :v1, :v2, :v3, :v4, :material
 
     def ui_renderer?
       true
     end
 
-    def initialize(tl, tr, br, bl, texture)
+    def initialize(tl, tr, br, bl, material)
       @v1 = tl
       @v2 = tr
       @v3 = br
       @v4 = bl
-      @texture = texture
-      @colour = { r: 1, g: 1, b: 1.0 }
+      @material = material
     end
 
     def start
@@ -24,12 +23,10 @@ module Engine::Components
     end
 
     def update(delta_time)
-      shader.use
-
       GL.BindVertexArray(@vao)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
 
-      set_shader_per_frame_data
+      set_material_per_frame_data
 
       GL.DrawElements(GL::TRIANGLES, 6, GL::UNSIGNED_INT, 0)
 
@@ -39,39 +36,20 @@ module Engine::Components
 
     private
 
-    def shader
-      @shader ||= Engine::Shader.new('./shaders/ui_sprite_vertex.glsl', './shaders/ui_sprite_frag.glsl')
+    def set_material_per_frame_data
+      set_camera_matrix
+      material.set_mat4("model", game_object.model_matrix)
+      material.update_shader
     end
 
-    def set_shader_per_frame_data
-      set_shader_camera_matrix
-      set_shader_model_matrix
-      set_shader_texture
-      set_shader_sprite_colour
-    end
-
-    def set_shader_sprite_colour
-      shader.set_vec3("spriteColor", @colour)
-    end
-
-    def set_shader_texture
-      GL.ActiveTexture(GL::TEXTURE0)
-      GL.BindTexture(GL::TEXTURE_2D, texture)
-      shader.set_int("image", 0)
-    end
-
-    def set_shader_model_matrix
-      shader.set_mat4("model", game_object.model_matrix)
-    end
-
-    def set_shader_camera_matrix
+    def set_camera_matrix
       camera_matrix = Matrix[
         [2.0 / Engine.screen_width, 0, 0, 0],
         [0, 2.0 / Engine.screen_height, 0, 0],
         [0, 0, 1, 0],
         [-1, -1, 0, 1]
       ]
-      shader.set_mat4("camera", camera_matrix)
+      material.set_mat4("camera", camera_matrix)
     end
 
     def setup_index_buffer
