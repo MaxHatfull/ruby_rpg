@@ -20,7 +20,7 @@ module Engine::Components
     end
 
     def update(delta_time)
-      set_shader_per_frame_data
+      set_material_per_frame_data
 
       GL.BindVertexArray(@vao)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
@@ -32,16 +32,25 @@ module Engine::Components
 
     private
 
-    def shader
-      @shader ||= Engine::Shader.new('./shaders/mesh_vertex.glsl', './shaders/mesh_frag.glsl')
-    end
-
-    def set_shader_per_frame_data
+    def set_material_per_frame_data
       material.set_mat4("camera", Engine::Camera.instance.matrix)
       material.set_mat4("model", game_object.model_matrix)
       material.set_vec3("cameraPos", Engine::Camera.instance.game_object.pos)
 
+      update_light_data
       material.update_shader
+    end
+
+    def update_light_data
+      Engine::Components::PointLight.point_lights.each_with_index do |light, i|
+        material.set_float("pointLights[#{i}].sqrRange", light.range * light.range)
+        material.set_vec3("pointLights[#{i}].position", light.game_object.pos)
+        material.set_vec3("pointLights[#{i}].colour", light.colour)
+      end
+      Engine::Components::DirectionLight.direction_lights.each_with_index do |light, i|
+        material.set_vec3("directionalLights[#{i}].direction", light.game_object.forward)
+        material.set_vec3("directionalLights[#{i}].colour", light.colour)
+      end
     end
 
     def setup_index_buffer

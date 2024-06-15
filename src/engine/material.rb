@@ -26,7 +26,6 @@ module Engine
 
     def update_shader
       shader.use
-      update_light_data!
 
       mat4s.each do |name, value|
         shader.set_mat4(name, value)
@@ -64,18 +63,6 @@ module Engine
 
     def textures
       @textures ||= {}
-    end
-
-    def update_light_data!
-      Engine::Components::PointLight.point_lights.each_with_index do |light, i|
-        set_float("pointLights[#{i}].sqrRange", light.range * light.range)
-        set_vec3("pointLights[#{i}].position", light.game_object.pos)
-        set_vec3("pointLights[#{i}].colour", light.colour)
-      end
-      Engine::Components::DirectionLight.direction_lights.each_with_index do |light, i|
-        set_vec3("directionalLights[#{i}].direction", light.game_object.forward)
-        set_vec3("directionalLights[#{i}].colour", light.colour)
-      end
     end
   end
 end
