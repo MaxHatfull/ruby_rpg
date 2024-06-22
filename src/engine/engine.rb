@@ -34,6 +34,7 @@ require_relative "components/direction_light"
 require_relative "physics/physics_resolver"
 require_relative 'physics/collision'
 require_relative "physics/components/sphere_collider"
+require_relative "physics/components/cube_collider"
 require_relative "physics/components/rigidbody"
 
 if OS.windows?

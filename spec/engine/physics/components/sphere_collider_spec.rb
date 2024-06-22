@@ -71,6 +71,19 @@ describe Engine::Physics::Components::SphereCollider do
           expect(collision).to be_nil
         end
       end
+
+      context "when the spheres are not touching" do
+        let(:position) { Vector[0, 0, 0] }
+        let(:other_position) { Vector[2, 0, 0] }
+        let(:radius) { 0.5 }
+        let(:other_radius) { 0.5 }
+
+        it 'returns nil' do
+          collision = collider.collision_for(other_collider)
+
+          expect(collision).to be_nil
+        end
+      end
     end
   end
 end
