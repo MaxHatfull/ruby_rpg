@@ -23,6 +23,10 @@ module Engine::Physics::Components
       @impulses += collision_impulses
     end
 
+    def apply_impulse(impulse)
+      @impulses << impulse
+    end
+
     def energy
       kinetic = 0.5 * @mass * @velocity.magnitude**2
       potential = -@mass * @gravity[1] * @game_object.pos[1]
