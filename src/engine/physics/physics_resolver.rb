@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Engine
+module Engine::Physics
   module PhysicsResolver
     def self.resolve
       rigidbodies.each do |rb|
@@ -12,7 +12,7 @@ module Engine
 
     def self.rigidbodies
       Engine::GameObject.objects.map do |go|
-        go.components.find { |c| c.is_a?(Engine::Components::Physics::Rigidbody) }
+        go.components.find { |c| c.is_a?(Engine::Physics::Components::Rigidbody) }
       end.compact
     end
   end

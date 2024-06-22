@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Engine::Components::Physics
+module Engine::Physics::Components
   class Rigidbody < Engine::Component
     attr_accessor :velocity, :forces, :impulses, :mass
 
@@ -50,12 +50,12 @@ module Engine::Components::Physics
     end
 
     def own_colliders
-      @game_object.components.select { |c| c.is_a?(Engine::Components::Physics::SphereCollider) }
+      @game_object.components.select { |c| c.is_a?(SphereCollider) }
     end
 
     def all_colliders
       Engine::GameObject.objects.map do |go|
-        go.components.select { |c| c.is_a?(Engine::Components::Physics::SphereCollider) }
+        go.components.select { |c| c.is_a?(SphereCollider) }
       end.flatten
     end
 

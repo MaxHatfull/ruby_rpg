@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Engine::Components::Physics
+module Engine::Physics::Components
   class SphereCollider < Engine::Component
     attr_accessor :radius
 
@@ -23,7 +23,7 @@ module Engine::Components::Physics
             v_r = velocity - other_collider.velocity
             -(v_r.dot(direction) * 2) / (inverse_mass + other_collider.inverse_mass)
           end
-        Collision.new(direction * magnitude, collision_point)
+        Engine::Physics::Collision.new(direction * magnitude, collision_point)
       else
         current_collisions.delete(other_collider) if current_collisions.include?(other_collider) && distance > min_distance
         nil
@@ -47,7 +47,7 @@ module Engine::Components::Physics
     end
 
     def rigidbody
-      game_object.components.find { |c| c.is_a?(Engine::Components::Physics::Rigidbody) }
+      game_object.components.find { |c| c.is_a?(Rigidbody) }
     end
 
     def current_collisions

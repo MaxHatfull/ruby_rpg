@@ -13,17 +13,17 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   end
 
   Sphere.create(Vector[0, 40, 0], 0, 5, [
-    Engine::Components::Physics::SphereCollider.new(5),
-    Engine::Components::Physics::Rigidbody.new(mass: 0.5, velocity: Vector[0, 0, 0], gravity: Vector[0, -10, 0])
+    Engine::Physics::Components::SphereCollider.new(5),
+    Engine::Physics::Components::Rigidbody.new(mass: 0.5, velocity: Vector[0, 0, 0], gravity: Vector[0, -10, 0])
   ]).tap { |sphere| sphere.name = "small" }
 
   Sphere.create(Vector[0, 80, 0], 0, 10, [
-    Engine::Components::Physics::SphereCollider.new(10),
-    Engine::Components::Physics::Rigidbody.new(velocity: Vector[0, 0, 0], gravity: Vector[0, -10, 0])
+    Engine::Physics::Components::SphereCollider.new(10),
+    Engine::Physics::Components::Rigidbody.new(velocity: Vector[0, 0, 0], gravity: Vector[0, -10, 0])
   ]).tap { |sphere| sphere.name = "big" }
 
   Sphere.create(Vector[0, 0, 0], 0, 10, [
-    Engine::Components::Physics::SphereCollider.new(10),
+    Engine::Physics::Components::SphereCollider.new(10),
   ])
 
   #Cube.create(Vector[0, 20, 0], 0, 10)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Engine::Components::Physics
+module Engine::Physics
   class Collision
     attr_accessor :impulse, :point
 
