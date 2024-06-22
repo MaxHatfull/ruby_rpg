@@ -19,6 +19,7 @@ require_relative 'tangent_calculator'
 require_relative 'shader'
 require_relative 'component'
 require_relative "camera"
+
 require_relative "components/orthographic_camera"
 require_relative "components/perspective_camera"
 require_relative "components/triangle_renderer"
@@ -29,6 +30,11 @@ require_relative "components/mesh_renderer"
 require_relative "components/font_renderer"
 require_relative "components/point_light"
 require_relative "components/direction_light"
+
+require_relative 'components/physics/physics_resolver'
+require_relative 'components/physics/collision'
+require_relative "components/physics/sphere_collider"
+require_relative "components/physics/rigidbody"
 
 if OS.windows?
   GLFW.load_lib(File.expand_path(File.join(__dir__, "..", "..", "glfw-3.4.bin.WIN64", "lib-static-ucrt", "glfw3.dll")))
@@ -100,6 +106,7 @@ module Engine
       delta_time = @time - @old_time
 
       print_fps(delta_time)
+      PhysicsResolver.resolve
       GameObject.update_all(delta_time)
 
       @swap_buffers_promise.wait! if @swap_buffers_promise

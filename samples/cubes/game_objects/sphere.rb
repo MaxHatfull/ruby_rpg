@@ -2,42 +2,28 @@
 
 module Cubes
   module Sphere
-    def self.create(pos, rotation, size)
-      parent = Engine::GameObject.new(
-        "Sphere",
-        pos: pos,
-        rotation: rotation,
-        scale: Vector[size, size, size],
-        components: [
-          Spinner.new(90),
-          Engine::Components::MeshRenderer.new(Engine::Mesh.for("assets/sphere"), material),
-        ]
-      )
-      child = Engine::GameObject.new(
-        "Sphere",
-        pos: pos,
-        rotation: rotation,
-        scale: Vector[1, 1, 1],
-        components: [
-          Spinner.new(90),
-          Engine::Components::MeshRenderer.new(Engine::Mesh.for("assets/sphere"), material),
-        ]
-      )
-      second_child = Engine::GameObject.new(
-        "Sphere",
-        pos: pos,
-        rotation: rotation,
-        scale: Vector[1, 1, 1],
-        components: [
-          Spinner.new(90),
-          Engine::Components::MeshRenderer.new(Engine::Mesh.for("assets/sphere"), material),
-        ]
-      )
+    def self.create_set(pos, rotation, size)
+      parent = Sphere.create(pos, rotation, size, [Spinner.new(90)])
+      child = Sphere.create(pos, rotation, 1, [Spinner.new(90)])
+      second_child = Sphere.create(pos, rotation, 1, [Spinner.new(90)])
       child.parent = parent
       second_child.parent = child
 
       child.pos = Vector[3, 0, 0]
       second_child.pos = Vector[3, 0, 0]
+    end
+
+    def self.create(pos, rotation, size, components = [])
+      Engine::GameObject.new(
+        "Sphere",
+        pos: pos,
+        rotation: rotation,
+        scale: Vector[1, 1, 1] * size,
+        components: [
+          Engine::Components::MeshRenderer.new(Engine::Mesh.for("assets/sphere"), material),
+          *components
+        ]
+      )
     end
 
     private

@@ -6,28 +6,42 @@ ASSETS_DIR = File.expand_path(File.join(__dir__, "assets"))
 Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   include Cubes
   (-3..3).each do |x|
-    Plane.create(Vector[x * 1000, 1000, -1000], Vector[0,0,0], 1000)
+    Plane.create(Vector[x * 100, 100, -100], Vector[0,0,0], 100)
     (0..3).each do |y|
-      Plane.create(Vector[x * 1000, 0, y * 1000], Vector[90,0,0], 1000)
+      Plane.create(Vector[x * 100, 0, y * 100], Vector[90, 0, 0], 100)
     end
   end
 
-  Cube.create(Vector[0, 200, 0], 0, 100)
-  Cube.create_bumped(Vector[500, 200, 0], 0, 100)
-  Teapot.create(Vector[1000, 200, 0], 0, 200)
-  Sphere.create(Vector[2000, 500, 0], 0, 100)
+  Sphere.create(Vector[0, 40, 0], 0, 5, [
+    Engine::Components::Physics::SphereCollider.new(5),
+    Engine::Components::Physics::Rigidbody.new(mass: 0.5, velocity: Vector[0, 0, 0], gravity: Vector[0, -10, 0])
+  ]).tap { |sphere| sphere.name = "small" }
 
-  Cubes::Light.create(Vector[2500, 500, 0], 500, Vector[0, 0, 1])
-  Cubes::Light.create(Vector[1500, 600, 200], 500, Vector[1, 0, 1])
-  Cubes::Light.create(Vector[2000, 1000, 500], 500, Vector[0, 1, 0])
+  Sphere.create(Vector[0, 80, 0], 0, 10, [
+    Engine::Components::Physics::SphereCollider.new(10),
+    Engine::Components::Physics::Rigidbody.new(velocity: Vector[0, 0, 0], gravity: Vector[0, -10, 0])
+  ]).tap { |sphere| sphere.name = "big" }
+
+  Sphere.create(Vector[0, 0, 0], 0, 10, [
+    Engine::Components::Physics::SphereCollider.new(10),
+  ])
+
+  #Cube.create(Vector[0, 20, 0], 0, 10)
+  Cube.create_bumped(Vector[50, 20, 0], 0, 10)
+  Teapot.create(Vector[100, 20, 0], 0, 20)
+  Sphere.create_set(Vector[200, 50, 0], 0, 10)
+
+  Cubes::Light.create(Vector[250, 50, 0], 50, Vector[0, 0, 1])
+  Cubes::Light.create(Vector[150, 60, 20], 50, Vector[1, 0, 1])
+  Cubes::Light.create(Vector[200, 100, 50], 50, Vector[0, 1, 0])
 
   Engine::GameObject.new(
     "Camera",
-    pos: Vector[0, 500, 700],
+    pos: Vector[0, 50, 70],
     rotation: Vector[20, 0, 0],
     components: [
       Cubes::CameraRotator.new,
-      Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: 10000.0)
+      Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: 1000.0)
     # Engine::Components::OrthographicCamera.new(width: 1920, height: 1080, far: 1000)
     ])
 
@@ -40,7 +54,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
         )
     ])
 
-  Text.create(Vector[-200, 600, 0], Vector[0, 0, 0], 100, "Hello World\nNew Line")
+  Text.create(Vector[-20, 60, 0], Vector[0, 0, 0], 10, "Hello World\nNew Line")
 
   ui_material = Engine::Material.new(Engine::Shader.new('./shaders/ui_sprite_vertex.glsl', './shaders/ui_sprite_frag.glsl'))
   ui_material.set_texture("image", Engine::Texture.for(ASSETS_DIR + "/cube.png").texture)
