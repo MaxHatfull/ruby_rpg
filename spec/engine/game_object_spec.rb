@@ -310,4 +310,23 @@ describe Engine::GameObject do
       expect(parent.children).not_to include(object)
     end
   end
+
+  describe "#rotate_around" do
+    it "rotates the object around the z axis" do
+      object = Engine::GameObject.new(rotation: Vector[1, 2, 3])
+
+      object.rotate_around(Vector[0, 0, 1], 90)
+
+      expect(object.rotation).to eq((Engine::Quaternion.from_angle_axis(90, Vector[0, 0, 1]) * Engine::Quaternion.from_euler(Vector[1, 2, 3])).to_euler)
+    end
+
+    it "rotates the object around multiple axes" do
+      object = Engine::GameObject.new(rotation: Vector[1, 2, 3])
+
+      object.rotate_around(Vector[0, 1, 1], 90)
+
+      expect(object.rotation)
+        .to eq((Engine::Quaternion.from_angle_axis(90, Vector[0, 1, 1]) * Engine::Quaternion.from_euler(Vector[1, 2, 3])).to_euler)
+    end
+  end
 end

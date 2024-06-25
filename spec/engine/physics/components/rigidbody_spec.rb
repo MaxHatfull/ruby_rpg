@@ -2,7 +2,15 @@
 
 describe Engine::Physics::Components::Rigidbody do
   describe '#update' do
-    let(:rigidbody) { described_class.new(velocity:, gravity:, mass:) }
+    let(:rigidbody) do
+      described_class.new(
+        velocity:,
+        angular_velocity:,
+        gravity:,
+        mass:
+      )
+    end
+    let(:angular_velocity) { Vector[0, 0, 0] }
     let!(:rigidbody_object) do
       Engine::GameObject.new(
         "rigidbody_object",
@@ -56,6 +64,20 @@ describe Engine::Physics::Components::Rigidbody do
 
         expect(rigidbody_object.pos).to be_vector(Vector[0, -0.2943, 0])
         expect(rigidbody.velocity).to be_vector(Vector[0, -1.962, 0])
+      end
+    end
+
+    context "with some angular velocity" do
+      let(:angular_velocity) { Vector[1, 0, 0] }
+      let(:velocity) { Vector[0, 0, 0] }
+      let(:gravity) { Vector[0, 0, 0] }
+      let(:mass) { 1 }
+
+      it 'rotates' do
+        rigidbody.update(0.1)
+
+        expect(rigidbody_object.pos).to eq(Vector[0, 0, 0])
+        expect(rigidbody_object.rotation).to eq(Vector[0.1, 0, 0])
       end
     end
 

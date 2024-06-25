@@ -7,6 +7,7 @@ require "rmagick"
 
 require_relative 'screenshoter'
 require_relative 'input'
+require_relative "quaternion"
 require_relative 'game_object'
 require_relative 'texture'
 require_relative 'material'
