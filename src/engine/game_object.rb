@@ -70,8 +70,20 @@ module Engine
       Vector[world[0, 0], world[0, 1], world[0, 2]]
     end
 
+    def world_to_local_coordinate(world)
+      world_x4 = Matrix[[world[0], world[1], world[2], 1.0]]
+      local = world_x4 * model_matrix.inverse
+      Vector[local[0, 0], local[0, 1], local[0, 2]]
+    end
+
     def local_to_world_direction(local)
       local_to_world_coordinate(local) - pos
+    end
+
+    def rotate_around(axis, angle)
+      rotation_quaternion = Quaternion.from_angle_axis(angle, axis)
+
+      @rotation = (rotation_quaternion * Quaternion.from_euler(rotation)).to_euler
     end
 
     def model_matrix
