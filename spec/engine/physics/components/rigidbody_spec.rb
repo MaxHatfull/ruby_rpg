@@ -247,6 +247,14 @@ describe Engine::Physics::Components::Rigidbody do
       it "is the sum of the two angular momentum vectors" do
         expect(rigidbody.angular_momentum).to eq(Vector[0, 10, 200])
       end
+
+      context "when using a different origin" do
+        let(:origin) { Vector[5, 0, 0] }
+
+        it "is the sum of the two angular momentum vectors" do
+          expect(rigidbody.angular_momentum(origin)).to eq(Vector[0, 10, 100])
+        end
+      end
     end
   end
 end

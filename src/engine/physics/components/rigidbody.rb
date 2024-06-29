@@ -45,7 +45,7 @@ module Engine::Physics::Components
 
     def angular_momentum(origin = Vector[0, 0, 0])
       moment_of_inertia * @angular_velocity +
-        game_object.pos.cross(momentum)
+        (game_object.pos - origin).cross(momentum)
     end
 
     private
