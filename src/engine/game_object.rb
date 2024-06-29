@@ -25,6 +25,10 @@ module Engine
       components.each(&:start)
     end
 
+    def to_s
+      @name
+    end
+
     def children
       @children ||= Set.new
     end

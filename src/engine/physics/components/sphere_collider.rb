@@ -28,7 +28,7 @@ module Engine::Physics::Components
     end
 
     def inverse_mass
-      1 / rigidbody.mass
+      1.0 / rigidbody.mass
     end
 
     def velocity

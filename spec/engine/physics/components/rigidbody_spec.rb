@@ -101,4 +101,101 @@ describe Engine::Physics::Components::Rigidbody do
       end
     end
   end
+
+  describe "#kinetic_energy" do
+    context "for a stationary object" do
+      let(:rigidbody) do
+        described_class.new(
+          velocity: Vector[0, 0, 0],
+          angular_velocity: Vector[0, 0, 0],
+          gravity: Vector[0, 0, 0],
+          mass: 1
+        )
+      end
+
+      it "is zero" do
+        expect(rigidbody.kinetic_energy).to eq(0)
+      end
+    end
+
+    context "for a moving object" do
+      let(:rigidbody) do
+        described_class.new(
+          velocity: Vector[5, 0, 0],
+          angular_velocity: Vector[0, 0, 0],
+          gravity: Vector[0, 0, 0],
+          mass: 2
+        )
+      end
+
+      it "is 25" do
+        expect(rigidbody.kinetic_energy).to eq(25)
+      end
+    end
+
+    context "for a rotating object" do
+      let(:rigidbody) do
+        described_class.new(
+          velocity: Vector[0, 0, 0],
+          angular_velocity: Vector[0, 5, 0],
+          gravity: Vector[0, 0, 0],
+          mass: 1
+        )
+      end
+
+      it "is 12.5" do
+        expect(rigidbody.kinetic_energy).to eq(12.5)
+      end
+    end
+
+    context "for a rotating body with a non-standard inertia tensor" do
+      let(:rigidbody) do
+        described_class.new(
+          velocity: Vector[0, 0, 0],
+          angular_velocity: Vector[0, 5, 0],
+          gravity: Vector[0, 0, 0],
+          mass: 324,
+          inertia_tensor: Matrix[
+            [1, 0, 0],
+            [0, 2, 0],
+            [0, 0, 3]
+          ]
+        )
+      end
+
+      it "is 25" do
+        expect(rigidbody.kinetic_energy).to eq(25)
+      end
+    end
+
+    context "for a moving and rotating object" do
+      let(:rigidbody) do
+        described_class.new(
+          velocity: Vector[5, 0, 0],
+          angular_velocity: Vector[0, 5, 0],
+          gravity: Vector[0, 0, 0],
+          mass: 2
+        )
+      end
+
+      it "is 50" do
+        expect(rigidbody.kinetic_energy).to eq(50)
+      end
+    end
+  end
+
+  describe "#momenturn" do
+    let(:rigidbody) do
+      described_class.new(
+        velocity: Vector[5, 0, 0],
+        angular_velocity: Vector[0, 5, 0],
+        gravity: Vector[0, 0, 0],
+        mass: 2
+      )
+    end
+
+    it "is 10 kg m/s in the direction of motion" do
+      expect(rigidbody.momentum).to eq(Vector[10, 0, 0])
+    end
+  end
 end
