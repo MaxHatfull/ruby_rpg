@@ -198,4 +198,55 @@ describe Engine::Physics::Components::Rigidbody do
       expect(rigidbody.momentum).to eq(Vector[10, 0, 0])
     end
   end
+
+  describe "angular_momentum" do
+    let!(:rigidbody_object) do
+      Engine::GameObject.new(
+        "rigidbody_object",
+        pos:,
+        components: [rigidbody]
+      )
+    end
+    let(:rigidbody) do
+      described_class.new(
+        velocity:,
+        angular_velocity:,
+        gravity: Vector[0, 0, 0],
+        mass:
+      )
+    end
+
+    context "when the object is spinning" do
+      let(:pos) { Vector[0, 0, 0] }
+      let(:velocity) { Vector[0, 0, 0] }
+      let(:angular_velocity) { Vector[0, 5, 0] }
+      let(:mass) { 2 }
+
+      it "is 10 kg m^2/s in the direction of rotation" do
+        expect(rigidbody.angular_momentum).to eq(Vector[0, 10, 0])
+      end
+    end
+
+    context "when the object is moving" do
+      let(:pos) { Vector[10, 0, 0] }
+      let(:velocity) { Vector[0, 10, 0] }
+      let(:angular_velocity) { Vector[0, 0, 0] }
+      let(:mass) { 2 }
+
+      it "is perpendicular to momentum and position and 200 in magnitude" do
+        expect(rigidbody.angular_momentum).to eq(Vector[0, 0, 200])
+      end
+    end
+
+    context "when the object is moving and spinning" do
+      let(:pos) { Vector[10, 0, 0] }
+      let(:velocity) { Vector[0, 10, 0] }
+      let(:angular_velocity) { Vector[0, 5, 0] }
+      let(:mass) { 2 }
+
+      it "is the sum of the two angular momentum vectors" do
+        expect(rigidbody.angular_momentum).to eq(Vector[0, 10, 200])
+      end
+    end
+  end
 end

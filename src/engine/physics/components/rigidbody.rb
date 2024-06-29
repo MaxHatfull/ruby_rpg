@@ -43,6 +43,11 @@ module Engine::Physics::Components
       @mass * @velocity
     end
 
+    def angular_momentum(origin = Vector[0, 0, 0])
+      moment_of_inertia * @angular_velocity +
+        game_object.pos.cross(momentum)
+    end
+
     private
 
     def acceleration
