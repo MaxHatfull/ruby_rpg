@@ -17,8 +17,8 @@ module Engine::Physics
         other_colliders.map do |other_collider|
           collider.collision_for(other_collider)
         end.compact
-      end.flatten.map(&:impulse).each do |impulse|
-        rigidbody.apply_impulse(impulse)
+      end.flatten.each do |collision|
+        rigidbody.apply_impulse(collision.impulse, collision.point)
       end
     end
 

@@ -87,17 +87,38 @@ describe Engine::Physics::Components::Rigidbody do
       let(:mass) { 1 }
       let(:impulse) { Vector[1, 0, 0] }
 
-      it 'instantly changes velocity' do
-        rigidbody.apply_impulse(impulse)
-        rigidbody.update(0.1)
+      context "directly to the object" do
+        it 'instantly changes velocity' do
+          rigidbody.apply_impulse(impulse, rigidbody_object.pos)
+          rigidbody.update(0.1)
 
-        expect(rigidbody_object.pos).to be_vector(Vector[0.1, 0.4019, 0])
-        expect(rigidbody.velocity).to be_vector(Vector[1, 4.019, 0])
+          expect(rigidbody_object.pos).to be_vector(Vector[0.1, 0.4019, 0])
+          expect(rigidbody.velocity).to be_vector(Vector[1, 4.019, 0])
+          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, 0])
 
-        rigidbody.update(0.1)
+          rigidbody.update(0.1)
 
-        expect(rigidbody_object.pos).to be_vector(Vector[0.2, 0.7057, 0])
-        expect(rigidbody.velocity).to be_vector(Vector[1, 3.038, 0])
+          expect(rigidbody_object.pos).to be_vector(Vector[0.2, 0.7057, 0])
+          expect(rigidbody.velocity).to be_vector(Vector[1, 3.038, 0])
+          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, 0])
+        end
+      end
+
+      context "to a point on the object" do
+        it 'instantly changes velocity and angular velocity' do
+          rigidbody.apply_impulse(impulse, rigidbody_object.pos + Vector[0, 1, 0])
+          rigidbody.update(0.1)
+
+          expect(rigidbody_object.pos).to be_vector(Vector[0.1, 0.4019, 0])
+          expect(rigidbody.velocity).to be_vector(Vector[1, 4.019, 0])
+          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, -1])
+
+          rigidbody.update(0.1)
+
+          expect(rigidbody_object.pos).to be_vector(Vector[0.2, 0.7057, 0])
+          expect(rigidbody.velocity).to be_vector(Vector[1, 3.038, 0])
+          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, -1])
+        end
       end
     end
 

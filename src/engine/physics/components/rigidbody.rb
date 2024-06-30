@@ -40,8 +40,9 @@ module Engine::Physics::Components
       @game_object.rotate_around(angular_velocity, delta_time * angular_velocity.magnitude) if angular_velocity.magnitude > 0
     end
 
-    def apply_impulse(impulse)
+    def apply_impulse(impulse, point)
       @impulses << impulse
+      @angular_impulses << (point - game_object.pos).cross(impulse)
     end
 
     def apply_angular_impulse(impulse)
