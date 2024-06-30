@@ -2,9 +2,16 @@
 
 module Engine::Physics::Components
   class Rigidbody < Engine::Component
-    attr_accessor :velocity, :angular_velocity, :force, :impulses, :mass
+    attr_accessor :velocity, :angular_velocity, :force, :impulses, :mass, :coefficient_of_restitution
 
-    def initialize(velocity: Vector[0, 0, 0], angular_velocity: Vector[0, 0, 0], mass: 1, inertia_tensor: nil, gravity: Vector[0, -9.81, 0])
+    def initialize(
+      velocity: Vector[0, 0, 0],
+      angular_velocity: Vector[0, 0, 0],
+      mass: 1,
+      inertia_tensor: nil,
+      gravity: Vector[0, -9.81, 0],
+      coefficient_of_restitution: 1
+    )
       @velocity = velocity
       @angular_velocity = angular_velocity
       @force = gravity * mass
@@ -17,6 +24,7 @@ module Engine::Physics::Components
         [0, 1, 0],
         [0, 0, 1]
       ] * mass
+      @coefficient_of_restitution = coefficient_of_restitution
     end
 
     def update(delta_time)

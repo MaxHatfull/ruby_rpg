@@ -10,10 +10,11 @@ describe Engine::Physics::Components::SphereCollider do
           pos: position,
           components: [
             collider,
-            Engine::Physics::Components::Rigidbody.new(velocity: velocity)
+            Engine::Physics::Components::Rigidbody.new(velocity:, coefficient_of_restitution:)
           ]
         )
       end
+      let(:coefficient_of_restitution) { 1 }
       let(:velocity) { Vector[0, 0, 0] }
 
       let(:other_collider) { described_class.new(other_radius) }
@@ -23,11 +24,15 @@ describe Engine::Physics::Components::SphereCollider do
           pos: other_position,
           components: [
             other_collider,
-            Engine::Physics::Components::Rigidbody.new(velocity: other_velocity)
+            Engine::Physics::Components::Rigidbody.new(
+              velocity: other_velocity,
+              coefficient_of_restitution: other_coefficient_of_restitution
+            )
           ]
         )
       end
       let(:other_velocity) { Vector[0, 0, 0] }
+      let(:other_coefficient_of_restitution) { 1 }
 
       context "when the spheres are touching" do
         let(:position) { Vector[0, 0, 0] }
@@ -55,6 +60,19 @@ describe Engine::Physics::Components::SphereCollider do
 
           expect(collision.point).to eq(Vector[1.5, 0, 0])
           expect(collision.impulse).to eq(Vector[-1, 0, 0])
+        end
+
+        context "when the spheres have non-standard coefficients of restitution" do
+          let(:coefficient_of_restitution) { 0.5 }
+          let(:other_coefficient_of_restitution) { 0.5 }
+          let(:velocity) { Vector[1, 0, 0] }
+
+          it 'returns a collision with the correct impulse' do
+            collision = collider.collision_for(other_collider)
+
+            expect(collision.point).to eq(Vector[1.5, 0, 0])
+            expect(collision.impulse).to eq(Vector[-0.25, 0, 0])
+          end
         end
       end
 

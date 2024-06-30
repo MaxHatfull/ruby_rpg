@@ -19,7 +19,8 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
       mass: 0.5,
       velocity: Vector[0, 0, 0],
       angular_velocity: Vector[0, 0, 0],
-      gravity: Vector[0, -9.81, 0]
+      gravity: Vector[0, -9.81, 0],
+      coefficient_of_restitution: 0.9
     )
   ]).tap { |sphere| sphere.name = "small" }
 

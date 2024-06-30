@@ -41,18 +41,24 @@ module Engine::Physics::Components
 
     private
 
+    def combined_coefficient_of_restitution(other_collider)
+      return rigidbody.coefficient_of_restitution if other_collider.static?
+
+      rigidbody.coefficient_of_restitution * other_collider.rigidbody.coefficient_of_restitution
+    end
+
     def collision_point(direction, overlap)
       game_object.pos + direction * (radius - overlap / 2)
     end
 
     def impulse_magnitude(direction, other_collider)
-      if other_collider.static?
+      (if other_collider.static?
         v_r = velocity
         (v_r.dot(direction) * 2) / inverse_mass
       else
         v_r = velocity - other_collider.velocity
         (v_r.dot(direction) * 2) / (inverse_mass + other_collider.inverse_mass)
-      end
+      end) * combined_coefficient_of_restitution(other_collider)
     end
   end
 end
