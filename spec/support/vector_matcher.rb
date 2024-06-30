@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec::Matchers.define :be_vector do |expected|
+RSpec::Matchers.define :be_vector do |expected, tolerance: 0.00001|
   match do |actual|
-    (expected - actual).magnitude < 0.00001
+    (expected - actual).magnitude < tolerance
   end
 
   failure_message do |actual|

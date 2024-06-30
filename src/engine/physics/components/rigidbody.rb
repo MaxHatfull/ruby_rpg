@@ -10,6 +10,7 @@ module Engine::Physics::Components
       @force = gravity * mass
       @gravity = gravity
       @impulses = []
+      @angular_impulses = []
       @mass = mass
       @inertia_tensor = inertia_tensor || Matrix[
         [1, 0, 0],
@@ -23,11 +24,28 @@ module Engine::Physics::Components
       @velocity += @impulses.reduce(Vector[0, 0, 0]) { |acc, impulse| acc + impulse } / @mass
       @impulses = []
       @game_object.pos += @velocity * delta_time
+
+      total_angular_impulse = @angular_impulses.reduce(Vector[0, 0, 0]) { |acc, impulse| acc + impulse }
+      if total_angular_impulse.magnitude > 0
+        angular_inertia =
+          if moment_of_inertia == 0
+            impulse_direction = total_angular_impulse.normalize
+            impulse_direction.dot(@inertia_tensor * impulse_direction)
+          else
+            moment_of_inertia
+          end
+        @angular_velocity += total_angular_impulse / angular_inertia
+      end
+      @angular_impulses = []
       @game_object.rotate_around(angular_velocity, delta_time * angular_velocity.magnitude) if angular_velocity.magnitude > 0
     end
 
     def apply_impulse(impulse)
       @impulses << impulse
+    end
+
+    def apply_angular_impulse(impulse)
+      @angular_impulses << impulse
     end
 
     def colliders

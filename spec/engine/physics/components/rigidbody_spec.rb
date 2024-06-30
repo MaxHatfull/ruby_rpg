@@ -100,6 +100,54 @@ describe Engine::Physics::Components::Rigidbody do
         expect(rigidbody.velocity).to be_vector(Vector[1, 3.038, 0])
       end
     end
+
+    context "when applying an angular impulse" do
+      context "to a stationary object" do
+        let(:velocity) { Vector[0, 0, 0] }
+        let(:angular_velocity) { Vector[0, 0, 0] }
+        let(:gravity) { Vector[0, 0, 0] }
+        let(:mass) { 1 }
+        let(:impulse) { Vector[1, 0, 0] }
+
+        it 'instantly changes angular velocity' do
+          rigidbody.apply_angular_impulse(impulse)
+          rigidbody.update(0.1)
+
+          expect(rigidbody_object.pos).to eq(Vector[0, 0, 0])
+          expect(rigidbody_object.rotation).to eq(Vector[0.1, 0, 0])
+          expect(rigidbody.angular_velocity).to eq(Vector[1, 0, 0])
+
+          rigidbody.update(0.1)
+
+          expect(rigidbody_object.pos).to eq(Vector[0, 0, 0])
+          expect(rigidbody_object.rotation).to eq(Vector[0.2, 0, 0])
+          expect(rigidbody.angular_velocity).to eq(Vector[1, 0, 0])
+        end
+      end
+
+      context "to a rotating object" do
+        let(:velocity) { Vector[0, 0, 0] }
+        let(:angular_velocity) { Vector[0, 5, 0] }
+        let(:gravity) { Vector[0, 0, 0] }
+        let(:mass) { 1 }
+        let(:impulse) { Vector[1, 0, 0] }
+
+        it 'instantly changes angular velocity' do
+          rigidbody.apply_angular_impulse(impulse)
+          rigidbody.update(0.1)
+
+          expect(rigidbody_object.pos).to eq(Vector[0, 0, 0])
+          expect(rigidbody_object.rotation).to be_vector(Vector[0.1, 0.5, 0], tolerance: 0.001) # angle axis introduces a small error here
+          expect(rigidbody.angular_velocity).to eq(Vector[1, 5, 0])
+
+          rigidbody.update(0.1)
+
+          expect(rigidbody_object.pos).to eq(Vector[0, 0, 0])
+          expect(rigidbody_object.rotation).to be_vector(Vector[0.2, 1, 0], tolerance: 0.01) # angle axis introduces a small error here
+          expect(rigidbody.angular_velocity).to eq(Vector[1, 5, 0])
+        end
+      end
+    end
   end
 
   describe "#kinetic_energy" do
@@ -199,7 +247,7 @@ describe Engine::Physics::Components::Rigidbody do
     end
   end
 
-  describe "angular_momentum" do
+  describe "#angular_momentum" do
     let!(:rigidbody_object) do
       Engine::GameObject.new(
         "rigidbody_object",
