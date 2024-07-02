@@ -111,13 +111,13 @@ describe Engine::Physics::Components::Rigidbody do
 
           expect(rigidbody_object.pos).to be_vector(Vector[0.1, 0.4019, 0])
           expect(rigidbody.velocity).to be_vector(Vector[1, 4.019, 0])
-          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, -1])
+          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, 1])
 
           rigidbody.update(0.1)
 
           expect(rigidbody_object.pos).to be_vector(Vector[0.2, 0.7057, 0])
           expect(rigidbody.velocity).to be_vector(Vector[1, 3.038, 0])
-          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, -1])
+          expect(rigidbody.angular_velocity).to be_vector(Vector[0, 0, 1])
         end
       end
     end
@@ -323,6 +323,67 @@ describe Engine::Physics::Components::Rigidbody do
         it "is the sum of the two angular momentum vectors" do
           expect(rigidbody.angular_momentum(origin)).to eq(Vector[0, 10, 100])
         end
+      end
+    end
+  end
+
+  describe "#velocity_at_point" do
+    let(:rigidbody) do
+      described_class.new(
+        velocity:,
+        angular_velocity:,
+        gravity: Vector[0, 0, 0],
+        mass: 1
+      )
+    end
+    let!(:rigidbody_object) do
+      Engine::GameObject.new(
+        "rigidbody_object",
+        pos:,
+        components: [rigidbody]
+      )
+    end
+
+    context "when stationary" do
+      let(:pos) { Vector[0, 0, 0] }
+      let(:velocity) { Vector[0, 0, 0] }
+      let(:angular_velocity) { Vector[0, 0, 0] }
+
+      it "is the same as the object's velocity" do
+        expect(rigidbody.velocity_at_point(Vector[0, 0, 0])).to eq(Vector[0, 0, 0])
+      end
+    end
+
+    context "when moving" do
+      let(:pos) { Vector[0, 0, 0] }
+      let(:velocity) { Vector[1, 0, 0] }
+      let(:angular_velocity) { Vector[0, 0, 0] }
+
+      it "is the same as the object's velocity" do
+        expect(rigidbody.velocity_at_point(Vector[0, 0, 0])).to eq(Vector[1, 0, 0])
+        expect(rigidbody.velocity_at_point(Vector[1, 0, 0])).to eq(Vector[1, 0, 0])
+      end
+    end
+
+    context "when spinning" do
+      let(:pos) { Vector[0, 0, 0] }
+      let(:velocity) { Vector[0, 0, 0] }
+      let(:angular_velocity) { Vector[0, 5, 0] }
+
+      it "is the cross product of the angular velocity and the position" do
+        expect(rigidbody.velocity_at_point(Vector[1, 0, 0])).to eq(Vector[0, 0, 5 * Math::PI / 180])
+        expect(rigidbody.velocity_at_point(Vector[0, 1, 0])).to eq(Vector[0, 0, 0])
+      end
+    end
+
+    context "when moving and spinning" do
+      let(:pos) { Vector[0, 0, 10] }
+      let(:velocity) { Vector[1, 0, 0] }
+      let(:angular_velocity) { Vector[0, 5, 0] }
+
+      it "is the sum of the object's velocity and the cross product of the angular velocity and the position" do
+        expect(rigidbody.velocity_at_point(Vector[1, 0, 10])).to eq(Vector[1, 0, 5 * Math::PI / 180])
+        expect(rigidbody.velocity_at_point(Vector[0, 1, 10])).to eq(Vector[1, 0, 0])
       end
     end
   end

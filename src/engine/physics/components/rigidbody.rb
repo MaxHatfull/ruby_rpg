@@ -2,7 +2,13 @@
 
 module Engine::Physics::Components
   class Rigidbody < Engine::Component
-    attr_accessor :velocity, :angular_velocity, :force, :impulses, :mass, :coefficient_of_restitution
+    attr_accessor :velocity,
+                  :angular_velocity,
+                  :force,
+                  :impulses,
+                  :mass,
+                  :coefficient_of_restitution,
+                  :coefficient_of_friction
 
     def initialize(
       velocity: Vector[0, 0, 0],
@@ -10,7 +16,8 @@ module Engine::Physics::Components
       mass: 1,
       inertia_tensor: nil,
       gravity: Vector[0, -9.81, 0],
-      coefficient_of_restitution: 1
+      coefficient_of_restitution: 1,
+      coefficient_of_friction: 0
     )
       @velocity = velocity
       @angular_velocity = angular_velocity
@@ -25,6 +32,7 @@ module Engine::Physics::Components
         [0, 0, 1]
       ] * mass
       @coefficient_of_restitution = coefficient_of_restitution
+      @coefficient_of_friction = coefficient_of_friction
     end
 
     def update(delta_time)
@@ -50,7 +58,7 @@ module Engine::Physics::Components
 
     def apply_impulse(impulse, point)
       @impulses << impulse
-      @angular_impulses << (point - game_object.pos).cross(impulse)
+      @angular_impulses << (game_object.pos - point).cross(impulse)
     end
 
     def apply_angular_impulse(impulse)
@@ -73,6 +81,10 @@ module Engine::Physics::Components
     def angular_momentum(origin = Vector[0, 0, 0])
       moment_of_inertia * @angular_velocity +
         (game_object.pos - origin).cross(momentum)
+    end
+
+    def velocity_at_point(point)
+      velocity + (angular_velocity.cross(game_object.pos - point) * Math::PI / 180)
     end
 
     private

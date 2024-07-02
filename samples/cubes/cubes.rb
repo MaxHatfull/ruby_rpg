@@ -12,22 +12,27 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
     end
   end
 
-  Sphere.create(Vector[0, 30, 0], 0, 5, [
+  Sphere.create(Vector[7, 20, 0], 0, 5, [
     Engine::Physics::Components::SphereCollider.new(5),
     #Spinner.new(90),
     Engine::Physics::Components::Rigidbody.new(
       mass: 0.5,
       velocity: Vector[0, 0, 0],
       angular_velocity: Vector[0, 0, 0],
-      gravity: Vector[0, -9.81, 0],
-      coefficient_of_restitution: 0.9
+      gravity: Vector[0, -5, 0],
+      coefficient_of_restitution: 0.95,
+      coefficient_of_friction: 1
     )
   ]).tap { |sphere| sphere.name = "small" }
 
-  Sphere.create(Vector[0, 80, 0], 0, 10, [
-    Engine::Physics::Components::SphereCollider.new(10),
-    Engine::Physics::Components::Rigidbody.new(velocity: Vector[0, 0, 0], gravity: Vector[0, -10, 0])
-  ]).tap { |sphere| sphere.name = "big" }
+  # Sphere.create(Vector[0, 80, 0], 0, 10, [
+  #   Engine::Physics::Components::SphereCollider.new(10),
+  #   Engine::Physics::Components::Rigidbody.new(
+  #     velocity: Vector[0, 0, 0],
+  #     gravity: Vector[0, -10, 0],
+  #     coefficient_of_friction: 0.1,
+  #   )
+  # ]).tap { |sphere| sphere.name = "big" }
 
   Sphere.create(Vector[0, 0, 0], 0, 10, [
     Engine::Physics::Components::SphereCollider.new(10),
