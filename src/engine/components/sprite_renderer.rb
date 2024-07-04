@@ -88,12 +88,7 @@ module Engine::Components
     end
 
     def set_shader_camera_matrix
-      camera_matrix = Matrix[
-        [2.0 / Engine.screen_width, 0, 0, 0],
-        [0, 2.0 / Engine.screen_height, 0, 0],
-        [0, 0, 1, 0],
-        [-1, -1, 0, 1]
-      ]
+      camera_matrix = Engine::Camera.instance.matrix
       shader.set_mat4("camera", camera_matrix)
     end
 
