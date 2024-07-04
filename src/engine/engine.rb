@@ -95,6 +95,7 @@ module Engine
     @game_stopped = false
     @old_time = Time.now
     @time = Time.now
+    @fps = 0
     update_screen_size
     GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
 
@@ -140,6 +141,10 @@ module Engine
     end
   end
 
+  def self.fps
+    @fps
+  end
+
   def self.terminate
     GLFW.DestroyWindow(@window)
     GLFW.Terminate
@@ -162,7 +167,8 @@ module Engine
     @time_since_last_fps_print = (@time_since_last_fps_print || 0) + delta_time
     @frame = (@frame || 0) + 1
     if @time_since_last_fps_print > 1
-      puts "FPS: #{@frame / @time_since_last_fps_print}"
+      @fps = @frame / @time_since_last_fps_print
+      puts "FPS: #{@fps}"
       @time_since_last_fps_print = 0
       @frame = 0
     end

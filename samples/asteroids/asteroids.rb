@@ -1,10 +1,15 @@
 require_relative "../../src/engine/engine"
+require "pry"
 
+ROOT = File.expand_path(File.join(__dir__))
 ASSETS_DIR = File.expand_path(File.join(__dir__, "assets"))
+WINDOW_WIDTH = 1440
+WINDOW_HEIGHT = 900
 
-Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
+Engine.start(width: WINDOW_WIDTH, height: WINDOW_HEIGHT, base_dir: File.dirname(__FILE__)) do
   include Asteroids
-  Ship.create(Vector[1920.0 / 2, 1080.0 / 2], 20)
+  Ship.create(Vector[WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0], 20)
+  OnscreenUI.create
 
   10.times do
     Asteroid.create(
