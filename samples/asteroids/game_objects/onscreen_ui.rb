@@ -2,7 +2,7 @@
 
 module Asteroids
   module OnscreenUI
-    TEXT_SIZE = 20
+    TEXT_SIZE = 50
     UI_Z_ORDER = 0
 
     def self.create
@@ -13,7 +13,7 @@ module Asteroids
       parent.add_child Text.create(Vector[WINDOW_WIDTH - TEXT_SIZE, TEXT_SIZE / 2, UI_Z_ORDER], 0, TEXT_SIZE, "BR" )
 
       ship_text = Text.create(Vector[340, 180, UI_Z_ORDER], 0, TEXT_SIZE, "SHIP" )
-      ship_text.renderers.first.update_string("Use space to fire, and arrows to fly!")
+      ship_text.ui_renderers.first.update_string("Use space to fire, and arrows to fly!")
 
       parent
     end

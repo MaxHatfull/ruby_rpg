@@ -10,16 +10,6 @@ Engine.start(width: WINDOW_WIDTH, height: WINDOW_HEIGHT, base_dir: File.dirname(
   include Asteroids
   Ship.create(Vector[WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0], 20)
 
-  # Create a camera for rendering text to the Onscreen UI
-  Engine::GameObject.new(
-    "Onscreen UI Camera",
-    pos: Vector[WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 1],
-    rotation: Vector[0, 0, 0],
-    components: [
-      Engine::Components::OrthographicCamera.new(width: WINDOW_WIDTH, height: WINDOW_HEIGHT, far: 2)
-    ]
-  )
-
   DEBUG_UI = OnscreenUI.create
 
   10.times do

@@ -12,7 +12,7 @@ module Asteroids
     end
 
     def update(delta_time)
-      DEBUG_UI.children.first.renderers.first.update_string("FPS: #{Engine.fps.round(4)}")
+      DEBUG_UI.children.first.ui_renderers.first.update_string("FPS: #{Engine.fps.round(4)}")
       if Engine::Input.key_down?(GLFW::KEY_UP)
         acceleration = ACCELERATION
         deceleration = 0
