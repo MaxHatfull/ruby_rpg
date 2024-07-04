@@ -18,8 +18,8 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
     Engine::Physics::Components::Rigidbody.new(
       mass: 0.5,
       velocity: Vector[0, 0, 0],
-      angular_velocity: Vector[0, 0, 0],
-      gravity: Vector[0, -5, 0],
+      angular_velocity: Vector[20, 45, 30] * 100,
+      gravity: Vector[0, 0, 0],
       coefficient_of_restitution: 0.95,
       coefficient_of_friction: 1
     )
@@ -34,9 +34,9 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
   #   )
   # ]).tap { |sphere| sphere.name = "big" }
 
-  Sphere.create(Vector[0, 0, 0], 0, 10, [
-    Engine::Physics::Components::SphereCollider.new(10),
-  ])
+  # Sphere.create(Vector[0, 0, 0], 0, 10, [
+  #   Engine::Physics::Components::SphereCollider.new(10),
+  # ])
 
   #Cube.create(Vector[0, 20, 0], 0, 10)
   Cube.create_bumped(Vector[50, 20, 0], 0, 10)
@@ -66,7 +66,7 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
         )
     ])
 
-  Text.create(Vector[-20, 60, 0], Vector[0, 0, 0], 10, "Hello World\nNew Line")
+  Text.create(Vector[500, 500, 0], Vector[0, 0, 0], 100, "Hello World\nNew Line")
 
   ui_material = Engine::Material.new(Engine::Shader.new('./shaders/ui_sprite_vertex.glsl', './shaders/ui_sprite_frag.glsl'))
   ui_material.set_texture("image", Engine::Texture.for(ASSETS_DIR + "/cube.png").texture)

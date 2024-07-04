@@ -29,6 +29,7 @@ require_relative "components/ui_sprite_renderer"
 require_relative "components/rect_renderer"
 require_relative "components/mesh_renderer"
 require_relative "components/font_renderer"
+require_relative "components/ui_font_renderer"
 require_relative "components/point_light"
 require_relative "components/direction_light"
 
