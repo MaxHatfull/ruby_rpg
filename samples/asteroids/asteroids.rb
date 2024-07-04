@@ -9,8 +9,7 @@ WINDOW_HEIGHT = 900
 Engine.start(width: WINDOW_WIDTH, height: WINDOW_HEIGHT, base_dir: File.dirname(__FILE__)) do
   include Asteroids
   Ship.create(Vector[WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0], 20)
-
-  DEBUG_UI = OnscreenUI.create
+  OnscreenUI.create
 
   10.times do
     Asteroid.create(
