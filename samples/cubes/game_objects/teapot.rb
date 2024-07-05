@@ -9,7 +9,6 @@ module Cubes
         rotation: rotation,
         scale: Vector[size, size, size],
         components: [
-          Cubes::Spinner.new(90),
           Engine::Components::MeshRenderer.new(
             Engine::Mesh.for("assets/teapot"),
             material,

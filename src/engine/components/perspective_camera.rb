@@ -11,6 +11,10 @@ module Engine::Components
       Engine::Camera.instance = self
     end
 
+    def destroy
+      Engine::Camera.instance = nil if Engine::Camera.instance == self
+    end
+
     def matrix
       @matrix ||=
         begin

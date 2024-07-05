@@ -17,6 +17,10 @@ module Engine
     def start
     end
 
-    def update(delta_time) end
+    def update(delta_time)
+    end
+
+    def destroy
+    end
   end
 end

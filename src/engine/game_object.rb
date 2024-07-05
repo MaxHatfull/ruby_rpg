@@ -121,6 +121,7 @@ module Engine
     end
 
     def destroy!
+      components.each(&:destroy)
       GameObject.objects.delete(self)
       parent.children.delete(self) if parent
       children.each(&:destroy!)

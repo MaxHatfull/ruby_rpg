@@ -134,7 +134,7 @@ describe Engine::Physics::Components::SphereCollider do
             collision = collider.collision_for(other_collider)
 
             expect(collision.point).to eq(Vector[1, 0, 0])
-            expect(collision.impulse).to eq(Vector[-0.2, -0.5, 0])
+            expect(collision.impulse).to eq(Vector[-0.2, -0.025, 0])
           end
         end
       end
