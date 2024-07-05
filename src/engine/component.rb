@@ -20,7 +20,7 @@ module Engine
     def update(delta_time)
     end
 
-    def destroy
+    def destroy!
     end
   end
 end
