@@ -1,9 +1,9 @@
 module Engine
   class Component
     def self.method_added(name)
-      @methods ||= []
+      @methods ||= Set.new
       return if name == :initialize
-      @methods << name
+      @methods.add(name)
     end
 
     attr_reader :game_object
@@ -30,6 +30,7 @@ module Engine
       game_object.components.delete(self)
       self.class.instance_variable_get(:@methods).each do |method|
         singleton_class.send(:undef_method, method)
+        singleton_class.send(:define_method, method) { |*args, **kwargs| raise "This component has been destroyed" }
       end
     end
 

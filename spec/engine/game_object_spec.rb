@@ -205,6 +205,15 @@ describe Engine::GameObject do
       object.destroy!
       expect(Engine::GameObject.objects).not_to include(object)
     end
+
+    it "calls destroy on all components" do
+      component = Engine::Component.new
+      object = Engine::GameObject.new(components: [component])
+
+      expect(component).to receive(:destroy!)
+
+      object.destroy!
+    end
   end
 
   describe ".destroy_all" do

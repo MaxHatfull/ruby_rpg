@@ -32,8 +32,8 @@ describe Engine::Component do
     it 'undefines the methods' do
       component.destroy!
 
-      expect { component.start }.to raise_error(NoMethodError)
-      expect { component.update(0) }.to raise_error(NoMethodError)
+      expect { component.start }.to raise_error("This component has been destroyed")
+      expect { component.update(0) }.to raise_error("This component has been destroyed")
     end
   end
 end

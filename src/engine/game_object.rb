@@ -2,6 +2,12 @@ require "matrix"
 
 module Engine
   class GameObject
+    def self.method_added(name)
+      @methods ||= Set.new
+      return if name == :initialize || name == :destroyed?
+      @methods.add(name)
+    end
+
     attr_accessor :name, :pos, :rotation, :scale, :components, :renderers, :ui_renderers, :created_at, :parent
 
     def initialize(name = "Game Object", pos: Vector[0, 0, 0], rotation: 0, scale: Vector[1, 1, 1], components: [], parent: nil)
@@ -120,11 +126,22 @@ module Engine
       end
     end
 
+    def destroyed?
+      @destroyed
+    end
+
     def destroy!
+      return unless GameObject.objects.include?(self)
+      @destroyed = true
+
       components.each(&:destroy!)
       GameObject.objects.delete(self)
       parent.children.delete(self) if parent
       children.each(&:destroy!)
+      self.class.instance_variable_get(:@methods).each do |method|
+        singleton_class.send(:undef_method, method)
+        singleton_class.send(:define_method, method) { raise "This object has been destroyed #{self.object_id}" }
+      end
     end
 
     def up
@@ -146,7 +163,9 @@ module Engine
     end
 
     def self.destroy_all
-      GameObject.objects.dup.each(&:destroy!)
+      GameObject.objects.dup.each do |object|
+        object.destroy! unless object.destroyed?
+      end
     end
 
     def self.update_all(delta_time)
