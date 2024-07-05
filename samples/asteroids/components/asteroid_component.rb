@@ -16,7 +16,7 @@ module Asteroids
       AsteroidComponent.asteroids << self
     end
 
-    def destroy!
+    def blow_up
       AsteroidComponent.asteroids.delete(self)
       split if size > 40
       game_object.destroy!

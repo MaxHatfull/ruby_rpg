@@ -6,7 +6,7 @@ module Asteroids
       AsteroidComponent.asteroids.each do |asteroid|
         if (game_object.pos - asteroid.game_object.pos).magnitude < asteroid.size
           game_object.destroy!
-          asteroid.destroy!
+          asteroid.blow_up
 
           Explosion.create(game_object.pos)
           break
