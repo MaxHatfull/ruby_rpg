@@ -34,16 +34,14 @@ module Engine
       horizontal_offset = 0.0
       vertical_offset = 0.0
       font_path = File.expand_path(File.join(ROOT, @font_file_path))
-      FreeType::API::Font.open(font_path) do |face|
-        string.chars.each do |char|
-          if char == "\n"
-            vertical_offset -= 1.0
-            horizontal_offset = 0.0
-            next
-          end
-          offsets << [horizontal_offset, vertical_offset]
-          horizontal_offset += face.glyph(char).char_width * scale_factor
+      string.chars.each do |char|
+        if char == "\n"
+          vertical_offset -= 1.0
+          horizontal_offset = 0.0
+          next
         end
+        offsets << [horizontal_offset, vertical_offset]
+        horizontal_offset += 100 * scale_factor
       end
       offsets
     end

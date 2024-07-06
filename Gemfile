@@ -16,6 +16,4 @@ gem "concurrent-ruby"
 
 gem 'os'
 
-gem "freetype"
-
-gem "rmagick"
+gem 'rmagick', '~> 6.0', '>= 6.0.1'

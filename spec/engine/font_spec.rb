@@ -15,13 +15,6 @@ describe Engine::Font do
     end
     before do
       stub_const("ROOT", "spec")
-      allow(FreeType::API::Font).to receive(:open) do |&block|
-        face = double("face")
-        allow(face).to receive(:glyph) do |char|
-          double("glyph", char_width: widths[char])
-        end
-        block.call(face)
-      end
     end
 
     it "returns the offsets of the string" do

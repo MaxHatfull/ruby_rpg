@@ -2,7 +2,6 @@ require 'opengl'
 require 'glfw'
 require 'concurrent'
 require 'os'
-require "freetype"
 require "rmagick"
 
 require_relative 'screenshoter'
