@@ -22,7 +22,7 @@ module Asteroids
         next if asteroid.destroyed?
         if (ship.pos - asteroid.game_object.pos).magnitude < asteroid.size
           inflict_shield_damage(asteroid.size)
-          asteroid.destroy!
+          asteroid.blow_up
 
           Explosion.create(ship.pos)
         end
