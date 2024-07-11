@@ -88,7 +88,15 @@ module Engine::Components
     end
 
     def set_shader_camera_matrix
-      camera_matrix = Engine::Camera.instance.matrix
+      # camera_matrix = Engine::Camera.instance.matrix
+      # Reverting this because something's wrong
+      # When the ship, or an asteroid, flies off the screen, it takes a while before it comes back onto the screen
+      camera_matrix = Matrix[
+         [2.0 / Engine.screen_width, 0, 0, 0],
+         [0, 2.0 / Engine.screen_height, 0, 0],
+         [0, 0, 1, 0],
+         [-1, -1, 0, 1]
+       ]
       shader.set_mat4("camera", camera_matrix)
     end
 

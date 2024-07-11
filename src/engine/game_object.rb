@@ -138,10 +138,10 @@ module Engine
       GameObject.objects.delete(self)
       parent.children.delete(self) if parent
       children.each(&:destroy!)
-      self.class.instance_variable_get(:@methods).each do |method|
-        singleton_class.send(:undef_method, method)
-        singleton_class.send(:define_method, method) { raise "This object has been destroyed #{self.object_id}" }
-      end
+      # self.class.instance_variable_get(:@methods).each do |method|
+      #   singleton_class.send(:undef_method, method)
+      #   singleton_class.send(:define_method, method) { raise "This object has been destroyed #{self.object_id}" }
+      # end
     end
 
     def up

@@ -28,10 +28,10 @@ module Engine
     def destroy!
       destroy
       game_object.components.delete(self)
-      self.class.instance_variable_get(:@methods).each do |method|
-        singleton_class.send(:undef_method, method)
-        singleton_class.send(:define_method, method) { |*args, **kwargs| raise "This component has been destroyed" }
-      end
+      # self.class.instance_variable_get(:@methods).each do |method|
+      #   singleton_class.send(:undef_method, method)
+      #   singleton_class.send(:define_method, method) { |*args, **kwargs| raise "This component has been destroyed" }
+      # end
     end
 
     def destroy

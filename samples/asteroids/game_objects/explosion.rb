@@ -24,7 +24,8 @@ module Asteroids
             20,
             false,
             colour
-          )
+          ),
+          DestroyAfter.new(1)
         ]
       )
     end
