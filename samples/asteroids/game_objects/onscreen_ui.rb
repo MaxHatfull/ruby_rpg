@@ -2,7 +2,7 @@
 
 module Asteroids
   module OnscreenUI
-    TEXT_SIZE = 50
+    TEXT_SIZE = 30
     UI_Z_ORDER = 0
 
     def self.create
