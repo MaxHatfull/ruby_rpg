@@ -19,6 +19,7 @@ module Asteroids
 
     def detect_collision_with_asteroids
       AsteroidComponent.asteroids.each do |asteroid|
+        next if asteroid.destroyed?
         if (ship.pos - asteroid.game_object.pos).magnitude < asteroid.size
           inflict_shield_damage(asteroid.size)
           asteroid.destroy!
