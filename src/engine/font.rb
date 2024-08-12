@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 module Engine
   class Font
     TEXTURE_SIZE = 1024
@@ -33,7 +35,8 @@ module Engine
       scale_factor = 1 / (1024.0 * 2)
       horizontal_offset = 0.0
       vertical_offset = 0.0
-      font_path = File.expand_path(File.join(ROOT, @font_file_path))
+      font_path = File.expand_path(File.join(ROOT, "_imported", @font_file_path.gsub(".ttf", ".json")))
+      font_metrics = JSON.parse File.read(font_path)
       string.chars.each do |char|
         if char == "\n"
           vertical_offset -= 1.0
@@ -41,7 +44,7 @@ module Engine
           next
         end
         offsets << [horizontal_offset, vertical_offset]
-        horizontal_offset += 100 * scale_factor
+        horizontal_offset += 30 * scale_factor * font_metrics[index_table[char].to_s]["width"]
       end
       offsets
     end

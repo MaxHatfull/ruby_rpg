@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'json'
 
 module Engine
   class FontImporter
@@ -6,17 +7,19 @@ module Engine
     GLYPH_COUNT = 16
     CELL_SIZE = TEXTURE_SIZE / GLYPH_COUNT
 
-    attr_reader :source, :destination
+    attr_reader :source, :destination_image, :destination_metrics
 
-    def initialize(source, destination)
+    def initialize(source, destination_image, destination_metrics)
       @source = source
-      @destination = destination
+      @destination_image = destination_image
+      @destination_metrics = destination_metrics
     end
 
     def import
       image = Magick::Image.new(TEXTURE_SIZE, TEXTURE_SIZE,) do |options|
         options.background_color = "transparent"
       end
+      font_metrics = {}
 
       draw = Magick::Draw.new
       (0...GLYPH_COUNT).each do |x|
@@ -25,11 +28,20 @@ module Engine
           next if index >= 255
           character = character(index)
           write_character(character, draw, image, coord(x), coord(y))
+
+          metric = draw.get_type_metrics(image, character)
+          if character.to_s == " "
+            font_metrics[index] = { width: metric.max_advance / 4.0 }
+          else
+            font_metrics[index] = { width: metric.width }
+          end
         end
       end
 
-      FileUtils.mkdir_p(File.dirname(destination)) unless File.directory?(File.dirname(destination))
-      image.write(destination)
+      FileUtils.mkdir_p(File.dirname(destination_image)) unless File.directory?(File.dirname(destination_image))
+      image.write(destination_image)
+
+      File.write(destination_metrics, font_metrics.to_json)
     end
 
     private

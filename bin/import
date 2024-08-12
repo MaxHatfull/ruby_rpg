@@ -21,9 +21,13 @@ puts "found #{fonts.size} fonts"
 fonts.each do |font|
   puts "importing #{font}"
   destination_image = (font.gsub(assets_path, "")).gsub(/\.ttf$/, '.png')
+  destination_font_metrics = (font.gsub(assets_path, "")).gsub(/\.ttf$/, '.json')
+
   destination_path = File.join(assets_path, '_imported', destination_image)
-  puts "  -> #{destination_path}"
-  Engine::FontImporter.new(font, destination_path).import
+  destination_font_metrics_file = File.join(assets_path, '_imported', destination_font_metrics)
+
+  puts "  -> #{destination_path}, #{destination_font_metrics_file}"
+  Engine::FontImporter.new(font, destination_path, destination_font_metrics_file).import
 end
 
 obj_files = Dir.glob("#{assets_path}/**/*.obj")
