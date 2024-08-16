@@ -4,7 +4,16 @@ module Engine
   class ObjFile
     def initialize(file_path)
       @file_path = file_path
-      @file_data = File.readlines(file_path)
+      @file_data = File.readlines(file_path).map do |line|
+        if line.start_with?("f ")
+          vertices = line.split(" ")[1..-1]
+          0.upto(vertices.length - 3).map do |i|
+            ["f #{vertices[0]} #{vertices[i + 1]} #{vertices[i + 2]}"]
+          end
+        else
+          line
+        end
+      end.flatten
     end
 
     def vertices
