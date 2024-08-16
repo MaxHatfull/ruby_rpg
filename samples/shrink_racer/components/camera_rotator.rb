@@ -3,7 +3,7 @@
 module ShrinkRacer
   class CameraRotator < Engine::Component
     ROTATION_SPEED = 60
-    MOVE_SPEED = 50
+    MOVE_SPEED = 5
 
     def update(delta_time)
       if Engine::Input.key_down?(GLFW::KEY_LEFT)

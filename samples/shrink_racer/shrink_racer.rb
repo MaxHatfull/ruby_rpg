@@ -15,13 +15,11 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
         )
     ])
 
-  1.upto(100) do |i|
-    RoadTile.create("%03d" % i, Vector[i * 50, 20, 0], 0, 10)
-  end
+  RoadTile.create("013", Vector[0, 0, 0], Vector[0, 0, 0], 1)
 
   Engine::GameObject.new(
     "Camera",
-    pos: Vector[0, 50, 70],
+    pos: Vector[0, 5, 7],
     rotation: Vector[20, 0, 0],
     components: [
       CameraRotator.new,
