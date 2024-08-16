@@ -84,15 +84,22 @@ module Engine::Components
         GL::ARRAY_BUFFER, @mesh.vertex_data.length * Fiddle::SIZEOF_FLOAT,
         points.pack('F*'), GL::STATIC_DRAW
       )
+      vertex_data_size = 20 * Fiddle::SIZEOF_FLOAT
 
-      GL.VertexAttribPointer(0, 3, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 0)
-      GL.VertexAttribPointer(1, 2, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 3 * Fiddle::SIZEOF_FLOAT)
-      GL.VertexAttribPointer(2, 3, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 5 * Fiddle::SIZEOF_FLOAT)
-      GL.VertexAttribPointer(3, 3, GL::FLOAT, GL::FALSE, 11 * Fiddle::SIZEOF_FLOAT, 8 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(0, 3, GL::FLOAT, GL::FALSE, vertex_data_size, 0)
+      GL.VertexAttribPointer(1, 2, GL::FLOAT, GL::FALSE, vertex_data_size, 3 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(2, 3, GL::FLOAT, GL::FALSE, vertex_data_size, 5 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(3, 3, GL::FLOAT, GL::FALSE, vertex_data_size, 8 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(4, 3, GL::FLOAT, GL::FALSE, vertex_data_size, 11 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(5, 3, GL::FLOAT, GL::FALSE, vertex_data_size, 14 * Fiddle::SIZEOF_FLOAT)
+      GL.VertexAttribPointer(6, 3, GL::FLOAT, GL::FALSE, vertex_data_size, 17 * Fiddle::SIZEOF_FLOAT)
       GL.EnableVertexAttribArray(0)
       GL.EnableVertexAttribArray(1)
       GL.EnableVertexAttribArray(2)
       GL.EnableVertexAttribArray(3)
+      GL.EnableVertexAttribArray(4)
+      GL.EnableVertexAttribArray(5)
+      GL.EnableVertexAttribArray(6)
     end
   end
 end

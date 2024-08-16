@@ -39,5 +39,5 @@ obj_files.each do |obj_file|
   destination_vertex_path = File.join(assets_path, '_imported', destination_vertex)
   destination_index_path = File.join(assets_path, '_imported', destination_index)
   puts "  -> #{destination_vertex_path}, #{destination_index_path}"
-  Engine::ObjImporter.new(obj_file, destination_vertex_path, destination_index_path).import
+  Engine::ObjImporter.new(obj_file.gsub(".obj", ""), destination_vertex_path, destination_index_path).import
 end
