@@ -5,19 +5,20 @@ module Engine
     attr_reader :texture
     private_class_method :new
 
-    def initialize(file_path)
+    def initialize(file_path, flip)
       @file_path = file_path
+      @flip = flip
       @texture = ' ' * 4
       load_texture
     end
 
-    def self.for(file_path)
-      texture_cache[file_path]
+    def self.for(file_path, flip: false)
+      texture_cache[[file_path, flip]]
     end
 
     def self.texture_cache
       @texture_cache ||= Hash.new do |hash, key|
-        hash[key] = new(key)
+        hash[key] = new(key[0], key[1])
       end
     end
 
@@ -41,7 +42,11 @@ module Engine
     end
 
     def read_image
-      ChunkyPNG::Image.from_file(@file_path)
+      if @flip
+        ChunkyPNG::Image.from_file(@file_path).flip_horizontally
+      else
+        ChunkyPNG::Image.from_file(@file_path)
+      end
     end
   end
 end

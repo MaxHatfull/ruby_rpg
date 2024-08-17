@@ -19,7 +19,7 @@ module ShrinkRacer
         game_object.rotation[0] += ROTATION_SPEED * delta_time
       end
       if Engine::Input.key_down?(GLFW::KEY_LEFT_SHIFT)
-        speed = MOVE_SPEED * 2
+        speed = MOVE_SPEED * 3
       else
         speed = MOVE_SPEED
       end

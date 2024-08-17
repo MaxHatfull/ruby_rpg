@@ -73,9 +73,13 @@ void main()
     }
     vec3 n = normalize(Normal);
     vec3 t = normalize(Tangent);
-    vec3 b = cross(t, n);
-    mat3 TBN = mat3(t, b, n);
-    vec3 norm = normalize(TBN * normalize(sampledNormal));
+    vec3 norm = n;
+    if ( length(t) > 0.0 )
+    {
+        vec3 b = cross(t, n);
+        mat3 TBN = mat3(t, b, n);
+        norm = normalize(TBN * normalize(sampledNormal));
+    }
     vec3 viewDir = normalize(cameraPos - FragPos);
 
     vec3 result = ambientLight;
