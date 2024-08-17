@@ -61,14 +61,18 @@ module Engine
     def face_lines
       @face_lines ||=
         begin
-          split_faces(@mesh_data.select { |line| line.start_with?("f ") })
+          split_faces(@mesh_data).select { |line| line.start_with?("f ") }
         end
     end
 
     def split_faces(lines)
-      lines.map do |line|
+      lines.map.with_index do |line, line_number|
         if line.start_with?("f ")
-          split_face(line).tap {|faces| puts "split face into #{faces}"}
+          new_faces = split_face(line)
+          (new_faces.length * 3).times do
+            material_names << material_for_line(line_number)
+          end
+          new_faces
         else
           line
         end
@@ -76,9 +80,8 @@ module Engine
     end
 
     def split_face(face)
-      puts "splitting face #{face}"
       face_vertices = face.split(" ")[1..-1]
-      return face if face_vertices.length == 3
+      return [face] if face_vertices.length == 3
 
       world_points = face_vertices.map { |v| v.split("/")[0] }
               .map { |i| vertices[i.to_i - 1] }
@@ -101,7 +104,6 @@ module Engine
       depth = 100
       until path.length == 3 || depth == 0
         depth -= 1
-        puts "getting the next ear"
         ear_result = path.find_ear
         ear = ear_result.first
         new_path = ear_result.last
@@ -115,7 +117,6 @@ module Engine
       else
         decomposed_vertices << path.points
       end
-      puts "decomposed vertices: #{decomposed_vertices}"
       decomposed_vertices.map do |triangle|
         "f #{triangle.map { |v| v[:point_string] }.join(" ")}"
       end
@@ -173,23 +174,19 @@ module Engine
         end.flatten
     end
 
-    def material_names
-      @material_names ||=
-        begin
-          current_material = nil
-          names = []
-          @mesh_data.each do |line|
-            if line.start_with?("usemtl ")
-              _, material_name = line.split(" ")
-              current_material = material_name
-            elsif line.start_with?("f ")
-              vertex_count = line.split(" ").length - 1
-              triangle_count = vertex_count - 2
-              (triangle_count * 3).times { names << current_material }
-            end
-          end
-          names
+
+    def material_for_line(line_number)
+      l = line_number
+      until l == 0
+        if @mesh_data[l].start_with?("usemtl ")
+          return @mesh_data[l].split(" ")[1]
         end
+        l -= 1
+      end
+    end
+
+    def material_names
+      @material_names ||= []
     end
 
     def materials

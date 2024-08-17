@@ -25,8 +25,6 @@ module Engine
     end
 
     def find_ear
-      puts "finding ear"
-      puts points.map { |p| point_string(p) }
       triangles = points.map.with_index do |point, i|
         a = points[i - 1]
         b = point
@@ -36,8 +34,6 @@ module Engine
 
       triangles.each do |triangle|
         if is_ear?(triangle)
-          puts "found #{point_string(triangle[1])}"
-          puts " "
           new_points = points.reject { |point| point == triangle[1] }
           return triangle, Path.new(new_points)
         end
