@@ -20,6 +20,8 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
     Text.create(Vector[i * 5 + 1.5, -1, 0], Vector[0, 0, 0], 1, "%03d" % i)
   end
 
+  RoadTile.create("013", Vector[0, 0, 0], Vector[0, 0, 0], 1)
+
   Engine::GameObject.new(
     "Camera",
     pos: Vector[0, 5, 7],

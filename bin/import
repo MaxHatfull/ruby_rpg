@@ -5,6 +5,7 @@
 require_relative '../src/engine/importers/font_importer'
 require_relative '../src/engine/importers/obj_importer'
 require_relative '../src/engine/importers/obj_file'
+require_relative '../src/engine/path'
 require_relative '../src/engine/tangent_calculator'
 
 require 'fileutils'

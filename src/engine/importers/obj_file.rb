@@ -3,16 +3,7 @@
 module Engine
   class ObjFile
     def initialize(file_path)
-      @mesh_data = File.readlines(file_path + ".obj").map do |line|
-        if line.start_with?("f ")
-          vertices = line.split(" ")[1..-1]
-          0.upto(vertices.length - 3).map do |i|
-            ["f #{vertices[0]} #{vertices[i + 1]} #{vertices[i + 2]}"]
-          end
-        else
-          line
-        end
-      end.flatten
+      @mesh_data = File.readlines(file_path + ".obj")
       if File.exist?(file_path + ".mtl")
         @mtl_data = File.readlines(file_path + ".mtl").map(&:chomp)
       else
@@ -67,9 +58,97 @@ module Engine
         end
     end
 
+    def face_lines
+      @face_lines ||=
+        begin
+          split_faces(@mesh_data.select { |line| line.start_with?("f ") })
+        end
+    end
+
+    def split_faces(lines)
+      lines.map do |line|
+        if line.start_with?("f ")
+          split_face(line).tap {|faces| puts "split face into #{faces}"}
+        else
+          line
+        end
+      end.flatten
+    end
+
+    def split_face(face)
+      puts "splitting face #{face}"
+      face_vertices = face.split(" ")[1..-1]
+      return face if face_vertices.length == 3
+
+      world_points = face_vertices.map { |v| v.split("/")[0] }
+              .map { |i| vertices[i.to_i - 1] }
+      plane = plane_matrix(world_points)
+      flat_points = world_points.map { |point| plane * point }
+      packed_points = face_vertices.map.with_index do |v, i|
+        { point_string: face_vertices[i], 0 => flat_points[i][0], 1 => flat_points[i][1] }
+      end
+
+      path = Path.new(packed_points.reverse)
+      begin
+        decompose_path(path, true)
+      rescue NoEarsException
+        decompose_path(Path.new(packed_points), false)
+      end
+    end
+
+    def decompose_path(path, reverse)
+      decomposed_vertices = []
+      depth = 100
+      until path.length == 3 || depth == 0
+        depth -= 1
+        puts "getting the next ear"
+        ear_result = path.find_ear
+        ear = ear_result.first
+        new_path = ear_result.last
+        ear = ear.reverse! if reverse
+        ear_area = triangle_area(ear[0], ear[1], ear[2])
+        decomposed_vertices << ear unless ear_area < 0.0001
+        path = new_path
+      end
+      if reverse
+        decomposed_vertices << path.points.reverse
+      else
+        decomposed_vertices << path.points
+      end
+      puts "decomposed vertices: #{decomposed_vertices}"
+      decomposed_vertices.map do |triangle|
+        "f #{triangle.map { |v| v[:point_string] }.join(" ")}"
+      end
+    end
+
+    def triangle_area(a, b, c)
+      (a[0] * (b[1] - c[1]) + b[0] * (c[1] - a[1]) + c[0] * (a[1] - b[1])).abs / 2.0
+    end
+
+    def plane_matrix(points)
+      raise "Not enough points to create a plane" if points.length < 3
+
+      origin_point = points[0]
+      a = points[1] - origin_point
+      b = nil
+      points[2..-1].each do |point|
+        diff = point - origin_point
+        b = diff if a.cross(diff).magnitude > 0.0001
+      end
+      raise "Points are collinear" if b.nil?
+
+      normal = a.cross(b).normalize
+
+      Matrix[
+        [a[0], a[1], a[2]],
+        [b[0], b[1], b[2]],
+        [normal[0], normal[1], normal[2]]
+      ].transpose.inverse
+    end
+
     def vertex_indices
       @vertex_indices ||=
-        @mesh_data.select { |line| line.start_with?("f ") }.map do |line|
+        face_lines.map do |line|
           _, v1, v2, v3 = line.split(" ")
           v1, v2, v3 = [v1, v2, v3].map { |v| v.split("/").first.to_i }
           [v1 - 1, v2 - 1, v3 - 1]
@@ -78,7 +157,7 @@ module Engine
 
     def texture_indices
       @texture_indices ||=
-        @mesh_data.select { |line| line.start_with?("f ") }.map do |line|
+        face_lines.map do |line|
           _, v1, v2, v3 = line.split(" ")
           v1, v2, v3 = [v1, v2, v3].map { |v| v.split("/")[1].to_i }
           [v1 - 1, v2 - 1, v3 - 1]
@@ -87,7 +166,7 @@ module Engine
 
     def normal_indices
       @normal_indices ||=
-        @mesh_data.select { |line| line.start_with?("f ") }.map do |line|
+        face_lines.map do |line|
           _, v1, v2, v3 = line.split(" ")
           v1, v2, v3 = [v1, v2, v3].map { |v| v.split("/")[2].to_i }
           [v1 - 1, v2 - 1, v3 - 1]
@@ -104,9 +183,9 @@ module Engine
               _, material_name = line.split(" ")
               current_material = material_name
             elsif line.start_with?("f ")
-              names << current_material
-              names << current_material
-              names << current_material
+              vertex_count = line.split(" ").length - 1
+              triangle_count = vertex_count - 2
+              (triangle_count * 3).times { names << current_material }
             end
           end
           names
