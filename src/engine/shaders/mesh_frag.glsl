@@ -4,6 +4,9 @@ in vec2 TexCoord;
 in vec3 Normal;
 in vec3 Tangent;
 in vec3 FragPos;
+in vec3 Diffuse;
+in vec3 Specular;
+in vec3 Albedo;
 
 out vec4 color;
 
@@ -94,5 +97,6 @@ void main()
     }
 
     vec4 tex = texture(image, TexCoord);
-    color = tex * vec4(result, 1.0);
+    vec4 c = tex + vec4(Diffuse, 1.0);
+    color = c * vec4(result, 1.0);
 }
