@@ -3,18 +3,30 @@
 module ShrinkRacer
   module Car
     def self.create_suv(pos, rotation)
-      Engine::GameObject.new(
-        "SUV",
+      spinner = SpinEffect.new
+      parent = Engine::GameObject.new(
+        "Car",
         pos: pos,
         rotation: rotation,
         scale: Vector[0.1, 0.1, 0.1],
         components: [
           CarCollider.new(1.0),
-          CarController.new,
-          Engine::Components::MeshRenderer.new(Engine::Mesh.for(
-            "assets/cars/suv"), material),
+          CarController.new(spinner),
         ]
       )
+      Engine::GameObject.new(
+        "SUV",
+        pos: Vector[0, 0, 0],
+        rotation: Vector[0, 0, 0],
+        scale: Vector[1, 1, 1],
+        components: [
+          spinner,
+          Engine::Components::MeshRenderer.new(Engine::Mesh.for(
+            "assets/cars/suv"), material),
+        ],
+        parent: parent
+      )
+      parent
     end
 
     private

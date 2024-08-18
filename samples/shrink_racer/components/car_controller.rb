@@ -6,7 +6,8 @@ module ShrinkRacer
     DRAG = 0.05
     SIDE_DRAG = 0.2
 
-    def initialize
+    def initialize(spinner)
+      @spinner = spinner
       @speed = Vector[0, 0, 0]
       @current_time = 0.0
       @last_shrink_time = -999.0
@@ -65,6 +66,7 @@ module ShrinkRacer
 
         if @current_time - @last_shrink_time > 0.5
           @target_scale *= 0.8
+          @spinner.spin
           @last_shrink_time = @current_time
         end
       end
