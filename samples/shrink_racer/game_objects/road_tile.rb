@@ -3,16 +3,25 @@
 module ShrinkRacer
   module RoadTile
     def self.create(tile_number, pos, rotation)
-      Engine::GameObject.new(
+      parent = Engine::GameObject.new(
         "Road Tile",
         pos: pos,
         rotation: rotation,
         scale: Vector[1, 1, 1],
+      )
+
+      Engine::GameObject.new(
+        "Road Tile",
+        pos: Vector[-1.5, 0, 1.5],
+        rotation: Vector[0, 0, 0],
+        scale: Vector[1, 1, 1],
         components: [
           Engine::Components::MeshRenderer.new(Engine::Mesh.for(
             "assets/road_tiles/roadTile_" + tile_number), material),
-        ]
+        ],
+        parent: parent
       )
+      parent
     end
 
     def self.create_straight_road(pos, rotation)
@@ -21,6 +30,10 @@ module ShrinkRacer
 
     def self.create_corner_road(pos, rotation)
       create("153", pos, rotation)
+    end
+
+    def self.create_grass(pos, rotation)
+      create("163", pos, rotation)
     end
 
     private
