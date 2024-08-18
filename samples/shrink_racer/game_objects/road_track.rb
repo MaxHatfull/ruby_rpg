@@ -14,5 +14,12 @@ module ShrinkRacer
         RoadTile.create_straight_road(Vector[(i + 1) * CELL_SIZE, 0, -29 * CELL_SIZE], Vector[0, 0, 0])
       end
     end
+
+    def self.create_gallery
+      1.upto(302) do |i|
+        RoadTile.create("%03d" % i, Vector[i * 5, 0, 0], Vector[0, 0, 0])
+        Text.create(Vector[i * 5 + 1.5, -1, 0], Vector[0, 0, 0], 1, "%03d" % i)
+      end
+    end
   end
 end

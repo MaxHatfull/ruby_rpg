@@ -15,14 +15,11 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
       ),
     ])
 
-  1.upto(302) do |i|
-    RoadTile.create("%03d" % i, Vector[i * 5, 0, 0], Vector[0, 0, 0])
-    Text.create(Vector[i * 5 + 1.5, -1, 0], Vector[0, 0, 0], 1, "%03d" % i)
-  end
-
+  #RoadTrack.create_gallery
   RoadTrack.create
+
   car = Car.create_suv(Vector[1.5, 0.75, 0], Vector[0, 180, 0])
-  camera = Engine::GameObject.new(
+  Engine::GameObject.new(
     "Camera",
     pos: Vector[0, 0, 0],
     rotation: Vector[20, 180, 0],
