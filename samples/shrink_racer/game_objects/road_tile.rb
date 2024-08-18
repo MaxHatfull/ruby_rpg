@@ -28,7 +28,7 @@ module ShrinkRacer
     def self.material
       @material ||=
         begin
-          material = Engine::Material.new(Engine::Shader.new('./shaders/mesh_vertex.glsl', './shaders/mesh_frag.glsl'))
+          material = Engine::Material.new(Engine::Shader.new('./shaders/vertex_lit_vertex.glsl', './shaders/vertex_lit_frag.glsl'))
           material.set_texture("image", nil)
           material.set_texture("normalMap", nil)
           material.set_float("diffuseStrength", 0.5)

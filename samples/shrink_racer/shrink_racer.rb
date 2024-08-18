@@ -11,8 +11,8 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
     rotation: Vector[-60, 180, 30],
     components: [
       Engine::Components::DirectionLight.new(
-        colour: Vector[2, 2, 2],
-      )
+        colour: Vector[1, 1, 1],
+      ),
     ])
 
   1.upto(302) do |i|

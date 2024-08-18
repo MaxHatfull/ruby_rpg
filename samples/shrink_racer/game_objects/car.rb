@@ -11,7 +11,7 @@ module ShrinkRacer
         components: [
           CarController.new,
           Engine::Components::MeshRenderer.new(Engine::Mesh.for(
-            "assets/cars/suv-luxury"), material),
+            "assets/cars/suv"), material),
         ]
       )
     end
@@ -25,7 +25,7 @@ module ShrinkRacer
           material.set_texture("image", Engine::Texture.for(File.join(ASSETS_DIR, "cars/Textures/colormap.png"), flip: true).texture)
           material.set_texture("normalMap", nil)
           material.set_float("diffuseStrength", 0.5)
-          material.set_float("specularStrength", 2.0)
+          material.set_float("specularStrength", 0.6)
           material.set_float("specularPower", 32.0)
           material.set_vec3("ambientLight", Vector[0.5, 0.5, 0.5])
           material
