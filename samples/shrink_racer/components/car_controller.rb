@@ -3,9 +3,10 @@
 module ShrinkRacer
   class CarController < Engine::Component
     ACCELERATION = 1.0
-    DRAG = 0.04
+    DRAG = 0.5
+    SIDE_DRAG = 0.9
     def initialize
-      @speed = 0
+      @speed = Vector[0, 0, 0]
     end
     def update(delta_time)
       thrust = 0
@@ -15,9 +16,12 @@ module ShrinkRacer
       if Engine::Input.key_down?(GLFW::KEY_S)
         thrust -= ACCELERATION / 2
       end
-      drag = -@speed * DRAG
-      @speed += thrust + drag
-      game_object.pos += game_object.forward * @speed * delta_time
+      drag = -@speed.dot(game_object.forward) * DRAG
+      side_drag = -@speed.dot(game_object.right)
+      @speed += game_object.forward * (thrust + drag)
+      @speed += game_object.right * (side_drag)
+
+      game_object.pos += @speed * delta_time
 
       if Engine::Input.key_down?(GLFW::KEY_A)
         game_object.rotation[1] -= 90 * delta_time
@@ -28,7 +32,11 @@ module ShrinkRacer
     end
 
     def collide(tree_pos)
-      @speed = -10
+      flat_pos = Vector[game_object.pos[0], 0, game_object.pos[2]]
+      flat_tree_pos = Vector[tree_pos[0], 0, tree_pos[2]]
+      incident = (flat_tree_pos - flat_pos).normalize
+      collision_speed = @speed.dot(incident)
+      @speed -= collision_speed * incident if collision_speed > 0
     end
   end
 end

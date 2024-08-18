@@ -45,7 +45,9 @@ module ShrinkRacer
     end
 
     def self.create_grass(pos, rotation)
-      place_tree(pos + Vector[rand(-1.0..1.0), 0.5, rand(-1.0..1.0)], rotation)
+      2.times do
+        place_tree(pos + Vector[rand(-1.5..1.5), 0.5, rand(-1.5..1.5)], rotation)
+      end
       create("163", pos, rotation)
     end
 
@@ -63,7 +65,7 @@ module ShrinkRacer
         rotation: rotation,
         scale: Vector[scale, scale, scale],
         components: [
-          TreeCollider.new(scale),
+          TreeCollider.new(0.4 * scale),
         ]
       )
       Engine::GameObject.new(
