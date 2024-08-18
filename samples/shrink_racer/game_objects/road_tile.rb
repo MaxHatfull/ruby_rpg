@@ -29,11 +29,11 @@ module ShrinkRacer
     end
 
     def self.create_corner_road(pos, rotation)
-      create("153", pos, rotation)
+      create("153", pos, rotation + Vector[0, 270, 0])
     end
 
     def self.create_t_junction_road(pos, rotation)
-      create("150", pos, rotation)
+      create("150", pos, rotation + Vector[0, 180, 0])
     end
 
     def self.create_cross_road(pos, rotation)
@@ -41,11 +41,15 @@ module ShrinkRacer
     end
 
     def self.create_bridge_road(pos, rotation)
-      create("188", pos, rotation)
+      create("188", pos, rotation + Vector[0, 90, 0])
+    end
+
+    def self.create_pond(pos, rotation)
+      create("001", pos, rotation)
     end
 
     def self.create_grass(pos, rotation)
-      2.times do
+      1.times do
         place_tree(pos + Vector[rand(-1.5..1.5), 0.5, rand(-1.5..1.5)], rotation)
       end
       create("163", pos, rotation)

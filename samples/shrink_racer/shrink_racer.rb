@@ -20,4 +20,5 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
 
   car = Car.create_suv(Vector[1.5, 0.6, 0], Vector[0, 0, 0])
   CameraObject.create(car)
+  #CameraObject.debug_camera
 end

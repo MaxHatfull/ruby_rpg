@@ -2,7 +2,7 @@
 
 module ShrinkRacer
   module CameraObject
-    FAR = 1000.0
+    FAR = 200.0
 
     def self.create(car)
       back_plane = create_back_plane
@@ -16,6 +16,17 @@ module ShrinkRacer
         ])
       back_plane.parent = camera
       camera
+    end
+
+    def self.debug_camera
+      Engine::GameObject.new(
+        "Camera",
+        pos: Vector[0, 0, 0],
+        rotation: Vector[20, 180, 0],
+        components: [
+          CameraRotator.new,
+          Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: FAR)
+        ])
     end
 
     private

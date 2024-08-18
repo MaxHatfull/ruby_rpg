@@ -16,12 +16,14 @@ module ShrinkRacer
       corner: "create_corner_road",
       cross: "create_cross_road",
       t_junction: "create_t_junction_road",
+      bridge: "create_bridge_road",
+      pond: "create_pond"
     }
 
     def self.create
-      track = RoadTrack.load_track(File.join(ASSETS_DIR, "test.csv"))
+      track = RoadTrack.load_track(File.join(ASSETS_DIR, "Road 3.csv"))
       track.each_with_index do |row, x|
-        row.each_with_index do |cell, z|
+        row.reverse.each_with_index do |cell, z|
           pos = Vector[x * CELL_SIZE, 0, z * CELL_SIZE]
           rot = DIRECTIONS[cell[1]] || DIRECTIONS[:north]
           type = ROAD_PARTS[cell[0]]
