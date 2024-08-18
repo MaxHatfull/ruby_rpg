@@ -19,9 +19,9 @@ module ShrinkRacer
     }
 
     def self.create
-      track = RoadTrack.load_track(File.join(ASSETS_DIR, "track.csv"))
-      track.each_with_index do |row, z|
-        row.each_with_index do |cell, x|
+      track = RoadTrack.load_track(File.join(ASSETS_DIR, "test.csv"))
+      track.each_with_index do |row, x|
+        row.each_with_index do |cell, z|
           pos = Vector[x * CELL_SIZE, 0, z * CELL_SIZE]
           rot = DIRECTIONS[cell[1]] || DIRECTIONS[:north]
           type = ROAD_PARTS[cell[0]]

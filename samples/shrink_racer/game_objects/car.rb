@@ -7,9 +7,9 @@ module ShrinkRacer
         "SUV",
         pos: pos,
         rotation: rotation,
-        scale: Vector[0.3, 0.3, 0.3],
+        scale: Vector[0.1, 0.1, 0.1],
         components: [
-          CarCollider.new(0.25, 0.5),
+          CarCollider.new(1.0),
           CarController.new,
           Engine::Components::MeshRenderer.new(Engine::Mesh.for(
             "assets/cars/suv"), material),

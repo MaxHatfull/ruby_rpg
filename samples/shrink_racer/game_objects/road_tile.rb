@@ -40,7 +40,7 @@ module ShrinkRacer
       create("141", pos, rotation)
     end
 
-    def create_bridge_road(pos, rotation)
+    def self.create_bridge_road(pos, rotation)
       create("188", pos, rotation)
     end
 
@@ -54,18 +54,17 @@ module ShrinkRacer
     def self.place_tree(pos, rotation)
       file_number = ["019", "020"].sample
       offsets = {
-        "019" => Vector[-0.35, 0, 0.5],
-        "020" => Vector[-0.8, 0, 0.6]
+        "019" => Vector[-0.4, 0, 0.5],
+        "020" => Vector[-0.85, 0, 0.75]
       }
       scale = rand(0.5..1.0)
-
       parent = Engine::GameObject.new(
         "Tree",
         pos: pos,
         rotation: rotation,
         scale: Vector[scale, scale, scale],
         components: [
-          TreeCollider.new(0.4 * scale),
+          TreeCollider.new(0.2 * scale),
         ]
       )
       Engine::GameObject.new(
