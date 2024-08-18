@@ -45,24 +45,39 @@ module ShrinkRacer
     end
 
     def self.create_grass(pos, rotation)
-      tree_offset = Vector[rand(-1.5..1.5), 0, rand(-1.5..1.5)]
-      place_tree(pos + tree_offset, rotation)
+      place_tree(pos + Vector[rand(-1.0..1.0), 0.5, rand(-1.0..1.0)], rotation)
       create("163", pos, rotation)
     end
 
     def self.place_tree(pos, rotation)
       file_number = ["019", "020"].sample
+      offsets = {
+        "019" => Vector[-0.35, 0, 0.5],
+        "020" => Vector[-0.8, 0, 0.6]
+      }
+      scale = rand(0.5..1.0)
 
+      parent = Engine::GameObject.new(
+        "Tree",
+        pos: pos,
+        rotation: rotation,
+        scale: Vector[scale, scale, scale],
+        components: [
+          TreeCollider.new(scale),
+        ]
+      )
       Engine::GameObject.new(
         "Tree",
-        pos: pos + Vector[0, 0.6, 0],
+        pos: offsets[file_number],
         rotation: rotation,
-        scale: Vector[1, 1, 1] * rand(0.5..1.0),
+        scale: Vector[1, 1, 1],
         components: [
           Engine::Components::MeshRenderer.new(Engine::Mesh.for(
             "assets/road_tiles/roadTile_" + file_number), material),
-        ]
+        ],
+        parent: parent
       )
+      parent
     end
 
     private

@@ -26,5 +26,9 @@ module ShrinkRacer
         game_object.rotation[1] += 90 * delta_time
       end
     end
+
+    def collide(tree_pos)
+      @speed = -10
+    end
   end
 end
