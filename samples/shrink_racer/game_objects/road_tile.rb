@@ -32,6 +32,18 @@ module ShrinkRacer
       create("153", pos, rotation)
     end
 
+    def self.create_t_junction_road(pos, rotation)
+      create("150", pos, rotation)
+    end
+
+    def self.create_cross_road(pos, rotation)
+      create("141", pos, rotation)
+    end
+
+    def create_bridge_road(pos, rotation)
+      create("188", pos, rotation)
+    end
+
     def self.create_grass(pos, rotation)
       tree_offset = Vector[rand(-1.5..1.5), 0, rand(-1.5..1.5)]
       place_tree(pos + tree_offset, rotation)

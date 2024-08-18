@@ -11,6 +11,12 @@ module ShrinkRacer
       south: Vector[0, 180, 0],
       west: Vector[0, 270, 0],
     }
+    ROAD_PARTS = {
+      road: "create_straight_road",
+      corner: "create_corner_road",
+      cross: "create_cross_road",
+      t_junction: "create_t_junction_road",
+    }
 
     def self.create
       track = RoadTrack.load_track(File.join(ASSETS_DIR, "track.csv"))
@@ -18,11 +24,9 @@ module ShrinkRacer
         row.each_with_index do |cell, x|
           pos = Vector[x * CELL_SIZE, 0, z * CELL_SIZE]
           rot = DIRECTIONS[cell[1]] || DIRECTIONS[:north]
-          case cell[0]
-          when :road
-            RoadTile.create_straight_road(pos, rot)
-          when :corner
-            RoadTile.create_corner_road(pos, rot)
+          type = ROAD_PARTS[cell[0]]
+          if type
+            RoadTile.send(type, pos, rot)
           else
             RoadTile.create_grass(pos, rot)
           end
