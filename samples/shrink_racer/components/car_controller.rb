@@ -2,8 +2,8 @@
 
 module ShrinkRacer
   class CarController < Engine::Component
-    ACCELERATION = 300.0
-    DRAG = 5.0
+    ACCELERATION = 100.0
+    DRAG = 3.0
     SIDE_DRAG = 10.0
     WIND_UP_TIME = 0.25
 
@@ -14,6 +14,7 @@ module ShrinkRacer
       @last_shrink_time = -999.0
       @last_collision_time = -999.0
       @acceleration = 0
+      @scale_count = 0
     end
 
     def start
@@ -46,12 +47,15 @@ module ShrinkRacer
 
       game_object.pos += @speed * delta_time
 
+      torque = 0
       if Engine::Input.key_down?(GLFW::KEY_A)
-        game_object.rotation[1] -= 90 * delta_time
+        torque = -60
       end
       if Engine::Input.key_down?(GLFW::KEY_D)
-        game_object.rotation[1] += 90 * delta_time
+        torque += 60
       end
+
+      game_object.rotation += Vector[0, torque, 0] * delta_time
     end
 
     def max_acceleration
@@ -59,7 +63,10 @@ module ShrinkRacer
     end
 
     def collect_coin
-      @target_scale /= 0.8
+      if @scale_count <= 3
+        @target_scale /= 0.8
+        @scale_count += 1
+      end
     end
 
     def collide(tree_pos)
@@ -74,7 +81,10 @@ module ShrinkRacer
         @last_collision_time = @current_time
 
         if @current_time - @last_shrink_time > 0.5
-          @target_scale *= 0.8
+          if @scale_count >= -3
+            @target_scale *= 0.8
+            @scale_count -= 1
+          end
           @spinner.spin
           @last_shrink_time = @current_time
         end
