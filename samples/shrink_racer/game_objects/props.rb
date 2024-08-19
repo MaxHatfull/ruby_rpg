@@ -33,6 +33,7 @@ module ShrinkRacer
         rotation: rotation,
         scale: Vector[1, 1, 1],
         components: [
+          CoinCollider.new(0.075)
         ]
       )
       Engine::GameObject.new(

@@ -58,6 +58,10 @@ module ShrinkRacer
       ACCELERATION * game_object.scale[0]
     end
 
+    def collect_coin
+      @target_scale /= 0.8
+    end
+
     def collide(tree_pos)
       flat_pos = Vector[game_object.pos[0], 0, game_object.pos[2]]
       flat_tree_pos = Vector[tree_pos[0], 0, tree_pos[2]]

@@ -15,11 +15,20 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
       ),
     ])
 
-  #RoadTrack.create_gallery
+  # RoadTrack.create_gallery
   track = RoadTrack::TRACKS[:track_3]
   RoadTrack.create(track)
 
+
+  coin_counter = UIText.create(Vector[100, 1080 - 100, 0], Vector[0, 0, 0], 100, " ")
+  Engine::GameObject.new(
+    "Game Controller",
+    components: [
+      GameController.new(coin_counter.ui_renderers[0]),
+    ],
+  )
+
   car = Car.create_suv(track[:start_pos], track[:start_rot])
   CameraObject.create(car)
-  #CameraObject.debug_camera
+  # CameraObject.debug_camera
 end

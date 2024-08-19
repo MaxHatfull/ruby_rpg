@@ -2,7 +2,7 @@
 
 module ShrinkRacer
   class CarFollower < Engine::Component
-    OFFSET = Vector[0, 0.2, -0.5]
+    OFFSET = Vector[0, 0.4, -0.8]
     CAMERA_ANGLE = Vector[10, 180, 0]
     FOLLOW_SPEED = 5
     ROTATION_SPEED = 20
