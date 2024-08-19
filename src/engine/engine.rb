@@ -2,7 +2,6 @@ require 'opengl'
 require 'glfw'
 require 'concurrent'
 require 'os'
-require "rmagick"
 
 require_relative 'rendering/render_pipeline'
 require_relative 'rendering/instance_renderer'
