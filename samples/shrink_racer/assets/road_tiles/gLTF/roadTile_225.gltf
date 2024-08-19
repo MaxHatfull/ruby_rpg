@@ -1,0 +1,203 @@
+{
+  "accessors": [
+    {
+      "name": "Mesh1 Group1 Model_1_positions",
+      "componentType": 5126,
+      "count": 56,
+      "min": [
+        0,
+        0,
+        -2.25
+      ],
+      "max": [
+        3,
+        1.7300000190734863,
+        0
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_normals",
+      "componentType": 5126,
+      "count": 56,
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 672
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_texcoords",
+      "componentType": 5126,
+      "count": 56,
+      "min": [
+        -3,
+        -1.25
+      ],
+      "max": [
+        3,
+        3.59594988822937
+      ],
+      "type": "VEC2",
+      "bufferView": 1,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_0_indices",
+      "componentType": 5123,
+      "count": 18,
+      "min": [
+        0
+      ],
+      "max": [
+        55
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_1_indices",
+      "componentType": 5123,
+      "count": 78,
+      "min": [
+        8
+      ],
+      "max": [
+        51
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 36
+    }
+  ],
+  "asset": {
+    "generator": "obj2gltf",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "name": "roadTile_225",
+      "byteLength": 1984,
+      "uri": "data:application/octet-stream;base64,sQ4cKaRw3T8AAMC+zg6cKKRw3T8AAPC/vhPQKDMzsz8AAPC/GBZqKTMzsz8AAMC+sQ4cKaRw3T8AAMC+AABAQJqZGT8AAMC+AABAQJqZGT8AAPC/zg6cKKRw3T8AAPC/AABAQKRw3T8AAMC+AABAQJqZGT8AAMC+sQ4cKaRw3T8AAMC+AABAQBgW6ia+E9CoAABAQAAAAAAAABDAAABAQKRw3T8AABDAAABAQKRw3T8AAPC/AABAQJqZGT8AAPC/AABAQJqZmT4AAPC/AABAQJqZmT4AAMC+AABAQJqZGT8AAMC+AABAQKRw3T8AAMC+AABAQKRw3T++E9CoAABAQAAAAAAAABDAAABAQBgW6ia+E9CoAAAAAO8PKScAAACAvhPQKO8PKScAABDAAABAQKRw3T++E9CoAAAAAKRw3T8AAACAAAAAAO8PKScAAACAAABAQBgW6ia+E9CosQ4cKaRw3T8AAMC+AAAAAKRw3T8AAACAAABAQKRw3T++E9CoAABAQKRw3T8AAMC+vhPQKO8PKScAABDAAAAAAO8PKScAAACAAAAAAKRw3T8AAACAsQ4cKaRw3T8AAMC+GBZqKTMzsz8AAMC+vhPQKDMzsz8AAPC/zg6cKKRw3T8AAPC/vhPQKKRw3T8AABDAAABAQKRw3T8AAPC/AABAQKRw3T8AABDAvhPQKKRw3T8AABDAzg6cKKRw3T8AAPC/vhPQKKRw3T8AABDAAABAQKRw3T8AABDAAABAQAAAAAAAABDAvhPQKO8PKScAABDAAABAQKRw3T8AAPC/zg6cKKRw3T8AAPC/AABAQJqZGT8AAPC/AABAQJqZGT8AAMC+AABAQJqZmT4AAMC+AABAQJqZmT4AAPC/AABAQJqZGT8AAPC/AACAv1SiHanUt4ooAACAv1SiHanUt4ooAACAv1SiHanUt4ooAACAv1SiHanUt4ooknm0PpKRbz/g/fOnknm0PpKRbz/g/fOnknm0PpKRbz/g/fOnknm0PpKRbz/g/fOnyWWtqAAAAAAAAIC/yWWtqAAAAAAAAIC/yWWtqAAAAAAAAIC/AACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nAACAPzMYDafV8t0nm8HypQAAgL93uLwlm8HypQAAgL93uLwlm8HypQAAgL93uLwlm8HypQAAgL93uLwlyLcKKPnzAJAAAIA/yLcKKPnzAJAAAIA/yLcKKPnzAJAAAIA/yLcKKPnzAJAAAIA/AAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAACAvzUk2CfLuiqnAACAvzUk2CfLuiqnAACAvzUk2CfLuiqnAACAvzUk2CfLuiqnAACAvzUk2CfLuiqnAACAvzUk2CfLuiqnAACAvzUk2CfLuiqnAACAvzUk2CfLuiqnAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAyLcKqCzgiokAAIC/yLcKqCzgiokAAIC/yLcKqCzgiokAAIC/yLcKqCzgiokAAIC/1LeKKAAAAAAAAIA/1LeKKAAAAAAAAIA/1LeKKAAAAAAAAIA/AACAP71lLajODpyoAACAP71lLajODpyoAACAP71lLajODpyoAACAP71lLajODpyoAADAvkjhOr8AAPC/SOE6vwAA8L/NzMy+AADAvs3MzL4AAMA+HcfHPgAAwD4LJGZAAADwPwskZkAAAPA/HcfHPgAAQMBI4Tq/AABAwM3MzD7ckTypSOE6v+ZEOykAAIA/AAAQQAAAgD8AABBASOE6vwAA8D9I4Tq/AADwP83MzD4AAPA/MzMzPwAAwD4zMzM/AADAPs3MzD4AAMA+SOE6v+ZEOylI4Tq/AABAwAAAoL8AAEDAAACAP/RQoA0AAIA/vhPQqAAAoL8AAEBASOE6vwAAAABI4Tq/AAAAAAAAgD8AAEBAAACAP7EOHCkAACA/AAAAAAAAgD8AAEBAAACAPwAAQEAAACA/AAAQwAAAgD8AAAAAAACAPwAAAABI4Tq/AADAvkjhOr8AAMC+zczMvgAA8L/NzMy+AADwv0jhOr8AABDASOE6vwAAQEAAAGC/AABAQAAAoL++E9AoAACgv84OnCgAAGC/KBE2qUjhOr8AAEDASOE6vwAAQMAAAIA/KBE2qQAAgD8AAEBASOE6v6ATUClI4Tq/AABAQM3MzD4AAMA+zczMPgAAwD4zMzM/AADwPzMzMz8AAPA/zczMPgAAAQACAAAAAgADAAQABQAGAAQABgAHADQANQA2ADQANgA3AAgACQAKABMAFAALAAwADQAOABIAEwALAAwADgAPABEAEgALAAwADwAQABAAEQALAAsADAAQABUAFgAXABUAFwAYABkAGgAbABkAGwAcAB0AHgAfAB0AHwAgACgAIQAiACQAJQAmACgAIgAjACQAJgAnACcAKAAjACMAJAAnACkAKgArACkAKwAsAC0ALgAvAC0ALwAwADEAMgAzAA=="
+    }
+  ],
+  "bufferViews": [
+    {
+      "name": "bufferView_0",
+      "buffer": 0,
+      "byteLength": 1344,
+      "byteOffset": 0,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_1",
+      "buffer": 0,
+      "byteLength": 448,
+      "byteOffset": 1344,
+      "byteStride": 8,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_2",
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 1792,
+      "target": 34963
+    }
+  ],
+  "materials": [
+    {
+      "name": "Asphalt",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.411765,
+          0.411765,
+          0.411765,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    },
+    {
+      "name": "Stone",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.847059,
+          0.827451,
+          0.74902,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mesh1 Group1 Model_1",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 4,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Mesh1 Group1 Model",
+      "mesh": 0
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

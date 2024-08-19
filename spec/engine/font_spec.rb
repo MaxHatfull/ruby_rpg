@@ -11,19 +11,28 @@ describe Engine::Font do
 
   describe "#string_offsets" do
     let(:widths) do
-      { "H" => 100, "e" => 80, "l" => 30, "o" => 50, "w" => 100, "r" => 60, "d" => 60 }
+      {
+        "71" => {"width" => 100 }, # H
+        "100" => { "width" => 80 }, # e
+        "107" => { "width" => 30 }, # l
+        "110" => { "width" => 50 }, # o
+        "118" => { "width" => 100 }, # w
+        "113" => { "width" => 60 }, # r
+        "99" => { "width" => 60 } # d
+      }
     end
     before do
       stub_const("ROOT", "spec")
     end
 
     it "returns the offsets of the string" do
+      allow(File).to receive(:read).and_return(JSON.dump(widths))
       font = Engine::Font.new("spec/fixtures/UbuntuMono-R.ttf")
 
       expect(font.string_offsets("Hello\nworld"))
         .to eq([
-                 [0.0, 0.0], [0.048828125, 0.0], [0.087890625, 0.0], [0.1025390625, 0.0], [0.1171875, 0.0],
-                 [0.0, -1.0], [0.048828125, -1.0], [0.0732421875, -1.0], [0.1025390625, -1.0], [0.1171875, -1.0]
+                 [0.0, 0.0], [1.46484375, 0.0], [2.63671875, 0.0], [3.076171875, 0.0], [3.515625, 0.0],
+                 [0.0, -1.0], [1.46484375, -1.0], [2.197265625, -1.0], [3.076171875, -1.0], [3.515625, -1.0]
                ]
             )
     end

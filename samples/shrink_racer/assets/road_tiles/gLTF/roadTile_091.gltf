@@ -1,0 +1,203 @@
+{
+  "accessors": [
+    {
+      "name": "Mesh1 Group1 Model_1_positions",
+      "componentType": 5126,
+      "count": 52,
+      "min": [
+        0,
+        0,
+        -3
+      ],
+      "max": [
+        3,
+        1.7300000190734863,
+        0
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_normals",
+      "componentType": 5126,
+      "count": 52,
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 624
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_texcoords",
+      "componentType": 5126,
+      "count": 52,
+      "min": [
+        -3,
+        -2
+      ],
+      "max": [
+        3,
+        1
+      ],
+      "type": "VEC2",
+      "bufferView": 1,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_0_indices",
+      "componentType": 5123,
+      "count": 72,
+      "min": [
+        0
+      ],
+      "max": [
+        51
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_1_indices",
+      "componentType": 5123,
+      "count": 18,
+      "min": [
+        24
+      ],
+      "max": [
+        35
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 144
+    }
+  ],
+  "asset": {
+    "generator": "obj2gltf",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "name": "roadTile_091",
+      "byteLength": 1844,
+      "uri": "data:application/octet-stream;base64,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"
+    }
+  ],
+  "bufferViews": [
+    {
+      "name": "bufferView_0",
+      "buffer": 0,
+      "byteLength": 1248,
+      "byteOffset": 0,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_1",
+      "buffer": 0,
+      "byteLength": 416,
+      "byteOffset": 1248,
+      "byteStride": 8,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_2",
+      "buffer": 0,
+      "byteLength": 180,
+      "byteOffset": 1664,
+      "target": 34963
+    }
+  ],
+  "materials": [
+    {
+      "name": "Stone",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.847059,
+          0.827451,
+          0.74902,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    },
+    {
+      "name": "Asphalt",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.411765,
+          0.411765,
+          0.411765,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mesh1 Group1 Model_1",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 4,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Mesh1 Group1 Model",
+      "mesh": 0
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

@@ -17,6 +17,10 @@ module Engine
       delta_uv1 = @texture_coords[1] - @texture_coords[0]
       delta_uv2 = @texture_coords[2] - @texture_coords[0]
 
+      if delta_uv1[0] * delta_uv2[1] - delta_uv1[1] * delta_uv2[0] == 0
+        return normals.map { |normal| Vector[0, 0, 0] }
+      end
+
       uv_matrix = Matrix[
         [delta_uv1[0], delta_uv1[1]],
         [delta_uv2[0], delta_uv2[1]]

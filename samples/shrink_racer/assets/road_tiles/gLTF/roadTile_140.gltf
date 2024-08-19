@@ -1,0 +1,159 @@
+{
+  "accessors": [
+    {
+      "name": "Mesh1 Group1 Model_1_positions",
+      "componentType": 5126,
+      "count": 26,
+      "min": [
+        0,
+        0,
+        -3
+      ],
+      "max": [
+        3,
+        1.649999976158142,
+        0
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_normals",
+      "componentType": 5126,
+      "count": 26,
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 312
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_texcoords",
+      "componentType": 5126,
+      "count": 26,
+      "min": [
+        -3,
+        -2
+      ],
+      "max": [
+        3,
+        2.630009889602661
+      ],
+      "type": "VEC2",
+      "bufferView": 1,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_0_indices",
+      "componentType": 5123,
+      "count": 36,
+      "min": [
+        0
+      ],
+      "max": [
+        25
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 0
+    }
+  ],
+  "asset": {
+    "generator": "obj2gltf",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "name": "roadTile_140",
+      "byteLength": 904,
+      "uri": "data:application/octet-stream;base64,AAAAAAAAAAAFAECzAABAQAAAAAAAAACAAABAQM3MDD8AAACAPQBAMzMz0z8FAECzAABAQAAAAAAAAEDAAABAQAAAAAAAAACAAAAAAAAAAAAFAECzBQBAMwAAAAAAAEDAAABAQM3MDD8AAACAAABAQAAAAAAAAACAAABAQAAAAAAAAEDAAABAQM3MDD8AAEDAAABAQAAAAAAAAEDABQBAMwAAAAAAAEDABQBAM83MDD8AAEDAAABAQM3MDD8AAEDABQBAM83MDD8AAEDABQBAMwAAAAAAAEDAAAAAAAAAAAAFAECzPQBAMzMz0z8FAECzPQBAMzMz0z8FAECzAABAQM3MDD8AAACABQBAM83MDD8AAEDAAABAQM3MDD8AAEDABQBAM83MDD8AAEDAAABAQM3MDD8AAACAFgCAsjL+4iYAAIA/FgCAsjL+4iYAAIA/FgCAsjL+4iYAAIA/FgCAsjL+4iYAAIA/Iy7diAAAgL+7cciIIy7diAAAgL+7cciIIy7diAAAgL+7cciIIy7diAAAgL+7cciIAACAPwAAAAAWAIAyAACAPwAAAAAWAIAyAACAPwAAAAAWAIAyAACAPwAAAAAWAIAyFgCAMm91KQ4AAIC/FgCAMm91KQ4AAIC/FgCAMm91KQ4AAIC/FgCAMm91KQ4AAIC/AACAv4t00TKszEyyAACAv4t00TKszEyyAACAv4t00TKszEyyAACAv4t00TKszEyyuaimPkJDYz+5qKa+uaimPkJDYz+5qKa+uaimPkJDYz+5qKa+AAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAwBApgAAgD8AAEBAAACAPwAAQEBmZuY+PQBAM2ZmJr8AAEDAAAAAwAAAQMAAAIA/AAAAAP//fz8FAECzAAAAwAUAQDNmZuY+BQBAMwAAgD8AAEBAAACAPwAAQEBmZuY+AABAwAAAgD8vAqsmAACAPy8CqyZmZuY+AABAwGZm5j4AAEDAZmbmPgAAQMAAAIA/BQBAswAAgD8FAECzZmYmv0+eFqp6N3Y+tcMHwBVSKEC1wwdAFVIoQAAAQEAAAADABQBAMwAAAMAAAEBAAACAPwAAAQACAAAAAgADAAQABQAGAAQABgAHAAgACQAKAAgACgALAAwADQAOAAwADgAPABAAEQASABAAEgATABQAFQAWABcAGAAZAA=="
+    }
+  ],
+  "bufferViews": [
+    {
+      "name": "bufferView_0",
+      "buffer": 0,
+      "byteLength": 624,
+      "byteOffset": 0,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_1",
+      "buffer": 0,
+      "byteLength": 208,
+      "byteOffset": 624,
+      "byteStride": 8,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_2",
+      "buffer": 0,
+      "byteLength": 72,
+      "byteOffset": 832,
+      "target": 34963
+    }
+  ],
+  "materials": [
+    {
+      "name": "Grass",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.541176,
+          0.709804,
+          0.286275,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mesh1 Group1 Model_1",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Mesh1 Group1 Model",
+      "mesh": 0
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

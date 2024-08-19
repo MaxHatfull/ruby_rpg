@@ -1,0 +1,203 @@
+{
+  "accessors": [
+    {
+      "name": "Mesh1 Group1 Model_1_positions",
+      "componentType": 5126,
+      "count": 54,
+      "min": [
+        0,
+        0,
+        -2.25
+      ],
+      "max": [
+        2.625,
+        0.6299999952316284,
+        0
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_normals",
+      "componentType": 5126,
+      "count": 54,
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 648
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_texcoords",
+      "componentType": 5126,
+      "count": 54,
+      "min": [
+        -2.625,
+        -1.25
+      ],
+      "max": [
+        2.625,
+        1
+      ],
+      "type": "VEC2",
+      "bufferView": 1,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_0_indices",
+      "componentType": 5123,
+      "count": 84,
+      "min": [
+        0
+      ],
+      "max": [
+        53
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 0
+    },
+    {
+      "name": "Mesh1 Group1 Model_1_1_indices",
+      "componentType": 5123,
+      "count": 12,
+      "min": [
+        16
+      ],
+      "max": [
+        49
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 168
+    }
+  ],
+  "asset": {
+    "generator": "obj2gltf",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "name": "roadTile_131",
+      "byteLength": 1920,
+      "uri": "data:application/octet-stream;base64,/P8PM65HIT8AABDAAAAoQK5HIT8AABDAAAAoQAAAAAAAABDA/P8PMwAAAAAAABDAAADAPq5HIT8AAMC+AADAPq5HIT8AAPC/AAAoQK5HIT8AAPC/AAAoQK5HIT8AABDA/P8PM65HIT8AABDAAAAAAK5HIT/y/yezAAAoQK5HIT8AAACAAAAoQK5HIT8AAMC+AADAPpqZGT8AAMC+AADAPpqZGT8AAPC/AADAPq5HIT8AAPC/AADAPq5HIT8AAMC+AAAoQJqZGT8AAPC/AADAPpqZGT8AAPC/AADAPpqZGT8AAMC+AAAoQJqZGT8AAMC+AAAoQK5HIT8AAPC/AADAPq5HIT8AAPC/AADAPpqZGT8AAPC/AAAoQJqZGT8AAPC/AAAoQAAAAAAAAACAAAAoQAAAAAAAABDAAAAoQK5HIT8AABDAAAAoQK5HIT8AAPC/AAAoQJqZGT8AAPC/AAAoQJqZmT4AAPC/AAAoQJqZmT4AAMC+AAAoQJqZGT8AAMC+AAAoQK5HIT8AAMC+AAAoQK5HIT8AAACAAAAoQAAAAAAAABDAAAAoQAAAAAAAAACAAAAAAAAAAADy/yez/P8PMwAAAAAAABDAAAAoQK5HIT8AAACAAAAAAK5HIT/y/yezAAAAAAAAAADy/yezAAAoQAAAAAAAAACAAAAAAK5HIT/y/yez/P8PM65HIT8AABDA/P8PMwAAAAAAABDAAAAAAAAAAADy/yezAAAoQJqZGT8AAMC+AAAoQJqZmT4AAMC+AAAoQJqZmT4AAPC/AAAoQJqZGT8AAPC/AADAPpqZGT8AAMC+AADAPq5HIT8AAMC+AAAoQK5HIT8AAMC+AAAoQJqZGT8AAMC+FgCAMpsO1YAAAIC/FgCAMpsO1YAAAIC/FgCAMpsO1YAAAIC/FgCAMpsO1YAAAIC/AAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAACAPyQWAAC7/38yAACAPyQWAAC7/38yAACAPyQWAAC7/38yAACAPyQWAAC7/38yAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAAAAAAAAAgD8AAACAu/9/sisgsREAAIA/u/9/sisgsREAAIA/u/9/sisgsREAAIA/u/9/sisgsREAAIA/AACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yAACAPzp7UCe7/38yubcKpAAAgL8HidijubcKpAAAgL8HidijubcKpAAAgL8HidijubcKpAAAgL8Hidiju/9/stkO1ZgAAIA/u/9/stkO1ZgAAIA/u/9/stkO1ZgAAIA/u/9/stkO1ZgAAIA/AACAvwAAAAC7/3+yAACAvwAAAAC7/3+yAACAvwAAAAC7/3+yAACAvwAAAAC7/3+yAACAP5F9oZq7/38yAACAP5F9oZq7/38yAACAP5F9oZq7/38yAACAP5F9oZq7/38yu/9/MgAAAAAAAIC/u/9/MgAAAAAAAIC/u/9/MgAAAAAAAIC/u/9/MgAAAAAAAIC/r1MkKaRwvT4AACjApHC9PgAAKMAAAIA/r1MkKQAAgD8AAMA+AAAgPwAAwD4AAGC/AAAoQAAAYL8AAChAAACgv/z/DzMAAKC/AAAAAP//fz8AAChAAACAPwAAKEAAACA/AADAPs3MzD4AAPA/zczMPgAA8D+kcL0+AADAPqRwvT4AAChAAABgvwAAwD4AAGC/AADAPgAAID8AAChAAAAgPwAAKECkcL0+AADAPqRwvT4AAMA+zczMPgAAKEDNzMw+8v8nMwAAgD8AABBAAACAPwAAEECkcL0+AADwP6RwvT4AAPA/zczMPgAA8D8zMzM/AADAPjMzMz8AAMA+zczMPgAAwD6kcL0+8v8nM6RwvT4AACjAAACgvwAAKMAAAIA/AAAAAP//fz/8/w+zAACgvwAAKECkcL0+2f8npqRwvT7Z/yemAACAPwAAKEAAAIA/8v8ns6RwvT4AABDApHC9PgAAEMAAAIA/8v8nswAAgD8AAMA+zczMPgAAwD4zMzM/AADwPzMzMz8AAPA/zczMPgAAwL7NzMw+AADAvqRwvT4AACjApHC9PgAAKMDNzMw+AAABAAIAAAACAAMACwAFAAQABwAJAAgACwAGAAUABwAKAAkACgAGAAsABgAKAAcADAANAA4ADAAOAA8AFAAVABYAFAAWABcAIAAhABgAGQAaABsAHwAgABgAGQAbABwAHgAfABgAGQAcAB0AHQAeABgAGAAZAB0AIgAjACQAIgAkACUAJgAnACgAJgAoACkAKgArACwAKgAsAC0AMgAzADQAMgA0ADUAEAARABIAEAASABMALgAvADAALgAwADEA"
+    }
+  ],
+  "bufferViews": [
+    {
+      "name": "bufferView_0",
+      "buffer": 0,
+      "byteLength": 1296,
+      "byteOffset": 0,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_1",
+      "buffer": 0,
+      "byteLength": 432,
+      "byteOffset": 1296,
+      "byteStride": 8,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_2",
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 1728,
+      "target": 34963
+    }
+  ],
+  "materials": [
+    {
+      "name": "Stone",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.847059,
+          0.827451,
+          0.74902,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    },
+    {
+      "name": "Asphalt",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.411765,
+          0.411765,
+          0.411765,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mesh1 Group1 Model_1",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 4,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Mesh1 Group1 Model",
+      "mesh": 0
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

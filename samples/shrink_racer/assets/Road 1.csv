@@ -1,0 +1,15 @@
+,,,corner|east,road|east,road|east,corner|north,,,,,,,,,,,
+,corner|east,road|east,corner|west,,,corner|south,road|east,corner|north,,,,,,,,,
+,road|north,,,,,,,road|north,,,,,,,,,
+corner|east,corner|west,,,,,,,corner|south,corner|north,,,,,,,,
+road|north,,,,,,,,,road|north,,,,,,,,
+corner|south,corner|north,,,,,,,,road|north,,,,,,,,
+,corner|south,corner|north,,,,,,,corner|south,corner|north,,,,,,,
+,,road|north,,,,,,,,corner|south,road|east,corner|north,,,,,
+,corner|east,corner|west,,,,,,,,,,corner|south,road|east,corner|north,,,
+,road|north,,,,,,,,,,,,,corner|south,road|east,corner|north,
+,road|north,,,,,,,,,,,,,,,corner|south,corner|north
+,corner|south,corner|north,,,,,,,,,,,,,,,road|north
+,,corner|south,corner|north,,,corner|east,road|east,road|east,road|east,corner|north,,,,,,,road|north
+,,,corner|south,road|east,road|east,corner|west,,,,corner|south,road|east,corner|north,,,,corner|east,corner|west
+,,,,,,,,,,,,corner|south,road|east,road|east,road|east,corner|west,
