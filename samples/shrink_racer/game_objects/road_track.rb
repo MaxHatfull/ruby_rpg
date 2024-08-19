@@ -20,8 +20,14 @@ module ShrinkRacer
       pond: "create_pond"
     }
 
-    def self.create
-      track = RoadTrack.load_track(File.join(ASSETS_DIR, "Road 3.csv"))
+    TRACKS = {
+      track_1: { file: "Road 1.csv" },
+      track_2: { file: "Road 2.csv" },
+      track_3: { file: "Road 3.csv", start_pos: Vector[63, 0.6, 39], start_rot: Vector[0, 90, 0] },
+    }
+
+    def self.create(track)
+      track = load_track(File.join(ASSETS_DIR, track[:file]))
       track.each_with_index do |row, x|
         row.reverse.each_with_index do |cell, z|
           pos = Vector[x * CELL_SIZE, 0, z * CELL_SIZE]

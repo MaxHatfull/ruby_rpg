@@ -25,7 +25,13 @@ module ShrinkRacer
     end
 
     def self.create_straight_road(pos, rotation)
-      create("162", pos, rotation)
+      road = create("162", pos, rotation)
+      if rand < 0.3
+        local_pos = Vector[rand(-1.0..1.0), 0.575, rand(-0.8..0.8)]
+        cone_pos = road.local_to_world_coordinate(local_pos)
+        Props.create_cone(cone_pos, rotation)
+      end
+      road
     end
 
     def self.create_corner_road(pos, rotation)
