@@ -4,6 +4,8 @@ require 'concurrent'
 require 'os'
 require "rmagick"
 
+require_relative 'rendering/render_pipeline'
+require_relative 'rendering/instance_renderer'
 require_relative 'screenshoter'
 require_relative 'input'
 require_relative "quaternion"
@@ -117,7 +119,7 @@ module Engine
       GL.Enable(GL::DEPTH_TEST)
       GL.DepthFunc(GL::LESS)
 
-      GameObject.render_all(delta_time)
+      Rendering::RenderPipeline.draw
 
       GL.Disable(GL::DEPTH_TEST)
       GameObject.render_ui(delta_time)

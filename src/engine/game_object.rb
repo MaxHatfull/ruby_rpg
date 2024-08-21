@@ -174,9 +174,9 @@ module Engine
       end
     end
 
-    def self.render_all(delta_time)
-      GameObject.objects.each do |object|
-        object.renderers.each { |renderer| renderer.update(delta_time) }
+    def self.mesh_renderers
+      GameObject.objects.flat_map do |object|
+        object.renderers
       end
     end
 
