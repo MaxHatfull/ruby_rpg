@@ -7,6 +7,7 @@ module Engine::Components
     def initialize(mesh, material)
       @mesh = mesh
       @material = material
+      Rendering::RenderPipeline.add_instance(self)
     end
 
     def renderer?

@@ -6,6 +6,7 @@ layout (location = 2) in vec3 normal;
 layout (location = 4) in vec3 diffuse;
 layout (location = 5) in vec3 specular;
 layout (location = 6) in vec3 albedo;
+layout (location = 7) in mat4 model;
 
 out vec3 Normal;
 out vec3 FragPos;
@@ -14,7 +15,6 @@ out vec3 Specular;
 out vec3 Albedo;
 
 uniform mat4 camera;
-uniform mat4 model;
 
 void main()
 {

@@ -30,5 +30,5 @@ Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
 
   car = Car.create_suv(track[:start_pos], track[:start_rot])
   CameraObject.create(car)
-  # CameraObject.debug_camera
+  #CameraObject.debug_camera
 end

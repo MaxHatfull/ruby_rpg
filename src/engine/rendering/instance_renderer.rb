@@ -2,33 +2,36 @@
 
 module Rendering
   class InstanceRenderer
-    attr_reader :mesh, :material
+    attr_reader :mesh, :material, :mesh_renderers
 
     def initialize(mesh, material)
       @mesh = mesh
       @material = material
+      @mesh_renderers = []
 
       setup_vertex_attribute_buffer
       setup_vertex_buffer
       setup_index_buffer
+      generate_instance_vbo_buf
     end
 
-    def draw(model_matrix)
-      set_material_per_frame_data(model_matrix)
+    def draw_all
+      update_vbo_buf
+      set_material_per_frame_data
 
       GL.BindVertexArray(@vao)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
+      GL.BindBuffer(GL::ARRAY_BUFFER, @instance_vbo)
 
-      GL.DrawElements(GL::TRIANGLES, mesh.index_data.length, GL::UNSIGNED_INT, 0)
+      GL.DrawElementsInstanced(GL::TRIANGLES, mesh.index_data.length, GL::UNSIGNED_INT, 0, @mesh_renderers.count)
       GL.BindVertexArray(0)
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, 0)
     end
 
     private
 
-    def set_material_per_frame_data(model_matrix)
+    def set_material_per_frame_data
       material.set_mat4("camera", Engine::Camera.instance.matrix)
-      material.set_mat4("model", model_matrix)
       material.set_vec3("cameraPos", Engine::Camera.instance.game_object.pos)
 
       update_light_data
@@ -94,6 +97,43 @@ module Rendering
       GL.EnableVertexAttribArray(4)
       GL.EnableVertexAttribArray(5)
       GL.EnableVertexAttribArray(6)
+    end
+
+    def generate_instance_vbo_buf
+      instance_vbo_buf = ' ' * 4
+      GL.GenBuffers(1, instance_vbo_buf)
+      @instance_vbo = instance_vbo_buf.unpack('L')[0]
+      update_vbo_buf
+    end
+
+    def update_vbo_buf
+      vertex_data = @mesh_renderers
+                      .map { |mr| mr.game_object.model_matrix.to_a }
+                      .flatten
+                      .map(&:to_f)
+
+      GL.BindBuffer(GL::ARRAY_BUFFER, @instance_vbo)
+      GL.BufferData(
+        GL::ARRAY_BUFFER, vertex_data.length * Fiddle::SIZEOF_FLOAT,
+        vertex_data.pack('F*'), GL::STATIC_DRAW
+      )
+
+      vec4_size = Fiddle::SIZEOF_FLOAT * 4
+
+      GL.EnableVertexAttribArray(7)
+      GL.EnableVertexAttribArray(8)
+      GL.EnableVertexAttribArray(9)
+      GL.EnableVertexAttribArray(10)
+
+      GL.VertexAttribPointer(7, 4, GL::FLOAT, GL::FALSE, 4 * vec4_size, 0)
+      GL.VertexAttribPointer(8, 4, GL::FLOAT, GL::FALSE, 4 * vec4_size, 1 * vec4_size)
+      GL.VertexAttribPointer(9, 4, GL::FLOAT, GL::FALSE, 4 * vec4_size, 2 * vec4_size)
+      GL.VertexAttribPointer(10, 4, GL::FLOAT, GL::FALSE, 4 * vec4_size, 3 * vec4_size)
+
+      GL.VertexAttribDivisor(7, 1)
+      GL.VertexAttribDivisor(8, 1)
+      GL.VertexAttribDivisor(9, 1)
+      GL.VertexAttribDivisor(10, 1)
     end
   end
 end
