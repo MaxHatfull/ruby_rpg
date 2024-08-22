@@ -3,13 +3,21 @@
 module Rendering
   module RenderPipeline
     def self.draw
+      Engine::GameObject.mesh_renderers.each do |mesh_renderer|
+        mesh_renderer.update(0)
+      end
+
       instance_renderers.values.each do |renderer|
         renderer.draw_all
       end
     end
 
     def self.add_instance(mesh_renderer)
-      instance_renderers[[mesh_renderer.mesh, mesh_renderer.material]].mesh_renderers << mesh_renderer
+      instance_renderers[[mesh_renderer.mesh, mesh_renderer.material]].add_instance(mesh_renderer)
+    end
+
+    def self.update_instance(mesh_renderer)
+      instance_renderers[[mesh_renderer.mesh, mesh_renderer.material]].update_instance(mesh_renderer)
     end
 
     private

@@ -17,7 +17,9 @@ module ShrinkRacer
         scale: Vector[1, 1, 1],
         components: [
           Engine::Components::MeshRenderer.new(Engine::Mesh.for(
-            "assets/road_tiles/roadTile_" + tile_number), material),
+            "assets/road_tiles/roadTile_" + tile_number),
+                                               material, static: true
+          ),
         ],
         parent: parent
       )
@@ -89,7 +91,10 @@ module ShrinkRacer
         scale: Vector[1, 1, 1],
         components: [
           Engine::Components::MeshRenderer.new(Engine::Mesh.for(
-            "assets/road_tiles/roadTile_" + file_number), material),
+            "assets/road_tiles/roadTile_" + file_number),
+                                               material,
+                                               static: true
+          ),
         ],
         parent: parent
       )

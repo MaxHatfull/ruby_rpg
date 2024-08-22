@@ -19,7 +19,7 @@ module ShrinkRacer
         scale: Vector[0.3, 0.3, 0.3],
         components: [
           Engine::Components::MeshRenderer.new(Engine::Mesh.for(
-            "assets/cars/cone"), cone_material),
+            "assets/cars/cone"), cone_material, static: true),
         ],
         parent: parent
       )
@@ -48,7 +48,6 @@ module ShrinkRacer
         ],
         parent: parent
       )
-      parent
       parent
     end
 

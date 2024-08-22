@@ -2,17 +2,28 @@
 
 module Rendering
   class InstanceRenderer
-    attr_reader :mesh, :material, :mesh_renderers
+    attr_reader :mesh, :material
 
     def initialize(mesh, material)
       @mesh = mesh
       @material = material
       @mesh_renderers = []
+      @mesh_matrix_data = []
 
       setup_vertex_attribute_buffer
       setup_vertex_buffer
       setup_index_buffer
       generate_instance_vbo_buf
+    end
+
+    def add_instance(mesh_renderer)
+      @mesh_renderers << mesh_renderer
+      @mesh_matrix_data += mesh_renderer.game_object.model_matrix.to_a.flatten
+    end
+
+    def update_instance(mesh_renderer)
+      index = @mesh_renderers.index(mesh_renderer)
+      @mesh_matrix_data[index * 16, 16] = mesh_renderer.game_object.model_matrix.to_a.flatten
     end
 
     def draw_all
@@ -107,10 +118,7 @@ module Rendering
     end
 
     def update_vbo_buf
-      vertex_data = @mesh_renderers
-                      .map { |mr| mr.game_object.model_matrix.to_a }
-                      .flatten
-                      .map(&:to_f)
+      vertex_data = @mesh_matrix_data
 
       GL.BindBuffer(GL::ARRAY_BUFFER, @instance_vbo)
       GL.BufferData(
