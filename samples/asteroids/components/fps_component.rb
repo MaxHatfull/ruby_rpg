@@ -4,6 +4,16 @@ module Asteroids
   class FpsComponent < Engine::Component
     def start
       @fps_counter = game_object.ui_renderers.first
+      @display = false
+    end
+
+    def update(delta_time)
+      toggle_visibility if Engine::Input.key_down?(GLFW::KEY_D)
+      @fps_counter.update_string( @display ? onscreen_message : '' )
+    end
+
+    def toggle_visibility
+      @display = !@display
     end
 
     def onscreen_message
@@ -15,9 +25,6 @@ module Asteroids
       ].join("\n")
     end
 
-    def update(delta_time)
-      @fps_counter.update_string(onscreen_message)
-    end
 
     def game_objects_tallied
       Engine::GameObject.objects.map(&:name).tally.map do |game_obj, count|
