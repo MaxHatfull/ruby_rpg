@@ -7,11 +7,8 @@ module Asteroids
       @shield_colour = { r: 1, g: 1, b: 1 }
     end
 
-    def ship
-      @ship ||= game_object.parent
-    end
-
     def update(delta_time)
+      @ship_pos = game_object.parent.pos
       detect_collision_with_asteroids
       set_shield_colour
       destroy_shield! if @shield_health <= 0
@@ -20,11 +17,11 @@ module Asteroids
     def detect_collision_with_asteroids
       AsteroidComponent.asteroids.each do |asteroid|
         next if asteroid.destroyed?
-        if (ship.pos - asteroid.game_object.pos).magnitude < asteroid.size
+        if (@ship_pos - asteroid.game_object.pos).magnitude < asteroid.size
           inflict_shield_damage(asteroid.size)
           asteroid.blow_up
 
-          Explosion.create(ship.pos)
+          Explosion.create(@ship_pos)
         end
       end
     end
@@ -36,7 +33,7 @@ module Asteroids
 
     def destroy_shield!
       game_object.destroy!
-      Explosion.create(ship.pos, colour: { r: 0.5, g: 1, b: 1 })
+      Explosion.create(@ship_pos, colour: { r: 0.5, g: 1, b: 1 })
     end
 
     def set_shield_colour
