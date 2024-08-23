@@ -27,10 +27,10 @@ module Rendering
     end
 
     def draw_all
-      update_vbo_buf
       set_material_per_frame_data
 
       GL.BindVertexArray(@vao)
+      update_vbo_buf
       GL.BindBuffer(GL::ELEMENT_ARRAY_BUFFER, @ebo)
       GL.BindBuffer(GL::ARRAY_BUFFER, @instance_vbo)
 
