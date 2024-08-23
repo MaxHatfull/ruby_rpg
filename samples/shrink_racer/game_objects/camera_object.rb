@@ -19,7 +19,8 @@ module ShrinkRacer
     end
 
     def self.debug_camera
-      Engine::GameObject.new(
+      back_plane = create_back_plane
+      camera = Engine::GameObject.new(
         "Camera",
         pos: Vector[0, 0, 0],
         rotation: Vector[20, 180, 0],
@@ -27,6 +28,8 @@ module ShrinkRacer
           CameraRotator.new,
           Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: 1920.0 / 1080.0, near: 0.1, far: FAR)
         ])
+      back_plane.parent = camera
+      camera
     end
 
     private
@@ -35,7 +38,6 @@ module ShrinkRacer
       material = Engine::Material.new(
         Engine::Shader.new('./shaders/skybox_vert.glsl', './shaders/skybox_frag.glsl')
       )
-
       Engine::GameObject.new(
         "Skybox",
         pos: Vector[0, 0, -FAR + 20],
