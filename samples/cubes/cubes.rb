@@ -3,7 +3,7 @@ require_relative "../../src/engine/engine"
 ROOT = File.expand_path(File.join(__dir__))
 ASSETS_DIR = File.expand_path(File.join(__dir__, "assets"))
 
-Engine.start(width: 1920, height: 1080, base_dir: File.dirname(__FILE__)) do
+Engine.start(base_dir: File.dirname(__FILE__)) do
   include Cubes
   (-3..3).each do |x|
     Plane.create(Vector[x * 100, 100, -100], Vector[0,0,0], 100)

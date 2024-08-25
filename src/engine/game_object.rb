@@ -140,7 +140,7 @@ module Engine
       children.each(&:destroy!)
       self.class.instance_variable_get(:@methods).each do |method|
         singleton_class.send(:undef_method, method)
-        singleton_class.send(:define_method, method) { raise "This object has been destroyed #{self.object_id}" }
+        singleton_class.send(:define_method, method) { raise "This object has been destroyed.  Object ID: #{self.object_id}" }
       end
     end
 
