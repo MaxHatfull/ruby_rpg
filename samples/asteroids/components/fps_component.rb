@@ -21,6 +21,9 @@ module Asteroids
         "FPS: #{Engine.fps.round(4)}",
         "Total Game Objects: #{Engine::GameObject.objects.count}",
         "",
+        "Window: #{Engine::Window.height} x #{Engine::Window.width}",
+        "FrameBuffer: #{Engine::Window.framebuffer_height} x #{Engine::Window.framebuffer_width}",
+        "",
         "#{game_objects_tallied}"
       ].join("\n")
     end
