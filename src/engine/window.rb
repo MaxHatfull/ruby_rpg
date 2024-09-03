@@ -11,6 +11,7 @@ module Engine
 
     class << self
       attr_accessor :full_screen, :window, :window_title
+      attr_reader :framebuffer_height, :framebuffer_width
 
       def create_window(window_title: 'Ruby RPG')
         @full_screen = FULL_SCREEN
@@ -94,21 +95,13 @@ module Engine
         GLFW.FocusWindow(window)
       end
 
-      def update_screen_size
+      def get_framebuffer_size
         width_buf = ' ' * 8
         height_buf = ' ' * 8
 
         GLFW.GetFramebufferSize(window, width_buf, height_buf)
-        @screen_width = width_buf.unpack('L')[0]
-        @screen_height = height_buf.unpack('L')[0]
-      end
-
-      def screen_width
-        @screen_width
-      end
-
-      def screen_height
-        @screen_height
+        @framebuffer_width = width_buf.unpack1('L')
+        @framebuffer_height = height_buf.unpack1('L')
       end
 
       def set_opengl_version
