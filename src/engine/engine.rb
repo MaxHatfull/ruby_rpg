@@ -20,6 +20,8 @@ require_relative 'tangent_calculator'
 require_relative 'shader'
 require_relative 'component'
 require_relative "camera"
+require_relative "window"
+require_relative "cursor"
 
 require_relative "components/orthographic_camera"
 require_relative "components/perspective_camera"
@@ -47,10 +49,11 @@ end
 GLFW.Init
 
 module Engine
-  def self.start(width: 600, height: 800, base_dir:, &first_frame_block)
+  def self.start(base_dir:, &first_frame_block)
     load(base_dir)
     return if ENV["BUILDING"] == "true"
-    open_window(width, height)
+
+    open_window
     main_game_loop(&first_frame_block)
     terminate
   end
@@ -65,17 +68,14 @@ module Engine
     Dir[File.join(base_dir, "game_objects", "**/*.rb")].each { |file| require file }
   end
 
-  def self.open_window(width, height)
-    set_opengl_version
+  def self.open_window
     @old_time = Time.now
     @time = Time.now
-    GLFW.WindowHint(GLFW::DECORATED, 0)
     @key_callback = create_key_callbacks # This must be an instance variable to prevent garbage collection
-    primary_monitor = GLFW.GetPrimaryMonitor
 
-    @window = GLFW.CreateWindow(width, height, "Ruby RPG", primary_monitor, nil)
-    GLFW.MakeContextCurrent(@window)
-    GLFW.SetKeyCallback(@window, @key_callback)
+    Window.create_window
+    GLFW.MakeContextCurrent(Window.window)
+    GLFW.SetKeyCallback(Window.window, @key_callback)
     GL.load_lib
 
     set_opengl_blend_mode
@@ -87,8 +87,7 @@ module Engine
 
     GLFW.SwapInterval(0)
 
-    # lock cursor
-    GLFW.SetInputMode(@window, GLFW::CURSOR, GLFW::CURSOR_DISABLED)
+    Cursor.hide
   end
 
   def self.main_game_loop(&first_frame_block)
@@ -96,10 +95,10 @@ module Engine
     @old_time = Time.now
     @time = Time.now
     @fps = 0
-    update_screen_size
+    Window.update_screen_size
     GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
 
-    until GLFW.WindowShouldClose(@window) == GLFW::TRUE || @game_stopped
+    until GLFW.WindowShouldClose(Window.window) == GLFW::TRUE || @game_stopped
       if first_frame_block
         first_frame_block.call
         first_frame_block = nil
@@ -119,20 +118,20 @@ module Engine
       GL.DepthFunc(GL::LESS)
 
       Rendering::RenderPipeline.draw
-
       GL.Disable(GL::DEPTH_TEST)
       GameObject.render_ui(delta_time)
 
       if Screenshoter.scheduled_screenshot
         Screenshoter.take_screenshot
       end
-      update_screen_size
+
+      Window.update_screen_size
 
       if OS.windows?
-        GLFW.SwapBuffers(@window)
+        GLFW.SwapBuffers(Window.window)
       else
         @swap_buffers_promise = Concurrent::Promise.new do
-          GLFW.SwapBuffers(@window)
+          GLFW.SwapBuffers(Window.window)
         end
         @swap_buffers_promise.execute
       end
@@ -146,19 +145,40 @@ module Engine
   end
 
   def self.terminate
-    GLFW.DestroyWindow(@window)
+    GLFW.DestroyWindow(Window.window)
     GLFW.Terminate
   end
 
   def self.close
     GameObject.destroy_all
-    GLFW.SetWindowShouldClose(@window, 1)
+    GLFW.SetWindowShouldClose(Window.window, 1)
   end
 
   def self.stop_game
     @game_stopped = true
     @swap_buffers_promise.wait! if @swap_buffers_promise && !@swap_buffers_promise.complete?
     GameObject.destroy_all
+  end
+
+  # Hit a breakpoint within the context of where the breakpoint is defined, assuming a block is passed
+  # with a `binding.pry` (or an alternative debugger), otherwise hit a breakpoint within this method.
+  def self.breakpoint(&block)
+    orig_fullscreen = Window.full_screen?
+    if orig_fullscreen
+      Window.set_to_windowed
+      GLFW.PollEvents # Required to trigger the switch from fullscreen to windowed within this breakpoint
+    end
+
+    orig_cursor_mode = Cursor.get_input_mode
+    Cursor.enable
+
+    block_given? ? yield : binding.pry
+    Cursor.restore_input_mode(orig_cursor_mode)
+    Window.set_to_full_screen if orig_fullscreen
+    Window.focus_window
+
+    # Reset the time, otherwise delta_time will be off for the next frame, and teleporting occurs
+    @time = Time.now
   end
 
   private
@@ -179,34 +199,18 @@ module Engine
     GL.BlendFunc(GL::SRC_ALPHA, GL::ONE_MINUS_SRC_ALPHA)
   end
 
-  def self.update_screen_size
-    width_buf = ' ' * 8
-    height_buf = ' ' * 8
-
-    GLFW.GetFramebufferSize(@window, width_buf, height_buf)
-    @screen_width = width_buf.unpack('L')[0]
-    @screen_height = height_buf.unpack('L')[0]
-  end
-
   def self.create_key_callbacks
     GLFW::create_callback(:GLFWkeyfun) do |window, key, scancode, action, mods|
       Input.key_callback(key, action)
     end
   end
 
-  def self.set_opengl_version
-    GLFW.WindowHint(GLFW::CONTEXT_VERSION_MAJOR, 3)
-    GLFW.WindowHint(GLFW::CONTEXT_VERSION_MINOR, 3)
-    GLFW.WindowHint(GLFW::OPENGL_PROFILE, GLFW::OPENGL_CORE_PROFILE)
-    GLFW.WindowHint(GLFW::OPENGL_FORWARD_COMPAT, GLFW::TRUE)
-  end
-
   def self.screen_width
-    @screen_width
+    Window.screen_width
   end
 
   def self.screen_height
-    @screen_height
+    Window.screen_height
   end
 
   def self.debug_opengl_call

@@ -11,6 +11,15 @@ module Engine
       if key == GLFW::KEY_ESCAPE
         Engine.close
       end
+
+      if key == GLFW::KEY_BACKSPACE
+        Engine.breakpoint { binding.pry }
+        # Engine.breakpoint { debugger }
+      end
+
+      if key == GLFW::KEY_F
+        Engine::Window.toggle_full_screen
+      end
     end
 
     def self._on_key_up(key)
