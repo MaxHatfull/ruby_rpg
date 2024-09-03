@@ -21,6 +21,7 @@ require_relative 'shader'
 require_relative 'component'
 require_relative "camera"
 require_relative "window"
+require_relative "video_mode"
 require_relative "cursor"
 
 require_relative "components/orthographic_camera"

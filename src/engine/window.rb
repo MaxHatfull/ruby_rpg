@@ -3,32 +3,33 @@
 module Engine
   class Window
 
-    FULL_SCREEN       = true
-    MAX_WIDTH         = 1920
-    MAX_HEIGHT        = 1080
-    WINDOWED_WIDTH    = 1200
-    WINDOWED_HEIGHT   = 800
+    DEFAULT_TITLE = File.basename($PROGRAM_NAME).gsub(/\.rb$/,'')
 
     class << self
       attr_accessor :full_screen, :window, :window_title
       attr_reader :framebuffer_height, :framebuffer_width
 
-      def create_window(window_title: 'Ruby RPG')
-        @full_screen = FULL_SCREEN
+      def create_window
         set_opengl_version
         enable_decorations
         disable_auto_iconify
-        @window = GLFW.CreateWindow(width, height, window_title, monitor, nil)
+        @full_screen = true
+        initial_video_mode = VideoMode.current_video_mode
+        @window = GLFW.CreateWindow(
+          initial_video_mode.width, initial_video_mode.height, DEFAULT_TITLE, primary_monitor, nil
+        )
       end
 
       alias full_screen? full_screen
 
       def width
-        @width = full_screen? ? MAX_WIDTH : WINDOWED_WIDTH
+        max_width = VideoMode.current_video_mode.width
+        @width = full_screen? ? max_width : max_width * 0.8
       end
 
       def height
-        @height = full_screen? ? MAX_HEIGHT : WINDOWED_HEIGHT
+        max_height = VideoMode.current_video_mode.height
+        @height = full_screen? ? max_height : max_height * 0.8
       end
 
       def monitor
