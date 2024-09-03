@@ -15,6 +15,8 @@ module ShrinkRacer
       @last_collision_time = -999.0
       @acceleration = 0
       @scale_count = 0
+      @car_debugger = UIText.create(Vector[100, 1080 - 200, 0], Vector[0, 0, 0], 50, "").ui_renderers.first
+      @visible_debugger = false
     end
 
     def start
@@ -24,6 +26,7 @@ module ShrinkRacer
     def update(delta_time)
       @current_time += delta_time
       game_object.scale += 15.0 * (@target_scale - game_object.scale) * delta_time
+      update_debugger
 
       if @current_time - @last_collision_time > 0.5
         if Engine::Input.key_down?(GLFW::KEY_W)
@@ -56,6 +59,24 @@ module ShrinkRacer
       end
 
       game_object.rotation += Vector[0, torque, 0] * delta_time
+
+    end
+
+    def update_debugger
+      onscreen_text = [
+        "Car Scale: #{game_object.scale}",
+        "Target Scale: #{@target_scale}",
+        "Scale Count: #{@scale_count}",
+        "Acceleration: #{@acceleration.round(3)}",
+        "Max Acceleration: #{max_acceleration.round(3)}"
+      ].join("\n")
+
+      toggle_debugger_visibility if Engine::Input.key_down?(GLFW::KEY_SLASH)
+      @car_debugger.update_string( @visible_debugger ? onscreen_text : '' )
+    end
+
+    def toggle_debugger_visibility
+      @visible_debugger = !@visible_debugger
     end
 
     def max_acceleration
