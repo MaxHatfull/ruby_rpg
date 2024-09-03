@@ -95,7 +95,7 @@ module Engine
         GLFW.FocusWindow(window)
       end
 
-      def update_screen_size
+      def get_framebuffer_size
         width_buf = ' ' * 8
         height_buf = ' ' * 8
 

@@ -95,7 +95,7 @@ module Engine
     @old_time = Time.now
     @time = Time.now
     @fps = 0
-    Window.update_screen_size
+    Window.get_framebuffer_size
     GL.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT)
 
     until GLFW.WindowShouldClose(Window.window) == GLFW::TRUE || @game_stopped
@@ -125,7 +125,7 @@ module Engine
         Screenshoter.take_screenshot
       end
 
-      Window.update_screen_size
+      Window.get_framebuffer_size
 
       if OS.windows?
         GLFW.SwapBuffers(Window.window)
