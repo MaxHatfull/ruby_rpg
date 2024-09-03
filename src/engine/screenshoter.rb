@@ -10,8 +10,8 @@ module Engine
 
     def self.take_screenshot
       @scheduled_screenshot = nil
-      width = Engine.screen_width
-      height = Engine.screen_height
+      width = Engine::Window.framebuffer_width
+      height = Engine::Window.framebuffer_height
       pixels = ' ' * (width * height * 3)
       GL.ReadPixels(0, 0, width, height, GL::RGB, GL::UNSIGNED_BYTE, pixels)
       png = ChunkyPNG::Image.new(width, height, ChunkyPNG::Color::TRANSPARENT)
