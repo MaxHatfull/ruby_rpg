@@ -205,14 +205,6 @@ module Engine
     end
   end
 
-  def self.screen_width
-    Window.screen_width
-  end
-
-  def self.screen_height
-    Window.screen_height
-  end
-
   def self.debug_opengl_call
     errors = []
     until GL.GetError == 0; end

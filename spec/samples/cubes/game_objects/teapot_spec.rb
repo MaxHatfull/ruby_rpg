@@ -14,9 +14,9 @@ describe Cubes::Teapot do
       within_game_context(load_path: "./samples/cubes") do
         at(0) do
           Engine::GameObject.new(
-            "Camera", pos: Vector[Engine.screen_width / 2, Engine.screen_height / 2, 1000],
+            "Camera", pos: Vector[Engine::Window.framebuffer_width / 2, Engine::Window.framebuffer_height / 2, 1000],
             components: [
-              Engine::Components::OrthographicCamera.new(width: Engine.screen_width, height: Engine.screen_height, far: 2000)
+              Engine::Components::OrthographicCamera.new(width: Engine::Window.framebuffer_width, height: Engine::Window.framebuffer_height, far: 2000)
             ]
           )
           Cubes::Teapot.create(Vector[500, 500], Vector[43, 68, 38], 500)
@@ -37,16 +37,16 @@ describe Cubes::Teapot do
         at(0) do
           Cubes::Teapot.create(Vector[100, 100], Vector[43, 68, 38], 500)
           Engine::GameObject.new(
-            "light", pos: Vector[Engine.screen_width / 2, 500, 100], components: [
+            "light", pos: Vector[Engine::Window.framebuffer_width / 2, 500, 100], components: [
             Engine::Components::PointLight.new(
               range: 300,
               colour: Vector[0.5, 0.5, 0.5],
             )
           ])
           Engine::GameObject.new(
-            "Camera", pos: Vector[Engine.screen_width / 2, Engine.screen_height / 2, 1000],
+            "Camera", pos: Vector[Engine::Window.framebuffer_width / 2, Engine::Window.framebuffer_height / 2, 1000],
             components: [
-              Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: Engine.screen_width / Engine.screen_height, near: 0.1, far: 2000)
+              Engine::Components::PerspectiveCamera.new(fov: 45.0, aspect: Engine::Window.framebuffer_width / Engine::Window.framebuffer_height, near: 0.1, far: 2000)
             ]
           )
         end
