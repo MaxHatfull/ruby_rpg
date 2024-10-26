@@ -21,6 +21,12 @@ module Rendering
       @mesh_matrix_data += mesh_renderer.game_object.model_matrix.to_a.flatten
     end
 
+    def remove_instance(mesh_renderer)
+      index = @mesh_renderers.index(mesh_renderer)
+      @mesh_renderers.delete_at(index)
+      @mesh_matrix_data[index * 16, 16] = []
+    end
+
     def update_instance(mesh_renderer)
       index = @mesh_renderers.index(mesh_renderer)
       @mesh_matrix_data[index * 16, 16] = mesh_renderer.game_object.model_matrix.to_a.flatten

@@ -133,8 +133,9 @@ module Engine
     def destroy!
       return unless GameObject.objects.include?(self)
       @destroyed = true
-
       components.each(&:destroy!)
+      ui_renderers.each(&:destroy!)
+      renderers.each(&:destroy!)
       GameObject.objects.delete(self)
       parent.children.delete(self) if parent
       children.each(&:destroy!)
