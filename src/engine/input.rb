@@ -2,7 +2,7 @@
 
 module Engine
   class Input
-    def self.key_down?(key)
+    def self.key?(key)
       keys[key]
     end
 

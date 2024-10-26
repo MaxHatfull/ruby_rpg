@@ -22,8 +22,8 @@ module Asteroids
     private
 
     def acceleration
-      return ACCELERATION if Engine::Input.key_down?(GLFW::KEY_UP)
-      return -DECELERATION if Engine::Input.key_down?(GLFW::KEY_DOWN)
+      return ACCELERATION if Engine::Input.key?(GLFW::KEY_UP)
+      return -DECELERATION if Engine::Input.key?(GLFW::KEY_DOWN)
 
       0
     end
@@ -36,8 +36,8 @@ module Asteroids
 
     def torque
       total_torque = 0
-      total_torque -= TURNING_SPEED if Engine::Input.key_down?(GLFW::KEY_LEFT)
-      total_torque += TURNING_SPEED if Engine::Input.key_down?(GLFW::KEY_RIGHT)
+      total_torque -= TURNING_SPEED if Engine::Input.key?(GLFW::KEY_LEFT)
+      total_torque += TURNING_SPEED if Engine::Input.key?(GLFW::KEY_RIGHT)
       total_torque
     end
   end

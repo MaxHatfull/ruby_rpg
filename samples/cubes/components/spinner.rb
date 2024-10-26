@@ -8,7 +8,7 @@ module Cubes
     end
 
     def update(delta_time)
-      input_state = Engine::Input.key_down?(GLFW::KEY_SPACE)
+      input_state = Engine::Input.key?(GLFW::KEY_SPACE)
 
       if input_state && !@old_state
         rigid_body = game_object.components.find { |c| c.is_a?(Engine::Physics::Components::Rigidbody) }
