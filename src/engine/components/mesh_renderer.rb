@@ -23,5 +23,9 @@ module Engine::Components
         Rendering::RenderPipeline.update_instance(self)
       end
     end
+
+    def destroy
+      Rendering::RenderPipeline.remove_instance(self)
+    end
   end
 end
