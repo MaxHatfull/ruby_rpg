@@ -28,7 +28,7 @@ module TestDriver
     end
 
     def press(key)
-      Engine::Input.instance_variable_get(:@keys)[key] = true
+      Engine::Input.instance_variable_get(:@keys)[key] = :down
     end
 
     def check_screenshot(file)

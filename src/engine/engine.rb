@@ -137,6 +137,7 @@ module Engine
         @swap_buffers_promise.execute
       end
 
+      Engine::Input.update_key_states
       GLFW.PollEvents
     end
   end
