@@ -11,8 +11,8 @@ module Engine
 
       def create_window
         set_opengl_version
-        enable_decorations
-        disable_auto_iconify
+        decorations :disable
+        auto_iconify :disable
         @full_screen = true
         initial_video_mode = VideoMode.current_video_mode
         @window = GLFW.CreateWindow(
@@ -36,6 +36,10 @@ module Engine
         full_screen? ? primary_monitor : nil
       end
 
+      def set_title(title)
+        GLFW::SetWindowTitle(window, title)
+      end
+
       def primary_monitor
         # The primary monitor is returned by glfwGetPrimaryMonitor.
         # It is the user's preferred monitor and is usually the one with global UI elements like task bar or menu bar.
@@ -51,31 +55,30 @@ module Engine
         GLFW::DONT_CARE
       end
 
-      # GLFW_DECORATED specifies whether the windowed mode window will have window decorations such as a border,
-      # a close widget, etc.
-      # An undecorated window will not be resizable by the user but will still allow the user to generate close events
-      # on some platforms.
-      # Possible values are GLFW_TRUE and GLFW_FALSE.
-      # This hint is ignored for full screen windows.
-      # https://www.glfw.org/docs/latest/window_guide.html#GLFW_DECORATED_attrib
-      def enable_decorations
-        GLFW.WindowHint(GLFW::DECORATED, GLFW::TRUE)
-        GLFW.SetWindowAttrib(window, GLFW::DECORATED, GLFW::TRUE) if window
+      def decorations(state)
+        # GLFW_DECORATED specifies whether the windowed mode window will have window decorations such as a border,
+        # a close widget, etc.
+        # An undecorated window will not be resizable by the user but will still allow the user to generate close events
+        # on some platforms.
+        # Possible values are GLFW_TRUE and GLFW_FALSE.
+        # This hint is ignored for full screen windows.
+        # https://www.glfw.org/docs/latest/window_guide.html#GLFW_DECORATED_attrib
+        glfw_setting = translate_state[state]
+
+        GLFW.WindowHint(GLFW::DECORATED, glfw_setting)
+        GLFW.SetWindowAttrib(window, GLFW::DECORATED, glfw_setting) if window
       end
 
-      def disable_decorations
-        GLFW.WindowHint(GLFW::DECORATED, GLFW::FALSE)
-        GLFW.SetWindowAttrib(window, GLFW::DECORATED, GLFW::FALSE) if window
-      end
+      def auto_iconify(state)
+        # GLFW_AUTO_ICONIFY specifies whether the full screen window will automatically iconify and restore the previous
+        # video mode on input focus loss.
+        # Possible values are GLFW_TRUE and GLFW_FALSE.
+        # This hint is ignored for windowed mode windows.
+        # https://www.glfw.org/docs/latest/window_guide.html#GLFW_AUTO_ICONIFY_hint
+        glfw_setting = translate_state[state]
 
-      # GLFW_AUTO_ICONIFY specifies whether the full screen window will automatically iconify and restore the previous
-      # video mode on input focus loss.
-      # Possible values are GLFW_TRUE and GLFW_FALSE.
-      # This hint is ignored for windowed mode windows.
-      # https://www.glfw.org/docs/latest/window_guide.html#GLFW_AUTO_ICONIFY_hint
-      def disable_auto_iconify
-        GLFW.WindowHint(GLFW::AUTO_ICONIFY, GLFW::FALSE)
-        GLFW.SetWindowAttrib(window, GLFW::AUTO_ICONIFY, GLFW::FALSE) if window
+        GLFW.WindowHint(GLFW::AUTO_ICONIFY, glfw_setting)
+        GLFW.SetWindowAttrib(window, GLFW::AUTO_ICONIFY, glfw_setting) if window
       end
 
       def set_to_windowed
@@ -110,6 +113,13 @@ module Engine
         GLFW.WindowHint(GLFW::CONTEXT_VERSION_MINOR, 3)
         GLFW.WindowHint(GLFW::OPENGL_PROFILE, GLFW::OPENGL_CORE_PROFILE)
         GLFW.WindowHint(GLFW::OPENGL_FORWARD_COMPAT, GLFW::TRUE)
+      end
+
+      def translate_state
+        {
+          :enable   => GLFW::TRUE,
+          :disable  => GLFW::FALSE
+        }
       end
     end
   end
