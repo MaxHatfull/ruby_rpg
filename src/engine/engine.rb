@@ -117,7 +117,7 @@ module Engine
       GL.Enable(GL::DEPTH_TEST)
       GL.DepthFunc(GL::LESS)
 
-      Rendering::RenderPipeline.draw
+      Rendering::RenderPipeline.draw unless @game_stopped
       GL.Disable(GL::DEPTH_TEST)
       GameObject.render_ui(delta_time)
 

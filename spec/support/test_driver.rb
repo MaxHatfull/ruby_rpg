@@ -51,7 +51,7 @@ module TestDriver
     allow(Time).to(receive(:now)) { current_tick * frame_duration }
     Engine.load(load_path)
     if !Engine.engine_started?
-      Engine.open_window(800, 600)
+      Engine.open_window
     end
     Engine.main_game_loop do
       Engine::GameObject.new("Test Driver", components: [TestDriverComponent.new(&block)])

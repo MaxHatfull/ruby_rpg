@@ -12,26 +12,33 @@ module Asteroids
     end
 
     def update(delta_time)
-      if Engine::Input.key_down?(GLFW::KEY_UP)
-        acceleration = ACCELERATION
-        deceleration = 0
-      elsif Engine::Input.key_down?(GLFW::KEY_DOWN)
-        acceleration = 0
-        deceleration = DECELERATION
-      else
-        acceleration = 0
-        deceleration = 0
-      end
+      @speed += game_object.local_to_world_direction(Vector[0.0, acceleration * delta_time, 0.0])
+      clamp_speed
+      game_object.pos += @speed * delta_time
 
-      @speed += game_object.local_to_world_direction(Vector[0.0, (acceleration - deceleration) * delta_time, 0.0])
+      game_object.rotation += Vector[0, 0, torque * delta_time]
+    end
+
+    private
+
+    def acceleration
+      return ACCELERATION if Engine::Input.key_down?(GLFW::KEY_UP)
+      return -DECELERATION if Engine::Input.key_down?(GLFW::KEY_DOWN)
+
+      0
+    end
+
+    def clamp_speed
       if @speed.magnitude > MAX_SPEED
         @speed = @speed / @speed.magnitude * MAX_SPEED
       end
-      game_object.pos += @speed * delta_time
+    end
 
-      torque = Engine::Input.key_down?(GLFW::KEY_LEFT) ? -TURNING_SPEED : 0
-      torque += Engine::Input.key_down?(GLFW::KEY_RIGHT) ? TURNING_SPEED : 0
-      game_object.rotation += Vector[0, 0, torque * delta_time]
+    def torque
+      total_torque = 0
+      total_torque -= TURNING_SPEED if Engine::Input.key_down?(GLFW::KEY_LEFT)
+      total_torque += TURNING_SPEED if Engine::Input.key_down?(GLFW::KEY_RIGHT)
+      total_torque
     end
   end
 end

@@ -13,6 +13,21 @@ module Cubes
       second_child.pos = Vector[3, 0, 0]
     end
 
+    def self.create_cluster(pos, rotation, size)
+      parent = Engine::GameObject.new(
+        "Spheres",
+        pos: pos,
+        rotation: rotation,
+        scale: Vector[1, 1, 1])
+
+      first = Sphere.create(Vector[0, 0, 0], Vector[rand(0..360), rand(0..360), rand(0..360)], size)
+      first.parent = parent
+      second = Sphere.create(Vector[20, 20, -10], 0, size)
+      second.parent = parent
+      third = Sphere.create(Vector[30, 0, 10], 0, size)
+      third.parent = parent
+    end
+
     def self.create(pos, rotation, size, components = [])
       Engine::GameObject.new(
         "Sphere",
