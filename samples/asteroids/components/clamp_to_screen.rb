@@ -9,15 +9,15 @@ module Asteroids
     private
 
     def clamp_to_screen
-      if game_object.x > Engine.screen_width
+      if game_object.x > Engine::Window.framebuffer_width
         game_object.x = 0
       elsif game_object.x < 0
-        game_object.x = Engine.screen_width
+        game_object.x = Engine::Window.framebuffer_width
       end
-      if game_object.y > Engine.screen_height
+      if game_object.y > Engine::Window.framebuffer_height
         game_object.y = 0
       elsif game_object.y < 0
-        game_object.y = Engine.screen_height
+        game_object.y = Engine::Window.framebuffer_height
       end
     end
   end
